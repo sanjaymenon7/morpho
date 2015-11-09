@@ -3,6 +3,31 @@
  */
 var exports = module.exports = {};
 
+var pg = require("pg");
+
+/*
+ * Database connection string
+ * Replace "postgres" with your dbms username.
+ * Replace "root" with your dbms password
+ * Replace "localhost:5432" with your postgreSQL server and port
+ * Replace "seba" with your database name
+ */   
+var conString = "pg://postgres:root@localhost:5432/seba";
+
+var client = new pg.Client(conString);
+client.connect();
+
+
+var query = client.query("SELECT * FROM MOBILEDATA");
+query.on("row", function (row, result) {
+    result.addRow(row);
+});
+query.on("end", function (result) {
+    exports.foneSpecs = JSON.stringify(result.rows, null, "    ");
+    console.log(exports.foneSpecs);
+    client.end();
+});
+
 exports.phoneSpecs =
 
     [
