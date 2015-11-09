@@ -1,8 +1,9 @@
 var React = require('react');
+var ejs = require('ejs');
 
 var ErrorMessage = React.createClass({
     render: function() {
-        return <div><h2>An error has occured</h2></div>;
+        return <div><h2>Error has occured</h2></div>;
     }
 });
 
