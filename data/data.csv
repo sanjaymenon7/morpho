@@ -1,0 +1,28 @@
+Company Name,Phone Name,Operating System,Physical Size,Resolution,Pixel Density,Camera,Front Camera,Processor,Clock Rate,System Memory,Built-in Storage,Battery Capacity,Multiple SIM Cards,SIM Card
+OnePlus,One,Android (5.1),5.5 inches,1080 x 1920 pixels,401 ppi,13 megapixels,5 megapixels,Quad-core,2500 MHz,3072 MB RAM,64 GB,3100 mAh,0,micro
+Motorola,Moto X,Android (5.1),5.5 inches,1080 x 1920 pixels,403 ppi,21 megapixels,5 megapixels,Octa-core,1700 MHz,2048 MB RAM,32 GB,3630 mAh,0,nano
+Asus,Zenfone 2,Android (5.0),5.5 inches,720 x 1280 pixels,265 ppi,13 megapixels,5 megapixels,Quad-core,1200 MHz,2048 MB RAM,16 GB,3000 mAh,1,micro
+Samsung,Galaxy S5,Android (5.0),5.1 inches,1080 x 1920 pixels,432 ppi,16 megapixels,2.1 megapixels,Quad-core,2500 MHz,2048 MB RAM,32 GB,2800 mAh,0,micro
+Samsung,Galaxy A8,Android (5.1),5.7 inches,1080 x 1920 pixels,386 ppi,16 megapixels,5 megapixels,Octa-core,1500 MHz,2048 MB RAM,32 GB,3050 mAh,0,nano
+Samsung,Z3,Tizen (2.3),5.0 inches,720 x 1280 pixels,294 ppi,8 megapixels,5 megapixels,Quad-core,1300 MHz,1024 MB RAM,8 GB,2600 mAh,1,normal
+Samsung,Galaxy J5,Android (5.0),5.0 inches,720 x 1280 pixels,294 ppi,13 megapixels,5 megapixels,Quad-core,1200 MHz,1536 MB RAM,8 GB,2600 mAh,0,micro
+Samsung,Galaxy Grand Neo Plus,Android (4.0),5.0 inches,480 x 800 pixels,187 ppi,5 megapixels,2 megapixels,Quad-core,1200 MHz,1024 MB RAM,8 GB,2100 mAh,1,normal
+Samsung,Galaxy Note 5,Android (5.1),5.7 inches,1440 x 2560 pixels,518 ppi,16 megapixels,5 megapixels,Octa-core,2100 MHz,4096 MB RAM,64 GB,3000 mAh,0,nano
+OnePlus,X,Android (5.1),5.0 inches,1080 x 1920 pixels,441 ppi,13 megapixels,8 megapixels,Quad-core,2300 MHz,3072 MB RAM,16 GB,2525 mAh,0,nano
+Samsung,Galaxy S6,Android (5.1),5.1 inches,1440 x 2560 pixels,577 ppi,16 megapixels,5 megapixels,Octa-core,2100 MHz,3072 MB RAM,128 GB,2550 mAh,0,nano
+Motorola,Nexus 6,Android (5.1),6.0 inches,1440 x 2560 pixels,493 ppi,13 megapixels,2 megapixels,Quad-core,2700 MHz,3072 MB RAM,64 GB,3220 mAh,0,nano
+Sony,Xperia Z5 Compact,Android (5.1),4.6 inches,720 x 1280 pixels,319 ppi,23 megapixels,5 megapixels,Octa-core,2000 MHz,2048 MB RAM,32 GB,2700 mAh,0,nano
+Sony,Xperia Z5 Premium,Android (5.1),5.5 inches,2160 x 3840 pixels,801 ppi,23 megapixels,5 megapixels,Octa-core,2000 MHz,3072 MB RAM,32 GB,3430 mAh,0,nano
+Sony,Xperia M,Android (5.0),5.0 inches,1080 x 1920 pixels,441 ppi,21.5 megapixels,13 megapixels,Octa-core,2000 MHz,3072 MB RAM,16 GB,2600 mAh,0,nano
+Sony,Xperia C5 Ultra,Android (5.0),6.0 inches,1080 x 1920 pixels,367 ppi,13 megapixels,13 megapixels,Octa-core,1700 MHz,2048 MB RAM,16 GB,2930 mAh,0,nano
+Sony,Xperia Z4 V,Android (5.1),5.2 inches,1440 x 2560 pixels,565 ppi,20.7 megapixels,5 megapixels,Octa-core,2000 MHz,3072 MB RAM,32 GB,3000 mAh,0,nano
+Sony,Xperia Z3+,Android (5.0),5.2 inches,1080 x 1920 pixels,424 ppi,20.7 megapixels,5 megapixels,Octa-core,2000 MHz,3072 MB RAM,32 GB,2930 mAh,0,nano
+Sony,Xperia C4,Android (5.0),5.5 inches,1080 x 1920 pixels,401 ppi,13 megapixels,5 megapixels,Octa-core,1700 MHz,16 GB RAM,16 GB,2600 mAh,0,nano
+Sony,Xperia M4 Aqua,Android (5.0),5.0 inches,720 x 1280 pixels,294 ppi,13 megapixels,5 megapixels,Octa-core,1500 MHz,16 GB RAM,16 GB,2400 mAh,0,nano
+Sony,Xperia E4,Android (4.4.4),5.0 inches,540 x 960 pixels,220 ppi,5 megapixels,2 megapixels,Quad-core,1300 MHz,8 GB RAM,8 GB,2300 mAh,0,micro
+Microsoft,Lumia 950,Windows (10 Mobile),5.2 inches,1440 x 2560 pixels,565 ppi,20 megapixels,5 megapixels,Hexa-core,1800 MHz,3072 MB RAM,32 GB,3000 mAh,0,nano
+LG,Nexus 5X,Android (6.0),5.2 inches,1080 x 1920 pixels,423 ppi,12.3 megapixels,5 megapixels,Hexa-core,1800 MHz,2048 MB RAM,32 GB,2700 mAh,0,nano
+Sony,Xperia Z5,Android (5.1),5.2 inches,1080 x 1920 pixels,424 ppi,23 megapixels,5 megapixels,Octa-core,2000 MHz,3072 MB RAM,32 GB,2900 mAh,0,nano
+LG,G4,Android (5.1),5.5 inches,1440 x 2560 pixels,538 ppi,16 megapixels,8 megapixels,Hexa-core,1800 MHz,3072 MB RAM,32 GB,3000 mAh,0,micro
+Xiamo,MI 4I,Android (5.0),5.0 inches,1080 x 1920 pixels,441 ppi,13 megapixels,5 megapixels,Octa-core,1700 MHz,2048 MB RAM,32 GB,3120 mAh,1,micro
+Huawei,Nexus 6P,Android (6.0),5.7 inches,1440 x 2560 pixels,518 ppi,12.3 megapixels,8 megapixels,Octa-core,2000 MHz,3072 MB RAM,128 GB,3450 mAh,0,nano
