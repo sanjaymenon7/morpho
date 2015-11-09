@@ -1,5 +1,6 @@
 var React = require('react');
 
+
 var HelloMessage = React.createClass({
     render: function() {
         return (
@@ -23,7 +24,13 @@ var HelloMessage = React.createClass({
                 </div>
             </nav>
             <div class="phoneList">
-                Test
+                <ul className="phnList">
+                        {
+                        this.props.data.map(function(phone) {
+                            return <li key={phone.CompanyName}>{phone.CompanyName}</li>
+                            })
+                        }
+                </ul>
             </div>
             </body>
             </html>
@@ -31,5 +38,6 @@ var HelloMessage = React.createClass({
         );
     }
 });
+
 
 module.exports = HelloMessage;
