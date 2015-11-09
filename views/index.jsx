@@ -14,23 +14,22 @@ var HelloMessage = React.createClass({
 
             </head>
             <body>
-            <h1>{this.props.name}</h1>
-            <p >This is {this.props.name}</p>
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="container">
-                    <a class="navbar-brand" href="#">Home</a>
-                    <ul class="nav navbar-nav">
-                    </ul>
-                </div>
-            </nav>
-            <div class="phoneList">
-                <ul className="phnList">
+            <div className="phoneList">
+
                         {
                         this.props.data.map(function(phone) {
-                            return <li key={phone.CompanyName}>{phone.CompanyName}</li>
+                            return (
+                                    <div>
+                                        <div className ="phone header" ><b>{phone.CompanyName}</b></div>
+                                        <div className ="phone specs" >{phone.PhoneName}</div>
+                                        <div className ="phone specs" >{phone.PhysicalSize}</div>
+                                    </div>
+
+
+                                );
                             })
                         }
-                </ul>
+
             </div>
             </body>
             </html>
