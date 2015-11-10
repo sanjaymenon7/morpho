@@ -11,7 +11,7 @@ var pg = require("pg");
  * Replace "root" with your dbms password
  * Replace "localhost:5432" with your postgreSQL server and port
  * Replace "seba" with your database name
- */   
+ */
 var conString = "pg://postgres:root@localhost:5432/seba";
 
 var client = new pg.Client(conString);
