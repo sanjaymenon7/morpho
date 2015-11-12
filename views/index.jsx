@@ -7,10 +7,11 @@ var HelloMessage = React.createClass({
             <html>
             <head>
                 <title>{this.props.name}</title>
-                <link rel='stylesheet' href='/stylesheets/style.css' />
-                <link rel='stylesheet' href='/stylesheets/flexBox.css' />
                 <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css' />
                 <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap-theme.css' />
+                <link rel='stylesheet' href="/bower_components/flat-ui/dist/css/flat-ui.css"/>
+                <link rel='stylesheet' href='/stylesheets/style.css' />
+                <link rel='stylesheet' href='/stylesheets/flexBox.css' />
 
             </head>
             <body>
@@ -19,8 +20,8 @@ var HelloMessage = React.createClass({
                         {
                         this.props.data.map(function(phone) {
                             return (
-                                    <div>
-                                        <div className ="phone header" ><b>{phone.CompanyName}</b></div>
+                                    <div class="tile">
+                                        <div className ="phone header tile-title   " >{phone.CompanyName}</div>
                                         <div className ="phone specs" >{phone.PhoneName}</div>
                                         <div className ="phone specs" >{phone.PhysicalSize}</div>
                                     </div>

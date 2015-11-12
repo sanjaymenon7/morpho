@@ -4,22 +4,23 @@ p{
 
 .phoneList{
     display: flex;
-    border: 5px solid black;
+    border: 3px solid #2f4154;
     justify-content: center;
     align-items: stretch;
 }
 
 .phone{
     vertical-align: middle;
-    border: 1px solid white;
+    border: 1px ridge darkgrey;
     text-align: center;
 }
 
 .header{
-    background-color: #00b3ee;
+    background-color: #2f4154;
+    color: white;
 }
 
 .specs{
-    color: red;
-    background-color: #9d9d9d;
+    color: #2f4154;
+    background-color: #148f77;
 }
