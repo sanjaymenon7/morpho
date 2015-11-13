@@ -3,7 +3,40 @@
  */
 var exports = module.exports = {};
 
-var pg = require("pg");
+/*
+ * MONGODB DATABASE
+ * @Togi can take help of this code to create export service
+ */
+
+var mongo = require('mongodb'),
+  Server = mongo.Server,
+  Db = mongo.Db;
+
+var server = new Server('localhost', 27017, {auto_reconnect: true});
+var db = new Db('morphologicalrecommender', server);
+
+db.open(function(err, db) {
+  if(!err) {
+    findDocuments(db, function() {
+        db.close();
+    });
+  }
+});
+
+var findDocuments = function(db, callback) {
+    // @Togi - I am selecting "phonedata" collection everytime. You need to pass the GET/POST param here.
+    var collection = db.collection('phonedata');
+    collection.find({}).toArray(function(err, docs) {
+        exports.foneSpecs = JSON.stringify(docs, null, "    ");
+        console.log(exports.foneSpecs);
+        callback(docs);
+    });      
+}
+
+/*
+ * REJECTED POSTGRES DATABASE CODE
+ */
+ //var pg = require("pg");
 
 /*
  * Database connection string
@@ -12,6 +45,8 @@ var pg = require("pg");
  * Replace "localhost:5432" with your postgreSQL server and port
  * Replace "seba" with your database name
  */
+
+/*
 var conString = "pg://postgres:root@localhost:5432/seba";
 
 var client = new pg.Client(conString);
@@ -27,6 +62,7 @@ query.on("end", function (result) {
     console.log(exports.foneSpecs);
     client.end();
 });
+*/
 
 exports.phoneSpecs =
 
