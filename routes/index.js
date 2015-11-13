@@ -28,7 +28,7 @@ router.get('/upload', function(req, res) {
 
 // Import Service - Upload csv to create a new table
 router.post('/create-table',upload.single('data_file'), function(req, res, next) {
-  exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file C:data\\csv\\'+req.file.filename, function(error, stdout, stderr) {
+  exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file C:\\data\\csv\\'+req.file.filename, function(error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
