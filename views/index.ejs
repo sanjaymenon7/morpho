@@ -7,48 +7,30 @@
   <script src="../bower_components/react/react.js"></script>
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/babel/browser.js"></script>
+
+
+  <link rel='stylesheet' href='../bower_components/bootstrap/dist/css/bootstrap.css' />
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/flexBox.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap-multiselect.css' type="text/css" />
 </head>
 <body>
 
+
+
+<br/>
 <div id="content">
 
 </div>
+<br/>
+<div id="chkBox">
 
+</div>
 
+<script src="bundle_reactify.js"></script>
 
 <script type="text/babel">
 
-
-
-  var MainComponent = React.createClass({
-    getInitialState: function() {
-      return {
-        mainData: []
-      };
-    },
-
-    mountMainData: function(){
-      $.ajax({
-        dataType: "json",
-        url: 'http://localhost:3000/',
-        success: function(data){
-          alert("Yes");
-          this.setState({data:data});
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error(this.props.url, status, err.toString());
-        }.bind(this)
-      });
-    },
-
-    render: function() {
-      return (
-      <h2>{this.mainData}Hello</h2>
-      );
-    }
-  });
 
   var MainComponent = React.createClass({
     getInitialState: function() {
@@ -69,26 +51,34 @@
     },
     render: function() {
       return (
-              <div className="phoneList">
-              {
-                this.state.data.map(function(phone) {
-                return (
-                        <div class="tile">
-                          <div className ="phone header tile-title   " >{phone.CompanyName}</div>
-                          <div className ="phone specs" >{phone.PhoneName}</div>
-                          <div className ="phone specs" >{phone.PhysicalSize}</div>
-                        </div>
-                );
-              })
-    }
+              <div>
+
+                    <div className="parentContainer">
+                            {
+                              this.state.data.map(function(phone) {
+                              return (
+                                      <div class="tile">
+                                      <div className ="child header tile-title   " >{phone.CompanyName}</div>
+                              <div className ="child specs" >{phone.PhoneName}</div>
+                              <div className ="child specs" >{phone.PhysicalSize}</div>
+                              </div>
+                              );
+                            })
+                            }
+                    </div>
               </div>
+
       );
     }
   });
 
 
-  React.render(<MainComponent />, document.getElementById('content'));
 
+
+
+
+
+  React.render(<MainComponent />, document.getElementById('content'));
 
 
 </script>

@@ -15,7 +15,7 @@ var HelloMessage = React.createClass({
 
             </head>
             <body>
-            <div className="phoneList">
+            <div className="parentContainer">
 
                         {
                         this.props.data.map(function(phone) {

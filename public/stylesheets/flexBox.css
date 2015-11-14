@@ -2,22 +2,25 @@ p{
     color: crimson;
 }
 
-.phoneList{
+.parentContainer {
     display: flex;
-    border: 3px solid #2f4154;
     justify-content: center;
     align-items: stretch;
+    align-content: stretch;
 }
 
-.phone{
+.child{
     vertical-align: middle;
     border: 1px ridge darkgrey;
     text-align: center;
+    height: 80px;
 }
+
 
 .header{
     background-color: #2f4154;
     color: white;
+    height: 40px;
 }
 
 .specs{
