@@ -7,12 +7,15 @@
   <script src="../bower_components/react/react.js"></script>
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/babel/browser.js"></script>
+  <script src="javascripts/react-multiselect.js"></script>
 
 
   <link rel='stylesheet' href='../bower_components/bootstrap/dist/css/bootstrap.css' />
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/flexBox.css' />
   <link rel='stylesheet' href='/stylesheets/bootstrap-multiselect.css' type="text/css" />
+  <link rel='stylesheet' href='/stylesheets/react-select.css' type="text/css" />
+  <link rel='stylesheet' href='/stylesheets/basic.css' type="text/css" />
 </head>
 <body>
 
@@ -23,11 +26,14 @@
 
 </div>
 <br/>
-<div id="chkBox">
+<div id="chkBox" ref="columnDropDown">
+</div>
+<br/>
+<div id="multiselect-basic">
 
 </div>
 
-<script src="bundle_reactify.js"></script>
+
 
 <script type="text/babel">
 
@@ -72,13 +78,76 @@
     }
   });
 
-
-
-
-
-
-
   React.render(<MainComponent />, document.getElementById('content'));
+
+  var items = [
+    {id: 1, text: 'Apple'},
+    {id: 2, text: 'Apricot'},
+    {id: 3, text: 'Avocado'},
+    {id: 4, text: 'Banana'},
+    {id: 5, text: 'Breadfruit'},
+    {id: 6, text: 'Bilberry'},
+    {id: 7, text: 'Blackberry'},
+    {id: 8, text: 'Blackcurrant'},
+    {id: 9, text: 'Blueberry'},
+    {id: 10, text: 'Boysenberry'},
+    {id: 11, text: 'Cantaloupe'},
+    {id: 12, text: 'Currant'},
+    {id: 13, text: 'Cherry'},
+    {id: 14, text: 'Cherimoya'},
+    {id: 15, text: 'Cloudberry'},
+    {id: 16, text: 'Coconut'},
+    {id: 17, text: 'Cranberry'},
+    {id: 18, text: 'Cucumber'},
+    {id: 19, text: 'Damson'},
+    {id: 20, text: 'Date'},
+    {id: 21, text: 'Dragonfruit'},
+    {id: 22, text: 'Durian'},
+    {id: 23, text: 'Eggplant'},
+    {id: 24, text: 'Elderberry'},
+    {id: 25, text: 'Feijoa'},
+    {id: 26, text: 'Fig'},
+    {id: 27, text: 'Goji berry'},
+    {id: 28, text: 'Gooseberry'},
+    {id: 29, text: 'Grape'},
+    {id: 30, text: 'Raisin'}
+  ]
+
+  var Basic = React.createClass({displayName: "Basic",
+    getInitialState: function() {
+      return {data: []};
+    },
+    componentDidMount: function() {
+      $.ajax({
+        url: 'http://localhost:3000/perfColoumnData',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          this.setState({data: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+    },
+    getDefaultProps: function() {
+      return {items: []}
+    },
+    handleItemSelected: function(item) {
+      console.log('Item selected: '+item.id+' - '+item.text)
+    },
+    handleItemDeselected: function(item) {
+      console.log('Item deselected: '+item.id+' - '+item.text)
+    },
+    render: function() {
+      return React.createElement(MultiSelect, {
+        items: this.state.data,
+        onItemSelected: this.handleItemSelected,
+        onItemDeselected: this.handleItemDeselected}
+      )
+    }
+  })
+  React.render(React.createElement(Basic, {items: items}), document.getElementById('multiselect-basic'));
 
 
 </script>

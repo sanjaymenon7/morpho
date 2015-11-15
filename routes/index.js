@@ -10,6 +10,9 @@ var multer  = require('multer');
 var upload = multer({ dest: 'c:/data/csv' })
 var exec = require('child_process').exec;
 
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { name: 'Express',data: phoneInfo.phoneSpecs });
@@ -17,10 +20,31 @@ router.get('/', function(req, res, next) {
  //res.send(phoneInfo.phoneSpecs[0].CompanyName);
  //console.log(phoneInfo.phoneSpecs[0]);
 });
-
+//Mock Service to populate mock main data
 router.get('/mainData',function(req,res,next){
   res.json(phoneInfo.phoneSpecs)
 })
+
+var coloumnList =
+    [
+        {
+            "id": 0,
+            "text": "Zero"
+        },
+        {
+            "id": 1,
+            "text": "One"
+        },
+        {
+            "id": 2,
+            "text": "Two"
+        }
+    ]
+//Mock service to populate performance coloumn dropdown
+router.get('/perfColoumnData',function(req,res,next){
+    res.json(coloumnList)
+})
+
 
 // Upload form for now - Later we need to create a view
 router.get('/upload', function(req, res) {
