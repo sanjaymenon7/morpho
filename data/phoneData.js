@@ -28,7 +28,7 @@ var findDocuments = function(db, callback) {
     var collection = db.collection('phonedata');
     collection.find({}).toArray(function(err, docs) {
         exports.phoneSpecs = JSON.stringify(docs, null, "    ");
-        console.log(exports.foneSpecs);
+        console.log(exports.phoneSpecs);
         callback(docs);
     });      
 }
