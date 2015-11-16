@@ -63,10 +63,11 @@ router.post('/create-table',upload.single('data_file'), function(req, res, next)
   });
 });
 
-// Export service - Get all data from MongoDB as JSON
-router.get('/exportData',function(req,res,next){
-  res.json(phoneInfo.phoneSpecs)
-})
+// Export service - Get all data from collection phonedata as JSON file
+router.get('/export-data', function(req, res, next) {
+  exec('mongoexport --db morphologicalrecommender --collection phonedata --out phonedata.json');
+});
+
 
 module.exports = router;
 
