@@ -63,7 +63,11 @@ router.post('/create-table',upload.single('data_file'), function(req, res, next)
   });
 });
 
-// TODO: @Togi Export Service - We need a param/attribute to export one table. See phoneData.js for more comments
+// Export service - Get all data from collection phonedata as JSON file
+router.get('/export-data', function(req, res, next) {
+  exec('mongoexport --db morphologicalrecommender --collection phonedata --out phonedata.json');
+});
+
 
 module.exports = router;
 

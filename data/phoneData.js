@@ -27,8 +27,8 @@ var findDocuments = function(db, callback) {
     // @Togi - I am selecting "phonedata" collection everytime. You need to pass the GET/POST param here.
     var collection = db.collection('phonedata');
     collection.find({}).toArray(function(err, docs) {
-        exports.foneSpecs = JSON.stringify(docs, null, "    ");
-        console.log(exports.foneSpecs);
+        exports.phoneSpecs = JSON.stringify(docs, null, "    ");
+        console.log(exports.phoneSpecs);
         callback(docs);
     });      
 }
