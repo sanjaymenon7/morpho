@@ -28,6 +28,8 @@
 <br/>
 <div id="chkBox" ref="columnDropDown">
 </div>
+<div id="chkBox12">
+</div>
 <br/>
 <div id="multiselect-basic">
 
@@ -63,7 +65,7 @@
                             {
                               this.state.data.map(function(phone) {
                               return (
-                                      <div class="tile">
+                                <div class="tile">
                                       <div className ="child header tile-title   " >{phone.CompanyName}</div>
                               <div className ="child specs" >{phone.PhoneName}</div>
                               <div className ="child specs" >{phone.PhysicalSize}</div>
@@ -80,40 +82,8 @@
 
   React.render(<MainComponent />, document.getElementById('content'));
 
-  var items = [
-    {id: 1, text: 'Apple'},
-    {id: 2, text: 'Apricot'},
-    {id: 3, text: 'Avocado'},
-    {id: 4, text: 'Banana'},
-    {id: 5, text: 'Breadfruit'},
-    {id: 6, text: 'Bilberry'},
-    {id: 7, text: 'Blackberry'},
-    {id: 8, text: 'Blackcurrant'},
-    {id: 9, text: 'Blueberry'},
-    {id: 10, text: 'Boysenberry'},
-    {id: 11, text: 'Cantaloupe'},
-    {id: 12, text: 'Currant'},
-    {id: 13, text: 'Cherry'},
-    {id: 14, text: 'Cherimoya'},
-    {id: 15, text: 'Cloudberry'},
-    {id: 16, text: 'Coconut'},
-    {id: 17, text: 'Cranberry'},
-    {id: 18, text: 'Cucumber'},
-    {id: 19, text: 'Damson'},
-    {id: 20, text: 'Date'},
-    {id: 21, text: 'Dragonfruit'},
-    {id: 22, text: 'Durian'},
-    {id: 23, text: 'Eggplant'},
-    {id: 24, text: 'Elderberry'},
-    {id: 25, text: 'Feijoa'},
-    {id: 26, text: 'Fig'},
-    {id: 27, text: 'Goji berry'},
-    {id: 28, text: 'Gooseberry'},
-    {id: 29, text: 'Grape'},
-    {id: 30, text: 'Raisin'}
-  ]
 
-  var Basic = React.createClass({displayName: "Basic",
+  var FilterComponent = React.createClass({displayName: "Basic",
     getInitialState: function() {
       return {data: []};
     },
@@ -131,24 +101,87 @@
       });
     },
     getDefaultProps: function() {
-      return {items: []}
+      return {items: [],perfDataProp: []}
     },
     handleItemSelected: function(item) {
       console.log('Item selected: '+item.id+' - '+item.text)
+      this.props.setPerfColData(item);
     },
     handleItemDeselected: function(item) {
       console.log('Item deselected: '+item.id+' - '+item.text)
     },
     render: function() {
-      return React.createElement(MultiSelect, {
-        items: this.state.data,
+      return (
+
+      React.createElement(MultiSelect, {
+        items:  this.props.perfDataProp,
         onItemSelected: this.handleItemSelected,
         onItemDeselected: this.handleItemDeselected}
-      )
+
+      ));
     }
   })
-  React.render(React.createElement(Basic, {items: items}), document.getElementById('multiselect-basic'));
+ // React.render(React.createElement(FilterComponent), document.getElementById('multiselect-basic'));
 
+
+  var Parent = React.createClass({
+
+    getInitialState: function () {
+
+      return {perfColData: [], colData:[],mainData:[], initPerfColData:[]}
+
+    },
+    componentDidMount: function() {
+      $.ajax({
+        url: 'http://localhost:3000/perfColoumnData',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          this.setState({initPerfColData: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+    },
+
+    render: function () {
+
+      var me = this;
+
+      var setLastLabel = function (label) {
+
+        me.setState({lastLabelClicked: label});
+
+      };
+      var setPerfColData = function (data) {
+        console.log('Item selected in parent: '+data.id+' - '+data.text)
+        me.setState({perfColData: data});
+
+      };
+      var setColData = function (data) {
+
+        me.setState({colData: data});
+
+      };
+      var setMainData = function (data) {
+
+        me.setState({mainData: data});
+
+      };
+
+      return(
+      <div>
+
+      <FilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
+
+      </div>)
+      ;
+
+    }
+
+  });
+  React.render(<Parent />, document.getElementById('multiselect-basic'));
 
 </script>
 
