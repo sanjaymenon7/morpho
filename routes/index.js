@@ -63,7 +63,10 @@ router.post('/create-table',upload.single('data_file'), function(req, res, next)
   });
 });
 
-// TODO: @Togi Export Service - We need a param/attribute to export one table. See phoneData.js for more comments
+// Export service - Get all data from MongoDB as JSON
+router.get('/exportData',function(req,res,next){
+  res.json(phoneInfo.phoneSpecs)
+})
 
 module.exports = router;
 
