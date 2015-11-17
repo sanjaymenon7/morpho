@@ -69,9 +69,12 @@
                               this.props.mainData.map(function(phone) {
                               return (
                                 <div class="tile">
-                                      <div className ="child header tile-title   " >{phone.CompanyName}</div>
-                              <div className ="child specs" >{phone.PhoneName}</div>
-                              <div className ="child specs" >{phone.PhysicalSize}</div>
+                                  <div className ="child header tile-title   " >{phone.column_header.name}</div>
+                                {phone.column_data.map(function(colData){
+                                      return(
+                                              <div className ="child specs" >{colData.value}</div>
+                                      );
+                                })}
                               </div>
                               );
                             })
@@ -134,7 +137,7 @@
 
     getInitialState: function () {
 
-      return {perfColData: '', colData:[],mainData:[], initPerfColData:[],initMainData:[]}
+      return {perfColData: [], colData:[],mainData:[], initPerfColData:[],initMainData:[]}
 
     },
     componentDidMount: function() {
@@ -151,10 +154,12 @@
       });
 
       $.ajax({
-        url: 'http://localhost:3000/mainData',
+        url: 'http://localhost:3000/get-columns',
         dataType: 'json',
+        data:{table:'MainTable'},
         cache: false,
         success: function(data) {
+          console.log(data);
           this.setState({initMainData: data});
         }.bind(this),
         error: function(xhr, status, err) {
