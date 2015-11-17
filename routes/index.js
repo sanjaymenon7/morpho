@@ -1,5 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongodb'),
+  Server = mongo.Server,
+  Db = mongo.Db;
+
+var server = new Server('localhost', 27017, {auto_reconnect: true});
+var db = new Db('morphologicalrecommender', server);
 var phoneInfo = require('../data/phoneData');
 
 
@@ -58,14 +64,66 @@ router.post('/create-table',upload.single('data_file'), function(req, res, next)
       console.log('stderr: ' + stderr);
       if (error !== null) {
           console.log('exec error: ' + error);
-      }
-      res.send(req.body.tablename+' Table Created!');
+          } else {
+            exec('mongo morphologicalrecommender --eval "db.runCommand({\\"mapreduce\\" : \\"'+req.body.tablename+'\\",\\"map\\" : function() {for (var key in this) { emit(key, null);}},\\"reduce\\" : function(key, stuff) { return null; }, \\"out\\": \\"'+req.body.tablename+'\\" + \\"_keys\\"});"', function(error1, stdout1, stderr1) {
+              console.log('stdout: ' + stdout1);
+              console.log('stderr: ' + stderr1);
+              if (error1 !== null) {
+                console.log('exec error: ' + error1);
+              } else {
+                res.send(req.body.tablename+" Table Created!!");
+              }
+            });
+          }
   });
 });
 
 // Export service - Get all data from collection phonedata as JSON file
 router.get('/export-data', function(req, res, next) {
   exec('mongoexport --db morphologicalrecommender --collection phonedata --out phonedata.json');
+});
+
+// Export service - Get all data from collection phonedata as JSON file
+router.get('/get-columns', function(req, res, next) {
+  db.open(function(err, db) {
+  if(!err) {
+    var columnJSON = new Array();
+    
+    var col_id = 0;
+    var data_id;
+    var i=0;
+    var query = 'db.'+req.query.table+'_keys.distinct("_id");';
+    db.eval(query, function(err, result){
+        for(i=0;i<result.length;i++){
+          if (result[i]!="_id") {
+            var header = {column_header:{name:result[i], id:col_id, is_performance:false, is_selected: false}, column_data: new Array()};
+            var collection = db.collection(req.query.table);
+            var field = result[i];
+            columnJSON.push(header);
+            col_id++;
+          }
+        }
+        collection.find({}).toArray(function(err, docs) {
+              for(i=0;i<result.length;i++){
+                if (result[i]!="_id") {
+                  data_id=0;
+                  for(var j=0;j<docs.length;j++){
+                    columnJSON[i].column_data.push({value:docs[j][result[i]], id:data_id, is_clicked: false, is_recommended: false});
+                    data_id++;
+                  }
+                }
+                
+              }
+              res.setHeader('Content-Type', 'application/json');
+              res.send(JSON.stringify(columnJSON, null, "    "));
+              db.close();
+        });
+        
+        
+    });
+  }
+});
+  
 });
 
 

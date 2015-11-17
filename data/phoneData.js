@@ -4,36 +4,6 @@
 var exports = module.exports = {};
 
 /*
- * MONGODB DATABASE
- * @Togi can take help of this code to create export service
- */
-
-var mongo = require('mongodb'),
-  Server = mongo.Server,
-  Db = mongo.Db;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-var db = new Db('morphologicalrecommender', server);
-
-db.open(function(err, db) {
-  if(!err) {
-    findDocuments(db, function() {
-        db.close();
-    });
-  }
-});
-
-var findDocuments = function(db, callback) {
-    // @Togi - I am selecting "phonedata" collection everytime. You need to pass the GET/POST param here.
-    var collection = db.collection('phonedata');
-    collection.find({}).toArray(function(err, docs) {
-        exports.phoneSpecs = JSON.stringify(docs, null, "    ");
-        console.log(exports.phoneSpecs);
-        callback(docs);
-    });      
-}
-
-/*
  * REJECTED POSTGRES DATABASE CODE
  */
  //var pg = require("pg");
