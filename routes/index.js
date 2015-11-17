@@ -45,6 +45,86 @@ router.get('/perfColoumnData',function(req,res,next){
     res.json(coloumnList)
 })
 
+var perfColFilterResponse =
+    [
+        {
+            "CompanyName":"OnePlus",
+            "PhoneName":"One",
+            "OperatingSystem":"Android (5.1)",
+            "PhysicalSize":"5.5 inches",
+            "Resolution":"1080 x 1920 pixels",
+            "PixelDensity":"401 ppi",
+            "Camera":"13 megapixels",
+            "FrontCamera":"5 megapixels",
+            "Processor":"Quad-core",
+            "ClockRate":"2500 MHz",
+            "SystemMemory":"3072 MB RAM",
+            "BuiltinStorage":"64 GB",
+            "BatteryCapacity":"3100 mAh",
+            "MultipleSIMCards":0,
+            "SIMCard":"micro"
+        },
+        {
+            "CompanyName":"Motorola",
+            "PhoneName":"Moto X",
+            "OperatingSystem":"Android (5.1)",
+            "PhysicalSize":"5.5 inches",
+            "Resolution":"1080 x 1920 pixels",
+            "PixelDensity":"403 ppi",
+            "Camera":"21 megapixels",
+            "FrontCamera":"5 megapixels",
+            "Processor":"Octa-core",
+            "ClockRate":"1700 MHz",
+            "SystemMemory":"2048 MB RAM",
+            "BuiltinStorage":"32 GB",
+            "BatteryCapacity":"3630 mAh",
+            "MultipleSIMCards":0,
+            "SIMCard":"nano"
+        },
+        {
+            "CompanyName":"Asus",
+            "PhoneName":"Zenfone 2",
+            "OperatingSystem":"Android (5.0)",
+            "PhysicalSize":"5.5 inches",
+            "Resolution":"720 x 1280 pixels",
+            "PixelDensity":"265 ppi",
+            "Camera":"13 megapixels",
+            "FrontCamera":"5 megapixels",
+            "Processor":"Quad-core",
+            "ClockRate":"1200 MHz",
+            "SystemMemory":"2048 MB RAM",
+            "BuiltinStorage":"16 GB",
+            "BatteryCapacity":"3000 mAh",
+            "MultipleSIMCards":1,
+            "SIMCard":"micro"
+        },
+        {
+            "CompanyName":"Samsung",
+            "PhoneName":"Galaxy S5",
+            "OperatingSystem":"Android (5.0)",
+            "PhysicalSize":"5.1 inches",
+            "Resolution":"1080 x 1920 pixels",
+            "PixelDensity":"432 ppi",
+            "Camera":"16 megapixels",
+            "FrontCamera":"2.1 megapixels",
+            "Processor":"Quad-core",
+            "ClockRate":"2500 MHz",
+            "SystemMemory":"2048 MB RAM",
+            "BuiltinStorage":"32 GB",
+            "BatteryCapacity":"2800 mAh",
+            "MultipleSIM ards":0,
+            "SIMCard":"micro"
+        }
+    ]
+
+//Mock service to post perfcoldata
+router.post('/getPerfColoumnData',function(req,res,next){
+    console.log(req.body);
+    console.log(req.rawBody);
+    res.json(perfColFilterResponse)
+})
+
+
 
 // Upload form for now - Later we need to create a view
 router.get('/upload', function(req, res) {
