@@ -44,6 +44,9 @@
     getInitialState: function() {
       return {data: []};
     },
+    getDefaultProps : function() {
+      return {mainData: []};
+    },
     componentDidMount: function() {
       $.ajax({
         url: 'http://localhost:3000/mainData',
@@ -63,7 +66,7 @@
 
                     <div className="parentContainer">
                             {
-                              this.state.data.map(function(phone) {
+                              this.props.mainData.map(function(phone) {
                               return (
                                 <div class="tile">
                                       <div className ="child header tile-title   " >{phone.CompanyName}</div>
@@ -83,9 +86,9 @@
   React.render(<MainComponent />, document.getElementById('content'));
 
 
-  var FilterComponent = React.createClass({displayName: "Basic",
+  var PerfFilterComponent = React.createClass({displayName: "Basic",
     getInitialState: function() {
-      return {data: []};
+      return {data: [],selections:[]};
     },
     componentDidMount: function() {
       $.ajax({
@@ -105,10 +108,13 @@
     },
     handleItemSelected: function(item) {
       console.log('Item selected: '+item.id+' - '+item.text)
-      this.props.setPerfColData(item);
     },
     handleItemDeselected: function(item) {
       console.log('Item deselected: '+item.id+' - '+item.text)
+    },
+    onChangeFn: function(selections) {
+      console.log('Items: '+JSON.stringify(selections))
+      this.props.setPerfColData(JSON.stringify(selections));
     },
     render: function() {
       return (
@@ -116,8 +122,8 @@
       React.createElement(MultiSelect, {
         items:  this.props.perfDataProp,
         onItemSelected: this.handleItemSelected,
-        onItemDeselected: this.handleItemDeselected}
-
+        onItemDeselected: this.handleItemDeselected,
+        onChange: this.onChangeFn}
       ));
     }
   })
@@ -128,7 +134,7 @@
 
     getInitialState: function () {
 
-      return {perfColData: [], colData:[],mainData:[], initPerfColData:[]}
+      return {perfColData: '', colData:[],mainData:[], initPerfColData:[],initMainData:[]}
 
     },
     componentDidMount: function() {
@@ -143,22 +149,51 @@
           console.error(this.props.url, status, err.toString());
         }.bind(this)
       });
+
+      $.ajax({
+        url: 'http://localhost:3000/mainData',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          this.setState({initMainData: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+
+    },
+    componentWillUpdate : function(nextProps, nextState) {
+       console.log("Will update")
+      console.log(nextState)
+      return true;
     },
 
     render: function () {
 
       var me = this;
 
-      var setLastLabel = function (label) {
-
-        me.setState({lastLabelClicked: label});
-
-      };
       var setPerfColData = function (data) {
-        console.log('Item selected in parent: '+data.id+' - '+data.text)
-        me.setState({perfColData: data});
+        console.log('Item selected in parent: '+data)
+        this.setState({perfColData: data});
+        console.log("State PErf"+this.state.perfColData);
+        $.ajax({
+          url : "http://localhost:3000/getPerfColoumnData",
+          type: "POST",
+          dataType: 'json',
+          data : data,
+          success: function(data, textStatus, jqXHR)
+          {
+            console.log(data)
+            me.setState({initMainData:data})
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
 
-      };
+          }
+        });
+
+      }.bind(this);
       var setColData = function (data) {
 
         me.setState({colData: data});
@@ -172,9 +207,8 @@
 
       return(
       <div>
-
-      <FilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
-
+        <PerfFilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
+        <MainComponent mainData={this.state.initMainData}/>
       </div>)
       ;
 
