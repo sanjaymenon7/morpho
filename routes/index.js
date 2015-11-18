@@ -54,72 +54,348 @@ router.get('/perfColoumnData',function(req,res,next){
 var perfColFilterResponse =
     [
         {
-            "CompanyName":"OnePlus",
-            "PhoneName":"One",
-            "OperatingSystem":"Android (5.1)",
-            "PhysicalSize":"5.5 inches",
-            "Resolution":"1080 x 1920 pixels",
-            "PixelDensity":"401 ppi",
-            "Camera":"13 megapixels",
-            "FrontCamera":"5 megapixels",
-            "Processor":"Quad-core",
-            "ClockRate":"2500 MHz",
-            "SystemMemory":"3072 MB RAM",
-            "BuiltinStorage":"64 GB",
-            "BatteryCapacity":"3100 mAh",
-            "MultipleSIMCards":0,
-            "SIMCard":"micro"
+            "column_header": {
+                "name": "Battery Capacity",
+                "id": 0,
+                "is_performance": false,
+                "is_selected": false
+            },
+            "column_data": [
+                {
+                    "value": "3100 mAh",
+                    "id": 0,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3630 mAh",
+                    "id": 1,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3000 mAh",
+                    "id": 2,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2800 mAh",
+                    "id": 3,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3050 mAh",
+                    "id": 4,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2600 mAh",
+                    "id": 5,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2600 mAh",
+                    "id": 6,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2100 mAh",
+                    "id": 7,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3000 mAh",
+                    "id": 8,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2525 mAh",
+                    "id": 9,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2550 mAh",
+                    "id": 10,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3220 mAh",
+                    "id": 11,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2700 mAh",
+                    "id": 12,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3430 mAh",
+                    "id": 13,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2600 mAh",
+                    "id": 14,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2930 mAh",
+                    "id": 15,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3000 mAh",
+                    "id": 16,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2930 mAh",
+                    "id": 17,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2600 mAh",
+                    "id": 18,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2400 mAh",
+                    "id": 19,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2300 mAh",
+                    "id": 20,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3000 mAh",
+                    "id": 21,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2700 mAh",
+                    "id": 22,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3000 mAh",
+                    "id": 23,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3120 mAh",
+                    "id": 24,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3450 mAh",
+                    "id": 25,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2900 mAh",
+                    "id": 26,
+                    "is_clicked": false,
+                    "is_recommended": false
+                }
+            ]
         },
         {
-            "CompanyName":"Motorola",
-            "PhoneName":"Moto X",
-            "OperatingSystem":"Android (5.1)",
-            "PhysicalSize":"5.5 inches",
-            "Resolution":"1080 x 1920 pixels",
-            "PixelDensity":"403 ppi",
-            "Camera":"21 megapixels",
-            "FrontCamera":"5 megapixels",
-            "Processor":"Octa-core",
-            "ClockRate":"1700 MHz",
-            "SystemMemory":"2048 MB RAM",
-            "BuiltinStorage":"32 GB",
-            "BatteryCapacity":"3630 mAh",
-            "MultipleSIMCards":0,
-            "SIMCard":"nano"
-        },
-        {
-            "CompanyName":"Asus",
-            "PhoneName":"Zenfone 2",
-            "OperatingSystem":"Android (5.0)",
-            "PhysicalSize":"5.5 inches",
-            "Resolution":"720 x 1280 pixels",
-            "PixelDensity":"265 ppi",
-            "Camera":"13 megapixels",
-            "FrontCamera":"5 megapixels",
-            "Processor":"Quad-core",
-            "ClockRate":"1200 MHz",
-            "SystemMemory":"2048 MB RAM",
-            "BuiltinStorage":"16 GB",
-            "BatteryCapacity":"3000 mAh",
-            "MultipleSIMCards":1,
-            "SIMCard":"micro"
-        },
-        {
-            "CompanyName":"Samsung",
-            "PhoneName":"Galaxy S5",
-            "OperatingSystem":"Android (5.0)",
-            "PhysicalSize":"5.1 inches",
-            "Resolution":"1080 x 1920 pixels",
-            "PixelDensity":"432 ppi",
-            "Camera":"16 megapixels",
-            "FrontCamera":"2.1 megapixels",
-            "Processor":"Quad-core",
-            "ClockRate":"2500 MHz",
-            "SystemMemory":"2048 MB RAM",
-            "BuiltinStorage":"32 GB",
-            "BatteryCapacity":"2800 mAh",
-            "MultipleSIM ards":0,
-            "SIMCard":"micro"
+            "column_header": {
+                "name": "System Memory",
+                "id": 14,
+                "is_performance": false,
+                "is_selected": false
+            },
+            "column_data": [
+                {
+                    "value": "3072 MB RAM",
+                    "id": 0,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 1,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 2,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 3,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 4,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "1024 MB RAM",
+                    "id": 5,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "1536 MB RAM",
+                    "id": 6,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "1024 MB RAM",
+                    "id": 7,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "4096 MB RAM",
+                    "id": 8,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 9,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 10,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 11,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 12,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 13,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 14,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 15,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 16,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 17,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "16 GB RAM",
+                    "id": 18,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "16 GB RAM",
+                    "id": 19,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "8 GB RAM",
+                    "id": 20,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 21,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 22,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 23,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "2048 MB RAM",
+                    "id": 24,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 25,
+                    "is_clicked": false,
+                    "is_recommended": false
+                },
+                {
+                    "value": "3072 MB RAM",
+                    "id": 26,
+                    "is_clicked": false,
+                    "is_recommended": false
+                }
+            ]
         }
     ]
 
