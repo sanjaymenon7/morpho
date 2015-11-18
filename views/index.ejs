@@ -62,25 +62,25 @@
     },
     render: function() {
       return (
-              <div>
+      <div>
 
-                    <div className="parentContainer">
-                            {
-                              this.props.mainData.map(function(phone) {
-                              return (
-                                <div class="tile">
-                                  <div className ="child header tile-title   " >{phone.column_header.name}</div>
-                                {phone.column_data.map(function(colData){
-                                      return(
-                                              <div className ="child specs" >{colData.value}</div>
-                                      );
-                                })}
-                              </div>
-                              );
-                            })
-                            }
-                    </div>
-              </div>
+      <div className="parentContainer">
+      {
+        this.props.mainData.map(function(phone) {
+          return (
+          <div class="tile">
+          <div className ="child header tile-title   " >{phone.column_header.name}</div>
+          {phone.column_data.map(function(colData){
+            return(
+            <div className ="child specs" >{colData.value}</div>
+            );
+          })}
+          </div>
+          );
+        })
+      }
+      </div>
+      </div>
 
       );
     }
@@ -122,15 +122,78 @@
     render: function() {
       return (
 
-      React.createElement(MultiSelect, {
-        items:  this.props.perfDataProp,
-        onItemSelected: this.handleItemSelected,
-        onItemDeselected: this.handleItemDeselected,
-        onChange: this.onChangeFn}
-      ));
+              React.createElement(MultiSelect, {
+                items:  this.props.perfDataProp,
+                onItemSelected: this.handleItemSelected,
+                onItemDeselected: this.handleItemDeselected,
+                onChange: this.onChangeFn}
+              ));
     }
   })
- // React.render(React.createElement(FilterComponent), document.getElementById('multiselect-basic'));
+
+  // written for second filter .
+  var SecondFilterComponent = React.createClass({displayName: "Basic",
+    getInitialState: function() {
+      return {data: [],selections:[]};
+    },
+    componentDidMount: function() {
+      $.ajax({
+        url: 'http://localhost:3000/allColumnData',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          this.setState({data: data});
+          console.log("log of data in componentDIDmount");
+          console.log(data);
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+      var input = this.refs.ColumnFilterId;
+      var dom = this.getDOMNode();
+      console.log("dom: ");
+      //console.log($(dom).children().children("button").children(0).click());
+      console.log(input);
+      //$(dom).children().children("button").children(0).click();
+    },
+    componentWillUpdate: function(){
+      // $('#ColumnFilterId').children().children("button").first().click();
+    },
+    getDefaultProps: function() {
+      return {items: [],secondDataProp: []}
+    },
+    handleItemSelected: function(item) {
+      console.log('Item selected: '+item.id+' - '+item.text)
+
+    },
+
+    selectAll: function(items){
+      for(i=0;i<items.length;i++){
+        items[i].selected=true;
+      }
+    },
+    handleItemDeselected: function(item) {
+      console.log('Item deselected: '+item.id+' - '+item.text)
+      // testing selected stuff
+      item.Selected=false;
+    },
+    onChangeFn: function(selections) {
+      console.log('Items: '+JSON.stringify(selections))
+      this.props.setAllColData(JSON.stringify(selections));
+    },
+    render: function() {
+      return (
+
+              React.createElement(MultiSelect, {
+                items:  this.props.secondDataProp,
+                onItemSelected: this.handleItemSelected,
+                onItemDeselected: this.handleItemDeselected,
+                onChange: this.onChangeFn}
+              ));
+    }
+  })
+  // React.render(React.createElement(FilterComponent), document.getElementById('multiselect-basic'));
 
 
   var Parent = React.createClass({
@@ -146,7 +209,23 @@
         dataType: 'json',
         cache: false,
         success: function(data) {
+          console.log("in success of component did mount. initperfcoldata:");
+          //console.log(initPerfColData.toSource());
           this.setState({initPerfColData: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+
+      $.ajax({
+        url: 'http://localhost:3000/allColumnData',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          console.log("in success of component did mount. AllColumnData:");
+          //console.log(initPerfColData.toSource());
+          this.setState({initSecondColData: data});
         }.bind(this),
         error: function(xhr, status, err) {
           console.error(this.props.url, status, err.toString());
@@ -159,6 +238,7 @@
         data:{table:'MainTable'},
         cache: false,
         success: function(data) {
+          console.log("ajax call of maintable");
           console.log(data);
           this.setState({initMainData: data});
         }.bind(this),
@@ -169,7 +249,7 @@
 
     },
     componentWillUpdate : function(nextProps, nextState) {
-       console.log("Will update")
+      console.log("Will update")
       console.log(nextState)
       return true;
     },
@@ -199,6 +279,29 @@
         });
 
       }.bind(this);
+
+      var setAllColData = function (data) {
+        console.log('Item selected in parent: '+data)
+        this.setState({perfColData: data});
+        console.log("State PErf in get all column data"+this.state.perfColData);
+        $.ajax({
+          url : "http://localhost:3000/getAllColoumnData",
+          type: "POST",
+          dataType: 'json',
+          data : data,
+          success: function(data, textStatus, jqXHR)
+          {
+            console.log(data)
+            me.setState({initMainData:data})
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+
+          }
+        });
+
+      }.bind(this);
+
       var setColData = function (data) {
 
         me.setState({colData: data});
@@ -210,10 +313,22 @@
 
       };
 
+      var setSecondColData = function (data) {
+        me.setState({secondData: data})
+      };
+
       return(
-      <div>
-        <PerfFilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
-        <MainComponent mainData={this.state.initMainData}/>
+      <div id="ParentID">
+      <div className="row">
+      <div id="PerfFilterId" className="col-md-6" >
+      <PerfFilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
+      </div>
+      <div ref="ColumnFilterId" id="ColumnFilterId" className="col-md-6" >
+
+      <SecondFilterComponent secondDataProp={this.state.initSecondColData} setAllColData={setAllColData} />
+      </div>
+      </div>
+      <MainComponent mainData={this.state.initMainData}/>
       </div>)
       ;
 
