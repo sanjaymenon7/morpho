@@ -35,11 +35,13 @@ var coloumnList =
     [
         {
             "id": 0,
-            "text": "Zero"
+            "text": "Zero",
+            "selected": true
         },
         {
             "id": 1,
-            "text": "One"
+            "text": "One",
+            "selected": true
         },
         {
             "id": 2,

@@ -61,7 +61,10 @@
       var regex = new RegExp('.*'+this.escapeRegExp(this.state.filter)+'.*', 'i')
       var text = 'text' in item ? item.text
                : 'name' in item ? item.name
+               : 'selected' in item ? item.selected
                : item.id
+      if( typeof this.state.selections[item.id] === 'undefined')
+      this.state.selections[item.id]= item.selected? true :false
       return React.createElement(MultiSelectItem, {
         key: item.id, 
         text: text, 
