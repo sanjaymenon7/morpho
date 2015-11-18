@@ -35,17 +35,16 @@ var coloumnList =
     [
         {
             "id": 0,
-            "text": "Zero",
-            "selected": true
+            "text": "Pixel Density",
+            "name": "Testing"
         },
         {
             "id": 1,
-            "text": "One",
-            "selected": true
+            "text": "Built-in Storage"
         },
         {
             "id": 2,
-            "text": "Two"
+            "text": "Battery Capacity"
         }
     ]
 //Mock service to populate performance coloumn dropdown
