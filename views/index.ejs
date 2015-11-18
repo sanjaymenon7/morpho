@@ -19,7 +19,7 @@
 </head>
 <body>
 
-
+<h2>Recommender</h2>
 
 <br/>
 <div id="content">
@@ -320,12 +320,19 @@
       return(
       <div id="ParentID">
       <div className="row">
+        <div className ="col-md-6">
+          <h4>Select Performace Columns</h4>
+        </div>
+        <div className ="col-md-6">
+          <h4>Filter Columns</h4>
+        </div>
+      </div>
+      <div className="row">
       <div id="PerfFilterId" className="col-md-6" >
-      <PerfFilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
+        <PerfFilterComponent perfDataProp={this.state.initPerfColData} setPerfColData={setPerfColData} />
       </div>
       <div ref="ColumnFilterId" id="ColumnFilterId" className="col-md-6" >
-
-      <SecondFilterComponent secondDataProp={this.state.initSecondColData} setAllColData={setAllColData} />
+        <SecondFilterComponent secondDataProp={this.state.initSecondColData} setAllColData={setAllColData} />
       </div>
       </div>
       <MainComponent mainData={this.state.initMainData}/>
