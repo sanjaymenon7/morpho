@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb'),
-  Server = mongo.Server,
-  Db = mongo.Db;
+    Server = mongo.Server,
+    Db = mongo.Db;
 
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
@@ -13,7 +13,7 @@ var phoneInfo = require('../data/phoneData');
 var multer  = require('multer');
 
 // For Linux, Mac - Please change the path of uploads to same folder as MongoDB
-var upload = multer({ dest: 'c:/data/csv' })
+var upload = multer({ dest: '/data/db' })
 var exec = require('child_process').exec;
 
 
@@ -21,14 +21,20 @@ var exec = require('child_process').exec;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { name: 'Express',data: phoneInfo.phoneSpecs });
- // res.json(phoneInfo.phoneSpecs)
- //res.send(phoneInfo.phoneSpecs[0].CompanyName);
- //console.log(phoneInfo.phoneSpecs[0]);
+    res.render('index', { name: 'Express',data: phoneInfo.phoneSpecs });
+    // res.json(phoneInfo.phoneSpecs)
+    //res.send(phoneInfo.phoneSpecs[0].CompanyName);
+    //console.log(phoneInfo.phoneSpecs[0]);
 });
+
+// get for index2. for testing purposes.
+router.get('/index2',function(req,res,next) {
+    res.render('index2', {name: 'Express', data: phoneInfo.phoneSpecs});
+});
+
 //Mock Service to populate mock main data
 router.get('/mainData',function(req,res,next){
-  res.json(phoneInfo.phoneSpecs)
+    res.json(phoneInfo.phoneSpecs)
 })
 
 var coloumnList =
@@ -47,9 +53,33 @@ var coloumnList =
             "text": "Battery Capacity"
         }
     ]
+
+var coloumnList2 =
+    [
+        {
+            "id": "A",
+            "text": "Alpha",
+            "selected" :"true"
+        },
+        {
+            "id": "B",
+            "text": "Beta",
+            "selected" :"true"
+        },
+        {
+            "id": "C",
+            "text": "Delta",
+            "selected" :"true"
+        }
+    ]
 //Mock service to populate performance coloumn dropdown
 router.get('/perfColoumnData',function(req,res,next){
     res.json(coloumnList)
+})
+
+//added for temp otherColumns data
+router.get('/allColumnData', function(req,res,next){
+    res.json(coloumnList2)
 })
 
 var perfColFilterResponse =
@@ -407,80 +437,97 @@ router.post('/getPerfColoumnData',function(req,res,next){
     res.json(perfColFilterResponse)
 })
 
+router.post('/getAllColoumnData',function(req,res,next){
+    console.log(req.body);
+    console.log(req.rawBody);
+    res.json(perfColFilterResponse)
+})
+
 
 
 // Upload form for now - Later we need to create a view
 router.get('/upload', function(req, res) {
-  res.send('<form action="/create-table" method="post" enctype="multipart/form-data"><input name="data_file" type="file">Table Name<input name="tablename" type="text"><input type="Submit" value="Upload"></form>');
+    res.send('<form action="/create-table" method="post" enctype="multipart/form-data"><input name="data_file" type="file">Table Name<input name="tablename" type="text"><input type="Submit" value="Upload"></form>');
 });
 
 // Import Service - Upload csv to create a new table
 router.post('/create-table',upload.single('data_file'), function(req, res, next) {
-  exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file C:\\data\\csv\\'+req.file.filename, function(error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if (error !== null) {
-          console.log('exec error: ' + error);
-          } else {
+    exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file /data/db/'+req.file.filename, function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        } else {
             exec('mongo morphologicalrecommender --eval "db.runCommand({\\"mapreduce\\" : \\"'+req.body.tablename+'\\",\\"map\\" : function() {for (var key in this) { emit(key, null);}},\\"reduce\\" : function(key, stuff) { return null; }, \\"out\\": \\"'+req.body.tablename+'\\" + \\"_keys\\"});"', function(error1, stdout1, stderr1) {
-              console.log('stdout: ' + stdout1);
-              console.log('stderr: ' + stderr1);
-              if (error1 !== null) {
-                console.log('exec error: ' + error1);
-              } else {
-                res.send(req.body.tablename+" Table Created!!");
-              }
+                console.log('stdout: ' + stdout1);
+                console.log('stderr: ' + stderr1);
+                if (error1 !== null) {
+                    console.log('exec error: ' + error1);
+                } else {
+                    res.send(req.body.tablename+" Table Created!!");
+                }
             });
-          }
-  });
+        }
+    });
 });
 
 // Export service - Get all data from collection phonedata as JSON file
 router.get('/export-data', function(req, res, next) {
-  exec('mongoexport --db morphologicalrecommender --collection phonedata --out phonedata.json');
+    exec('mongoexport --db morphologicalrecommender --collection phonedata --out phonedata.json');
 });
 
 // Export service - Get all data from collection phonedata as JSON file
 router.get('/get-columns', function(req, res, next) {
-  db.open(function(err, db) {
-  if(!err) {
-    var columnJSON = new Array();
-    
-    var col_id = 0;
-    var data_id;
-    var i=0;
-    var query = 'db.'+req.query.table+'_keys.distinct("_id");';
-    db.eval(query, function(err, result){
-        for(i=0;i<result.length;i++){
-          if (result[i]!="_id") {
-            var header = {column_header:{name:result[i], id:col_id, is_performance:false, is_selected: false}, column_data: new Array()};
-            var collection = db.collection(req.query.table);
-            var field = result[i];
-            columnJSON.push(header);
-            col_id++;
-          }
-        }
-        collection.find({}).toArray(function(err, docs) {
-              for(i=0;i<result.length;i++){
-                if (result[i]!="_id") {
-                  data_id=0;
-                  for(var j=0;j<docs.length;j++){
-                    columnJSON[i].column_data.push({value:docs[j][result[i]], id:data_id, is_clicked: false, is_recommended: false});
-                    data_id++;
-                  }
+    // console.log("before db open command");
+    db.open(function(err, db) {
+        console.log("after db open command");
+        if(!err) {
+            var columnJSON = new Array();
+
+            var col_id = 0;
+            var data_id;
+            var i=0;
+            var query = 'db.'+req.query.table+'_keys.distinct("_id");';
+            db.eval(query, function(err, result){
+                if(result!=null){
+                    console.log(result);
+
                 }
-                
-              }
-              res.setHeader('Content-Type', 'application/json');
-              res.send(JSON.stringify(columnJSON, null, "    "));
-              db.close();
-        });
-        
-        
+                else{
+                    console.log("error: no result");
+
+                    result= phoneInfo.phoneSpecs; // when mongo or any other db is not giving the data
+                }
+                for(i=0;i<result.length;i++){
+                    if (result[i]!="_id") {
+                        var header = {column_header:{name:result[i], id:col_id, is_performance:false, is_selected: false}, column_data: new Array()};
+                        var collection = db.collection(req.query.table);
+                        var field = result[i];
+                        columnJSON.push(header);
+                        col_id++;
+                    }
+                }
+                collection.find({}).toArray(function(err, docs) {
+                    for(i=0;i<result.length;i++){
+                        if (result[i]!="_id") {
+                            data_id=0;
+                            for(var j=0;j<docs.length;j++){
+                                columnJSON[i].column_data.push({value:docs[j][result[i]], id:data_id, is_clicked: false, is_recommended: false});
+                                data_id++;
+                            }
+                        }
+
+                    }
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(JSON.stringify(columnJSON, null, "    "));
+                    db.close();
+                });
+
+
+            });
+        }
     });
-  }
-});
-  
+
 });
 
 
