@@ -62,7 +62,7 @@ var coloumnList2 =
         },
         {
             "id": "C",
-            "text": "builtinstorage",
+            "text": "Built-in Storage",
             "selected" :"true"
         }
     ]

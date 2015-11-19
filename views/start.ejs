@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Recommender</title>
+    <script src="../bower_components/react/react-dom.js"></script>
+    <script src="../bower_components/react/react.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/babel/browser.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
+</head>
+<body>
+<br/><br/><br/>
+<script type="text/javascript">
+    $( document ).ready(function() {
+
+        $( "#startproceed" ).click(function() {
+            var data = [
+                {
+                    "AnalysisName": "Mobile Data",
+                    "UserName": "User",
+                }
+            ]
+            $.ajax({
+                url : "http://localhost:3000/start/submitinitdata",
+                type: "POST",
+                dataType: 'json',
+                data : data,
+                success: function(data, textStatus, jqXHR)
+                {
+                    console.log(data[0].success)
+                    if(data[0].success == true){
+                        location.href = "http://localhost:3000/datasourceselection";
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+
+                }
+            });
+        });
+
+    });
+</script>
+
+
+
+<div class="row">
+    <div class="col-md-3">
+
+
+    </div>
+    <div class="col-md-6">
+        <div class="well bs-component">
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend>Start Analysis</legend>
+                    <div class="form-group is-empty">
+                        <label for="inputEmail" class="col-lg-2 control-label">Analysis Name</label>
+
+                        <div class="col-lg-10">
+                            <input type="email" class="form-control" id="inputAnalysisName" placeholder="Analysis Name">
+                        </div>
+                        <span class="material-input"></span></div>
+                    <div class="form-group is-empty">
+                        <label for="inputEmail" class="col-lg-2 control-label">User Name</label>
+
+                        <div class="col-lg-10">
+                            <input type="email" class="form-control" id="inputUserName" placeholder="User Name">
+                        </div>
+                        <span class="material-input"></span></div>
+                </fieldset>
+            </form>
+            <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+
+            </div>
+            <div class="col-md-2">
+                <button id="startproceed" class="btn btn-success">Proceed<div class="ripple-wrapper"></div></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

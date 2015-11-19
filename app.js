@@ -8,6 +8,9 @@ var React = require('react');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var start = require('./routes/start');
+var datasourceselection = require('./routes/datasourceselection');
+var dataupload = require('./routes/dataupload');
 
 var app = express();
 
@@ -27,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/start', start);
+app.use('/datasourceselection', datasourceselection);
+app.use('/dataupload', dataupload);
 
 // added these to handle bower components as well
 app.use(express.static(__dirname + '/public'));
