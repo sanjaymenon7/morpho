@@ -34,6 +34,7 @@
     "react-select": "^0.9.1",
     "reactify": "^1.1.1",
     "serve-favicon": "~2.3.0",
+    "underscore.string": "^3.2.2",
     "watchify": "^3.6.0"
   }
 }

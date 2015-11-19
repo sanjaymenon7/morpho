@@ -8,6 +8,8 @@ var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
 var phoneInfo = require('../data/phoneData');
 
+// A library to change string to hyphen string
+var slugify = require("underscore.string/slugify");
 
 // Multer - A lib to manage uploads
 var multer  = require('multer');
@@ -66,15 +68,62 @@ var coloumnList2 =
             "selected" :"true"
         }
     ]
+
 //Mock service to populate performance coloumn dropdown
 router.get('/perfColoumnData',function(req,res,next){
     res.json(coloumnList)
-})
+});
+
+// Service to populate performance coloumn dropdown
+router.get('/perfColumns',function(req,res,next){
+  findColumns(req, 1, function(columns){
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(columns, null, "    "));
+  });
+});
+
+// Service to populate columns that can be filtered out
+router.get('/filterColumns',function(req,res,next){
+  findColumns(req, 0, function(columns){
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(columns, null, "    "));
+  });
+});
+
+var findColumns = function(req, number_flag, callback){
+  db.open(function(err, db) {
+    if(!err) {
+      var collection = db.collection(req.query.table);
+      var collection_keys = db.collection(req.query.table+"_keys");
+      collection.findOne({}, function(err, doc) {
+        var query = 'db.'+req.query.table+'_keys.distinct("_id");';
+        db.eval(query, function(err, result){
+          var columns = new Array();
+            for(i=0;i<result.length;i++){
+              if (number_flag==1) {
+                if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] === "number") {
+                  var column = {id: i, text: result[i]};
+                  columns.push(column);
+                }
+              } else {
+                if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] !== "number") {
+                  var column = {id: i, text: result[i]};
+                  columns.push(column);
+                }
+              }
+            }
+            db.close();
+            callback(columns);
+        });
+      });
+    }
+  });
+}
 
 //added for temp otherColumns data
 router.get('/allColumnData', function(req,res,next){
     res.json(coloumnList2)
-})
+});
 
 //Service for getting possible performance columns name and ID
 router.get('/getColumnID',function(req,res,next){
@@ -502,46 +551,39 @@ router.get('/export-data', function(req, res, next) {
 // Export service - Get all data from collection phonedata as JSON file
 router.get('/get-columns', function(req, res, next) {
   db.open(function(err, db) {
-  if(!err) {
-    var columnJSON = new Array();
-    
-    var col_id = 0;
-    var data_id;
-    var i=0;
-    var query = 'db.'+req.query.table+'_keys.distinct("_id");';
-    db.eval(query, function(err, result){
-        for(i=0;i<result.length;i++){
-          if (result[i]!="_id") {
-            var header = {column_header:{name:result[i], id:col_id, is_performance:false, is_selected: false}, column_data: new Array()};
-            var collection = db.collection(req.query.table);
-            var field = result[i];
-            columnJSON.push(header);
-            col_id++;
+    if(!err) {
+      var columnJSON = new Array();
+      var data_id;
+      var i;
+      var query = 'db.'+req.query.table+'_keys.distinct("_id");';
+      db.eval(query, function(err, result){
+          for(i=0;i<result.length;i++){
+            if (result[i]!="_id") {
+              var header = {column_header:{name:result[i], id:i, is_performance:false, is_selected: false}, column_data: new Array()};
+              var collection = db.collection(req.query.table);
+              var field = result[i];
+              columnJSON.push(header);
+            }
           }
-        }
-        collection.find({}).toArray(function(err, docs) {
-              for(i=0;i<result.length;i++){
-                if (result[i]!="_id") {
-                  data_id=0;
-                  for(var j=0;j<docs.length;j++){
-                    columnJSON[i].column_data.push({value:docs[j][result[i]], id:data_id, is_clicked: false, is_recommended: false});
-                    data_id++;
+          collection.find({}).toArray(function(err, docs) {
+                for(i=0;i<result.length;i++){
+                  if (result[i]!="_id") {
+                    data_id=0;
+                    for(var j=0;j<docs.length;j++){
+                      columnJSON[i].column_data.push({value:docs[j][result[i]], id:slugify(result[i])+"-"+data_id, is_clicked: false, is_recommended: false});
+                      data_id++;
+                    }
                   }
+                  
                 }
-                
-              }
-              res.setHeader('Content-Type', 'application/json');
-              res.send(JSON.stringify(columnJSON, null, "    "));
-              db.close();
-        });
-        
-        
-    });
-  }
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(columnJSON, null, "    "));
+                db.close();
+          });
+      });
+    }
+  });
 });
-  
-});
-
 
 module.exports = router;
 
