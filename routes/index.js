@@ -86,10 +86,10 @@ router.get('/getColumnID',function(req,res,next){
             //Get Document
             collection.find({}).toArray(function(err, docs) {
                 //Check for number
-                if (isNaN(docs[i])===false) {
+                if (isNaN(docs[0])===false) {
                     //Get header data
                     db.eval(query, function(err, result){
-                        for(n=0;n<result.length;n++){
+                        for(n=0; n<result.length; n++){
                           if (result[n]!="_id") {
                             var header = {id:col_id, name:result[n]};
                             var field = result[n];
@@ -98,7 +98,6 @@ router.get('/getColumnID',function(req,res,next){
                         }
                     }
                 })
-
             }
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(columnID, null, "    "));
