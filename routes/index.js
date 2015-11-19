@@ -76,6 +76,38 @@ router.get('/allColumnData', function(req,res,next){
     res.json(coloumnList2)
 })
 
+//Service for getting possible performance columns name and ID
+router.get('/getColumnID',function(req,res,next){
+    db.open(function(err, db){
+        if(!err){
+            var columnID = new Array();
+            var query = 'db.'+req.query.table+'_keys.distinct("_id");';
+            var collection = db.collection(req.query.table);
+            //Get Document
+            collection.find({}).toArray(function(err, docs) {
+                //Check for number
+                if (isNaN(docs[i])===false) {
+                    //Get header data
+                    db.eval(query, function(err, result){
+                        for(n=0;n<result.length;n++){
+                          if (result[n]!="_id") {
+                            var header = {id:col_id, name:result[n]};
+                            var field = result[n];
+                            columnID.push(header);
+                            col_id++;
+                        }
+                    }
+                })
+
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(columnID, null, "    "));
+            db.close();
+                });
+        }
+    })
+})
+
 var perfColFilterResponse =
     [
         {
@@ -436,8 +468,6 @@ router.post('/getAllColoumnData',function(req,res,next){
     console.log(req.rawBody);
     res.json(perfColFilterResponse)
 })
-
-
 
 // Upload form for now - Later we need to create a view
 router.get('/upload', function(req, res) {
