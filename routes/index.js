@@ -3,7 +3,7 @@ var router = express.Router();
 var mongo = require('mongodb'),
   Server = mongo.Server,
   Db = mongo.Db;
-
+var configVariables= require('../configVariables');//.configLines.uploadDestination;
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
 var phoneInfo = require('../data/phoneData');
@@ -15,9 +15,8 @@ var slugify = require("underscore.string/slugify");
 var multer  = require('multer');
 
 // For Linux, Mac - Please change the path of uploads to same folder as MongoDB
-var upload = multer({ dest: 'c:/data/csv' })
+var upload = multer({ dest: configVariables.configLines.uploadDestination});
 var exec = require('child_process').exec;
-
 
 
 
@@ -524,7 +523,7 @@ router.get('/upload', function(req, res) {
 
 // Import Service - Upload csv to create a new table
 router.post('/create-table',upload.single('data_file'), function(req, res, next) {
-  exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file C:\\data\\csv\\'+req.file.filename, function(error, stdout, stderr) {
+  exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file '+configVariables.configLines.uploadDestination+req.file.filename, function(error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
