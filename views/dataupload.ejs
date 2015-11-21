@@ -25,7 +25,9 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $("#input-1").fileinput({'showUpload':false, 'previewFileType':'any'});
+        $.material.init();
     });
+
 </script>
 <br/><br/><br/>
 
@@ -35,12 +37,33 @@
 
     </div>
     <div class="col-md-6">
-        <form action="/create-table" method="post" enctype="multipart/form-data">
-            <div class="well bs-component">
-                <label class="control-label">Select File</label>
-                <input id="input-1" type="file" class="file" name="data_file">
-            </div>
-        </form>
+        <div class="well bs-component">
+            <form class="form-horizontal" action="/create-table" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <legend>Please fill in the required details and upload the file</legend>
+                    <div class="form-group is-empty">
+                        <label for="analysisname" class="col-lg-2 control-label">Analysis Name</label>
+
+                        <div class="col-lg-10">
+                            <input type="email" class="form-control" id="inputAnalysisName" placeholder="Analysis Name">
+                        </div>
+                        <span class="material-input"></span></div>
+                    <div class="form-group">
+                        <label for="textArea" class="col-lg-2 control-label">Analsys Description</label>
+
+                        <div class="col-lg-10">
+                            <textarea class="form-control" rows="3" id="textArea"></textarea>
+                            <span class="help-block">Please enter a short description of the analysis</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="control-label">Select File</label>
+                        <input id="input-1" type="file" class="file" name="data_file">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
     </div>
 </div>
 

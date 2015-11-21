@@ -23,14 +23,13 @@
 <br/><br/><br/>
 <script type="text/javascript">
     $( document ).ready(function() {
-
+        $.material.init()
         $( "#startproceed" ).click(function() {
-            var data = [
+            var data =
                 {
-                    "AnalysisName": "Mobile Data",
-                    "UserName": "User",
+                    "AnalysisName": $("#inputUserName").val(),
                 }
-            ]
+
             $.ajax({
                 url : "http://localhost:3000/start/submitinitdata",
                 type: "POST",
@@ -67,19 +66,13 @@
                 <fieldset>
                     <legend>Start Analysis</legend>
                     <div class="form-group is-empty">
-                        <label for="inputEmail" class="col-lg-2 control-label">Analysis Name</label>
-
-                        <div class="col-lg-10">
-                            <input type="email" class="form-control" id="inputAnalysisName" placeholder="Analysis Name">
-                        </div>
-                        <span class="material-input"></span></div>
-                    <div class="form-group is-empty">
-                        <label for="inputEmail" class="col-lg-2 control-label">User Name</label>
+                        <label for="inputEmail" class="col-lg-2 control-label">User Email</label>
 
                         <div class="col-lg-10">
                             <input type="email" class="form-control" id="inputUserName" placeholder="User Name">
                         </div>
-                        <span class="material-input"></span></div>
+                        <span class="material-input"></span>
+                    </div>
                 </fieldset>
             </form>
             <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>

@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 });
 //Mock Service to populate mock main data
 router.get('/mainData',function(req,res,next){
-  res.json(phoneInfo.phoneSpecs)
+  res.json(perfColFilterResponse)
 })
 
 var coloumnList =
@@ -73,6 +73,18 @@ var coloumnList2 =
 router.get('/perfColoumnData',function(req,res,next){
     res.json(coloumnList)
 });
+
+//Mock Service to set performance colum
+reponseJson =
+{
+    "status": true
+}
+
+router.post('/setPerfCol',function(req,res,next){
+    console.log(req.body);
+    console.log(req.rawBody);
+    res.json(reponseJson)
+})
 
 // Service to populate performance coloumn dropdown
 router.get('/perfColumns',function(req,res,next){
