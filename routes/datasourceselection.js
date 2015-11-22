@@ -3,7 +3,11 @@ var router = express.Router();
 
 /* GET start start page. */
 router.get('/', function(req, res, next) {
-    res.render('datasourceselection');
+    if (req.session.loggedIn) {
+        res.render('datasourceselection');
+    } else {
+        res.render('start');
+    }
 });
 
 module.exports = router;

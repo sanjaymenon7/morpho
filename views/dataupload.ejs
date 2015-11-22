@@ -38,21 +38,21 @@
     </div>
     <div class="col-md-6">
         <div class="well bs-component">
-            <form class="form-horizontal" action="/create-table" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="dataupload" method="post" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Please fill in the required details and upload the file</legend>
                     <div class="form-group is-empty">
                         <label for="analysisname" class="col-lg-2 control-label">Analysis Name</label>
 
                         <div class="col-lg-10">
-                            <input type="email" class="form-control" id="inputAnalysisName" placeholder="Analysis Name">
+                            <input type="text" class="form-control" id="inputAnalysisName" placeholder="Analysis Name" name="project_name">
                         </div>
                         <span class="material-input"></span></div>
                     <div class="form-group">
                         <label for="textArea" class="col-lg-2 control-label">Analsys Description</label>
 
                         <div class="col-lg-10">
-                            <textarea class="form-control" rows="3" id="textArea"></textarea>
+                            <textarea class="form-control" rows="3" id="textArea" name="project_description" placeholder="Please enter a short description of the analysis"></textarea>
                             <span class="help-block">Please enter a short description of the analysis</span>
                         </div>
                     </div>
