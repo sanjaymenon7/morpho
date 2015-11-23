@@ -541,7 +541,7 @@ router.get('/get-columns', function(req, res, next) {
                         data_id++;
                       }
                     }
-                    
+
                   }
                   res.setHeader('Content-Type', 'application/json');
                   res.send(JSON.stringify(columnJSON, null, "    "));
@@ -551,7 +551,7 @@ router.get('/get-columns', function(req, res, next) {
       }
     });
   }
-  
+
 });
 
 module.exports = router;
