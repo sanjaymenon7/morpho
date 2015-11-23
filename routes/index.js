@@ -3,6 +3,9 @@ var router = express.Router();
 var mongo = require('mongodb'),
   Server = mongo.Server,
   Db = mongo.Db;
+var session	= require('express-session');
+router.use(session({secret: 'morpho-key-f8M0gT5',saveUninitialized: true,resave: true}));
+
 var configVariables= require('../configVariables');//.configLines.uploadDestination;
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
@@ -135,37 +138,6 @@ var findColumns = function(req, number_flag, callback){
 router.get('/allColumnData', function(req,res,next){
     res.json(coloumnList2)
 });
-
-//Service for getting possible performance columns name and ID
-router.get('/getColumnID',function(req,res,next){
-    db.open(function(err, db){
-        if(!err){
-            var columnID = new Array();
-            var query = 'db.'+req.query.table+'_keys.distinct("_id");';
-            var collection = db.collection(req.query.table);
-            //Get Document
-            collection.find({}).toArray(function(err, docs) {
-                //Check for number
-                if (isNaN(docs[0])===false) {
-                    //Get header data
-                    db.eval(query, function(err, result){
-                        for(n=0; n<result.length; n++){
-                          if (result[n]!="_id") {
-                            var header = {id:col_id, name:result[n]};
-                            var field = result[n];
-                            columnID.push(header);
-                            col_id++;
-                        }
-                    }
-                })
-            }
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(columnID, null, "    "));
-            db.close();
-                });
-        }
-    })
-})
 
 var perfColFilterResponse =
     [
@@ -530,28 +502,7 @@ router.post('/getAllColoumnData',function(req,res,next){
 
 // Upload form for now - Later we need to create a view
 router.get('/upload', function(req, res) {
-  res.send('<form action="/create-table" method="post" enctype="multipart/form-data"><input name="data_file" type="file">Table Name<input name="tablename" type="text"><input type="Submit" value="Upload"></form>');
-});
-
-// Import Service - Upload csv to create a new table
-router.post('/create-table',upload.single('data_file'), function(req, res, next) {
-  exec('mongoimport --db morphologicalrecommender --collection '+req.body.tablename+' --type csv --headerline --file '+configVariables.configLines.newDest+req.file.filename, function(error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if (error !== null) {
-          console.log('exec error: ' + error);
-          } else {
-            exec('mongo morphologicalrecommender --eval "db.runCommand({\\"mapreduce\\" : \\"'+req.body.tablename+'\\",\\"map\\" : function() {for (var key in this) { emit(key, null);}},\\"reduce\\" : function(key, stuff) { return null; }, \\"out\\": \\"'+req.body.tablename+'\\" + \\"_keys\\"});"', function(error1, stdout1, stderr1) {
-              console.log('stdout: ' + stdout1);
-              console.log('stderr: ' + stderr1);
-              if (error1 !== null) {
-                console.log('exec error: ' + error1);
-              } else {
-                res.send(req.body.tablename+" Table Created!!");
-              }
-            });
-          }
-  });
+  res.send('<form action="/dataupload" method="post" enctype="multipart/form-data"><input name="data_file" type="file">Table Name<input name="tablename" type="text"><input type="Submit" value="Upload"></form>');
 });
 
 // Export service - Get all data from collection phonedata as JSON file
@@ -561,39 +512,46 @@ router.get('/export-data', function(req, res, next) {
 
 // Export service - Get all data from collection phonedata as JSON file
 router.get('/get-columns', function(req, res, next) {
-  db.open(function(err, db) {
-    if(!err) {
-      var columnJSON = new Array();
-      var data_id;
-      var i;
-      var query = 'db.'+req.query.table+'_keys.distinct("_id");';
-      db.eval(query, function(err, result){
-          for(i=0;i<result.length;i++){
-            if (result[i]!="_id") {
-              var header = {column_header:{name:result[i], id:i, is_performance:false, is_selected: false}, column_data: new Array()};
-              var collection = db.collection(req.query.table);
-              var field = result[i];
-              columnJSON.push(header);
+  if (!req.session.loggedIn) {
+    res.render("start");
+  } else if (!req.session.tableSet) {
+    res.render("datasourceselection");
+  } else {
+    db.open(function(err, db) {
+      if(!err) {
+        var columnJSON = new Array();
+        var data_id;
+        var i;
+        var query = 'db.'+req.session.table+'_keys.distinct("_id");';
+        db.eval(query, function(err, result){
+            for(i=0;i<result.length;i++){
+              if (result[i]!="_id") {
+                var header = {column_header:{name:result[i], id:i, is_performance:false, is_selected: false}, column_data: new Array()};
+                var collection = db.collection(req.session.table);
+                var field = result[i];
+                columnJSON.push(header);
+              }
             }
-          }
-          collection.find({}).toArray(function(err, docs) {
-                for(i=0;i<result.length;i++){
-                  if (result[i]!="_id") {
-                    data_id=0;
-                    for(var j=0;j<docs.length;j++){
-                      columnJSON[i].column_data.push({value:docs[j][result[i]], id:slugify(result[i])+"-"+data_id, is_clicked: false, is_recommended: false});
-                      data_id++;
+            collection.find({}).toArray(function(err, docs) {
+                  for(i=0;i<result.length;i++){
+                    if (result[i]!="_id") {
+                      data_id=0;
+                      for(var j=0;j<docs.length;j++){
+                        columnJSON[i].column_data.push({value:docs[j][result[i]], id:slugify(result[i])+"-"+data_id, is_clicked: false, is_recommended: false});
+                        data_id++;
+                      }
                     }
+
                   }
-                  
-                }
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(columnJSON, null, "    "));
-                db.close();
-          });
-      });
-    }
-  });
+                  res.setHeader('Content-Type', 'application/json');
+                  res.send(JSON.stringify(columnJSON, null, "    "));
+                  db.close();
+            });
+        });
+      }
+    });
+  }
+
 });
 
 module.exports = router;

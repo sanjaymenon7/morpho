@@ -7,8 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/submitinitdata',function(req,res,next){
-    console.log(req.body);
-    console.log(req.rawBody);
+    
+    // @Togi - set the userId to the retrieved user id from database. I am using static for now
+    router.sess = req.session;
+    router.sess.loggedIn=true;
+    router.sess.userId=1;
     var data = [
         {
             "success": true
