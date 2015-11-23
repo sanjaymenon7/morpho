@@ -30,7 +30,7 @@
         $( "#startproceed" ).click(function() {
             var data =
                 {
-                    "AnalysisName": $("#inputUserName").val(),
+                    "username": $("#inputUserName").val(),
                 }
             if(! $("#startform").valid()) return false;
             $.ajax({
@@ -72,7 +72,7 @@
                         <label for="inputEmail" class="col-lg-2 control-label">User Email</label>
 
                         <div class="col-lg-10">
-                            <input type="email" class="form-control" id="inputUserName" placeholder="User Name" required/>
+                            <input type="email" class="form-control" id="inputUserName" placeholder="User Name" name="username" required>
                         </div>
                         <span class="material-input"></span>
                     </div>
