@@ -92,6 +92,29 @@
                     selectedColArray.push(ele.id);
                 })
                 console.log(selectedColArray);
+                var data =
+                {
+                    "perfColId": selectedVal,
+                    "selecetedCols" : selectedColArray
+                }
+                $.ajax({
+                    url : "http://localhost:3000/coloumnpreprocessor/setDataSet",
+                    type: "POST",
+                    dataType: 'json',
+                    data : data,
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        console.log(data.status)
+                        if(data.status == true){
+                            location.href = "http://localhost:3000/coloumnpreprocessor";
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+
+                    }
+                });
             }
         });
 
@@ -125,6 +148,9 @@
     </div>
 
     <div class="row">
+        <div class="col-md-4">
+            <a href="/datasourceselection" class="btn btn-lg btn-info">Back to data source selection</a>
+        </div>
         <div class="col-md-6">
             <div class="well bs-compoenent">
                 <legend>Please select the required performace coloumn to proceed</legend>
@@ -141,10 +167,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button id="selectperfcol" class="btn btn-lg btn-success">Submit<div class="ripple-wrapper"></div></button>
 
         </div>
+
+
     </div>
     <div class="row">
         <div class="col-md-12">

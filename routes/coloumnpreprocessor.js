@@ -32,6 +32,11 @@ reponseJson =
     "status": true
 }
 
+/* Sample post request
+ { perfColId: 'batterycapacity',
+ 'selecetedCols[]': [ '0', '1', '2', '3', '6', '8', '9', '10', '11', '12', '13', '14' ] }
+* */
+
 router.post('/setDataSet',function(req,res,next){
     console.log(req.body);
     console.log(req.rawBody);

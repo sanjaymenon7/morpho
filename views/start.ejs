@@ -9,6 +9,8 @@
     <script src="../bower_components/babel/browser.js"></script>
     <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
 
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
@@ -24,12 +26,13 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $.material.init()
+        $("#startform").validate();
         $( "#startproceed" ).click(function() {
             var data =
                 {
                     "AnalysisName": $("#inputUserName").val(),
                 }
-
+            if(! $("#startform").valid()) return false;
             $.ajax({
                 url : "http://localhost:3000/start/submitinitdata",
                 type: "POST",
@@ -62,14 +65,14 @@
     </div>
     <div class="col-md-6">
         <div class="well bs-component">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="startform">
                 <fieldset>
                     <legend>Start Analysis</legend>
                     <div class="form-group is-empty">
                         <label for="inputEmail" class="col-lg-2 control-label">User Email</label>
 
                         <div class="col-lg-10">
-                            <input type="email" class="form-control" id="inputUserName" placeholder="User Name">
+                            <input type="email" class="form-control" id="inputUserName" placeholder="User Name" required/>
                         </div>
                         <span class="material-input"></span>
                     </div>

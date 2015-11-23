@@ -35,7 +35,7 @@
                 for (i=0;i<data.length;i++){
                     console.log(data[i].id);
 
-                    $("#radioList").append('<div class="radio radio-success"><label><input type="radio" name="datasetlist" value="'+data[i].text+'" /><span class="circle"></span><span class="check"></span>'+data[i].text+'</lable></div>')
+                    $("#radioList").append('<div class="radio radio-success"><label><input type="radio" name="datasetlist" value="'+data[i].text+'" /><span class="circle"></span><span class="check"></span>'+data[i].text+'<p><b>Description:</b>'+data[i].description +'</p></lable></div>')
                 }
                 console.log(listHtml);
 
@@ -63,7 +63,7 @@
                     {
                         console.log(data);
                         if(data.status == true){
-                            alert("Permance column set");
+                            location.href = "http://localhost:3000/coloumnpreprocessor";
                         }
 
                     },

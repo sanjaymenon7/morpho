@@ -60,7 +60,7 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
                                             router.sess = req.session;
                                             router.sess.tableSet = true;
                                             router.sess.table="table"+tableNumber;
-                                            res.render('datasourceselection');
+                                            res.render('coloumnpreprocessor');
                                         });
                                     });
                                   }
