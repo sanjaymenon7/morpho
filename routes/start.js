@@ -26,20 +26,23 @@ router.post('/submitinitdata',function(req,res,next){
 			var users = db.collection("users");
 			users.find({"username":req.body.username}).toArray(function(err2, docs) {
 				if(docs.length>0){
+                    console.log("User found in DB")
                     router.sess = req.session;
                     router.sess.loggedIn=true;
                     router.sess.userId=req.body.username;
                     data[0].success=true;
                     res.json(data);
-                    //res.render("datasourceselection");
-                    //res.send("User "+req.query.username+" found!");
+                    res.render("datasourceselection");
                 }
                 else {
-                    // TODO @Togi - Handle the case where we dont have an account. insert this user in db and store his username in session variables
-                    console.log(req.body.username);
-                    data[0].success=false;
-                	res.json(data);
-                	//res.render('register');
+                    users.insert({"username":req.body.username});
+                    console.log("New user inserted into DB!");
+                    router.sess = req.session;
+                    router.sess.loggedIn=true;
+                    router.sess.userId=req.body.username;
+                    data[0].success=true;
+                    res.json(data);
+                    res.render("datasourceselection");
                 }
 				db.close();
 			});
@@ -49,7 +52,6 @@ router.post('/submitinitdata',function(req,res,next){
         res.render('start');
     }
 	});
-    // @Togi - set the userId to the retrieved user id from database. I am using static for now
     
 })
 
