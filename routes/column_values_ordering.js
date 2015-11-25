@@ -13,6 +13,10 @@ var mongo = require('mongodb'),
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
 
+var responseJson =
+{
+    "status": true
+}
 
 var dataOrdinal = [
     {
@@ -106,14 +110,56 @@ var dataNumeric = [
 
 /* GET */
 router.get('/', function(req, res, next) {
-    res.render('column_values_ordering');
+    if (!req.session.loggedIn) {
+        res.render("start");
+      } else if (!req.session.tableSet) {
+        res.render("datasourceselection");
+      } else if(!req.session.perfSet){
+        res.render('coloumnpreprocessor');
+      } else {
+        res.render('column_values_ordering');
+      }
 });
 
 
 router.post('/column_values_ordering_post',function(req,res,next){
-    res.json(dataNumeric);
-
+     if (!req.session.loggedIn || !req.session.tableSet || !req.session.perfSet) {
+        responseJson.status=false;
+        res.json(responseJson);
+     } else {
+        res.json(dataNumeric);
+     }
 })
+
+var findColumns = function(req, number_flag, callback){
+  db.open(function(err, db) {
+    if(!err) {
+      var collection = db.collection(req.query.table);
+      var collection_keys = db.collection(req.query.table+"_keys");
+      collection.findOne({}, function(err, doc) {
+        var query = 'db.'+req.query.table+'_keys.distinct("_id");';
+        db.eval(query, function(err, result){
+          var columns = new Array();
+            for(i=0;i<result.length;i++){
+              if (number_flag==1) {
+                if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] === "number") {
+                  var column = {id: i, text: result[i]};
+                  columns.push(column);
+                }
+              } else {
+                if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] !== "number") {
+                  var column = {id: i, text: result[i]};
+                  columns.push(column);
+                }
+              }
+            }
+            db.close();
+            callback(columns);
+        });
+      });
+    }
+  });
+}
 
 module.exports = router;
 

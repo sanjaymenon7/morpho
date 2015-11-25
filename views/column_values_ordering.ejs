@@ -36,10 +36,9 @@
 
 <script type="text/babel">
     $.ajax({
-        url : "http://localhost:3000/column_values_ordering_post",
+        url : "http://localhost:3000/column_values_ordering/column_values_ordering_post",
         type: "POST",
         dataType: 'json',
-        data : data,
         success: function(data, textStatus, jqXHR)
         {
             console.log("success post column_values_ordering");
