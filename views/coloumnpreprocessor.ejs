@@ -62,7 +62,7 @@
                     var colhtml='';
                    // console.log(data[i].column_header.name);
                     var colData =data[i].column_data;
-                    datahtml= datahtml+('<div class ="child header tile-title"  id="'+ data[i].column_header.id +'" >'+ data[i].column_header.name +'</div>');
+                    datahtml= datahtml+('<div class ="child header tile-title"  id="'+ data[i].column_header.id +'" ><a>'+ data[i].column_header.name +'</a></div>');
                     for(j=0;j<colData.length;j++){
                       //  console.log(colData[j].value);
                         colhtml=colhtml+('<div class ="child specs" id="'+colData[j].id+'" >'+colData[j].value +'</div>');

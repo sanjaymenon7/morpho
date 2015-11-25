@@ -30,14 +30,24 @@
             dataType: 'json',
             success: function(data, textStatus, jqXHR)
             {
-                console.log(data)
-                var listHtml=''
-                for (i=0;i<data.length;i++){
-                    console.log(data[i].id);
+                if(data.length >0){
+                    console.log(data)
+                    var listHtml=''
+                    for (i=0;i<data.length;i++){
+                        console.log(data[i].id);
 
-                    $("#radioList").append('<div class="radio radio-success"><label><input type="radio" name="datasetlist" value="'+data[i].text+'" /><span class="circle"></span><span class="check"></span>'+data[i].text+'<p><b>Description:</b>'+data[i].description +'</p></lable></div>')
+                        $("#radioList").append('<div class="radio radio-success"><label><input type="radio" name="datasetlist" value="'+data[i].text+'" /><span class="circle"></span><span class="check"></span>'+data[i].text+'<p><b>Description:</b>'+data[i].description +'</p></lable></div>')
+                    }
+                    console.log(listHtml);
+
                 }
-                console.log(listHtml);
+                else{
+                    $("#submitdiv").css("display","none");
+                    $("#backdiv").css("display","block")
+
+                }
+
+
 
             },
             error: function (jqXHR, textStatus, errorThrown)
@@ -102,11 +112,19 @@
 
             </div>
 
-            <div class="row">
+            <div class="row" id="submitdiv" style="display: block">
                 <div class="col-md-6">
                     <button id="selectdataset" class="btn btn-success">Submit<div class="ripple-wrapper"></div></button>
                 </div>
                 <div class="">
+                </div>
+            </div>
+            <div class="row" id="backdiv" style="display: none">
+                <div class="col-md-5">
+                    <p class="text-info">No Dataset available,Please upload a new one!</p>
+                </div>
+                <div class="col-md-6" >
+                      <a href="/datasourceselection" class="btn btn-lg btn-info">Back to data source selection<div class="ripple-wrapper"></div></a>
                 </div>
             </div>
         </div>
