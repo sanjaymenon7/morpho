@@ -1,0 +1,13 @@
+{
+  "name": "Recommender",
+  "version": "0.0.0",
+  "dependencies": {
+    "babel": "*",
+    "bootstrap-fileinput": "~4.2.8",
+    "bootstrap": "~3.3.5",
+    "bootstrap-material-design": "~0.4.1",
+    "react": "~0.14.2",
+    "react-checkbox-list": "*",
+    "jquery-validation": "~1.14.0"
+  }
+}
