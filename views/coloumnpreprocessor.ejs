@@ -95,18 +95,17 @@
                 var data =
                 {
                     "perfColId": selectedVal,
-                    "selecetedCols" : selectedColArray
+                    "selectedCols" : selectedColArray
                 }
                 $.ajax({
                     url : "http://localhost:3000/coloumnpreprocessor/setDataSet",
                     type: "POST",
-                    dataType: 'json',
                     data : data,
                     success: function(data, textStatus, jqXHR)
                     {
                         console.log(data.status)
                         if(data.status == true){
-                            location.href = "http://localhost:3000/coloumnpreprocessor";
+                            location.href = "http://localhost:3000/column_values_ordering";
                         }
 
                     },
