@@ -1,0 +1,76 @@
+<!--
+* Created by kaushik on 21.11.15.
+* for ordering the column values based on input from user.
+* The user will order the values in the performance column.
+* This is the view file.
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Recommender</title>
+    <script src="../bower_components/react/react-dom.js"></script>
+    <script src="../bower_components/react/react.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/babel/browser.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
+
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
+</head>
+
+
+
+
+
+<script type="text/babel">
+    $.ajax({
+        url : "http://localhost:3000/column_values_ordering_post",
+        type: "POST",
+        dataType: 'json',
+        data : data,
+        success: function(data, textStatus, jqXHR)
+        {
+            console.log("success post column_values_ordering");
+
+            $(function() {
+                $.each(data, function(i, item) {
+                    var $tr = $('<tr>').append(
+                            $('<td>').text(item.rank),
+                            $('<td>').text(item.content),
+                            $('<td>').text(item.UID)
+                    ); //.appendTo('#records_table');
+                    console.log($tr.wrap('<p>').html());
+                });
+            });
+
+        },
+
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+
+        }
+    });
+
+</script>
+
+
+<body >
+
+<div id="sliderHead" class="tile">
+
+
+</div>
+</body>
+</html>

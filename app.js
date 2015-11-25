@@ -13,6 +13,7 @@ var datasourceselection = require('./routes/datasourceselection');
 var dataupload = require('./routes/dataupload');
 var datasetlist = require('./routes/datasetlist');
 var coloumnpreprocessor = require('./routes/coloumnpreprocessor');
+var columnValuesOrdering = require('./routes/column_values_ordering');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/datasourceselection', datasourceselection);
 app.use('/dataupload', dataupload);
 app.use('/datasetlist', datasetlist);
 app.use('/coloumnpreprocessor', coloumnpreprocessor);
+app.use('/column_values_ordering',columnValuesOrdering);
 
 // added these to handle bower components as well
 app.use(express.static(__dirname + '/public'));
