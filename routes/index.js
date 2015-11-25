@@ -21,7 +21,14 @@ var multer  = require('multer');
 var upload = multer({ dest: configVariables.configLines.uploadDestination});
 var exec = require('child_process').exec;
 
+if (configVariables.configLines.mongoCall !== undefined && configVariables.configLines.mongoCall!="") {
+  exec(configVariables.configLines.mongoCall);
+}
 
+var responseJson =
+{
+    "status": true
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -88,13 +95,7 @@ router.post('/setPerfCol',function(req,res,next){
     res.json(reponseJson)
 })
 
-// Service to populate performance coloumn dropdown
-router.get('/perfColumns',function(req,res,next){
-  findColumns(req, 1, function(columns){
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(columns, null, "    "));
-  });
-});
+
 
 // Service to populate columns that can be filtered out
 router.get('/filterColumns',function(req,res,next){
@@ -103,36 +104,6 @@ router.get('/filterColumns',function(req,res,next){
     res.send(JSON.stringify(columns, null, "    "));
   });
 });
-
-var findColumns = function(req, number_flag, callback){
-  db.open(function(err, db) {
-    if(!err) {
-      var collection = db.collection(req.query.table);
-      var collection_keys = db.collection(req.query.table+"_keys");
-      collection.findOne({}, function(err, doc) {
-        var query = 'db.'+req.query.table+'_keys.distinct("_id");';
-        db.eval(query, function(err, result){
-          var columns = new Array();
-            for(i=0;i<result.length;i++){
-              if (number_flag==1) {
-                if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] === "number") {
-                  var column = {id: i, text: result[i]};
-                  columns.push(column);
-                }
-              } else {
-                if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] !== "number") {
-                  var column = {id: i, text: result[i]};
-                  columns.push(column);
-                }
-              }
-            }
-            db.close();
-            callback(columns);
-        });
-      });
-    }
-  });
-}
 
 //added for temp otherColumns data
 router.get('/allColumnData', function(req,res,next){
@@ -512,10 +483,9 @@ router.get('/export-data', function(req, res, next) {
 
 // Export service - Get all data from collection phonedata as JSON file
 router.get('/get-columns', function(req, res, next) {
-  if (!req.session.loggedIn) {
-    res.render("start");
-  } else if (!req.session.tableSet) {
-    res.render("datasourceselection");
+   if (!req.session.loggedIn || !req.session.tableSet) {
+    responseJson.status=false;
+    res.json(responseJson);
   } else {
     db.open(function(err, db) {
       if(!err) {
