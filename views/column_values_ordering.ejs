@@ -51,7 +51,7 @@
                 if (data) {
                     var len = data.length;
 
-                    var txt = '<div class="table-bordered" ><thead><tr class="bg-primary"><th class="col-md-2 text-center">Name</th><th class="col-md-6 text-center">Value</th></tr></thead>';
+                    var txt = '<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
                     console.log('length is' + len);
                     console.log(data);
                     var columnValues = data[0].values;
@@ -59,8 +59,8 @@
                     for (var i = 0; i < columnValues.length; i++) {
                         console.log(columnValues[i]);
                         txt += '<div class="row">';
-                        txt += '<div class="col-md-2 text-center">' + columnValues[i].value + '</div>';
-                        txt += '<div id="slider'+i+'" class="col-md-6 sliders" ></div>';
+                        txt += '<div class="col-md-2 text-center" >' + columnValues[i].value + '</div>';
+                        txt += '<div id="slider'+i+'" class="col-md-6 sliders"  ></div>';
                         txt += '</div>';
                     }
                     txt+="</table>";
@@ -76,8 +76,9 @@
                                 max: maxLength,
                                 value: maxLength/2,
                                 orientation: "horizontal",
-                                range: "min"
-                            }).addSliderSegments($slider.slider("option").max);
+                                range: "min",
+                                change: setPerfValueInJson(i)
+                            }).addSliderSegments($slider.slider("option").max);//.change(setPerfValueInJson(i));
                         }
                     }
 
@@ -90,7 +91,13 @@
         });
     });
 
+function setPerfValueInJson(id){
+    console.log("inside setPerfValue function "+id);
+    /*
 
+
+     */
+}
 </script>
 
 
