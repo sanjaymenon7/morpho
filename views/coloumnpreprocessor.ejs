@@ -22,7 +22,8 @@
 
 </head>
 <body>
-<br/>
+<div id="headerdiv" style="display: none;">columnpreprocessor</div>
+<%include header.ejs%>
 <script type="text/javascript">
     $( document ).ready(function() {
         $.material.init();
@@ -148,11 +149,11 @@
 
     <div class="row">
         <div class="col-md-4">
-            <a href="/datasourceselection" class="btn btn-lg btn-info">Back to data source selection</a>
+            <a href="/datasourceselection" class="btn btn-lg btn-info">Back</a>
         </div>
         <div class="col-md-6">
-            <div class="well bs-compoenent">
-                <legend>Please select the required performace coloumn to proceed</legend>
+            <div class="">
+                <legend>Please select the required performance column to proceed</legend>
                 <div id="perfcolList"class="sample1" style="max-height: 200px; overflow-y: auto">
 
                 </div>
@@ -167,16 +168,17 @@
             </div>
         </div>
         <div class="col-md-2">
-            <button id="selectperfcol" class="btn btn-lg btn-success">Submit<div class="ripple-wrapper"></div></button>
+            <button id="selectperfcol" class="btn btn-lg btn-info">Proceed<div class="ripple-wrapper"></div></button>
 
         </div>
 
 
     </div>
+    <br/>
     <div class="row">
         <div class="col-md-12">
-            <div class="well bs-compoenent">
-                <legend>Filter coloumn by clicking the coloumn header</legend>
+            <div class="">
+                <legend>Filter column by clicking the column header</legend>
                 <div id="mainDataDiv" class="parentContainer">
 
                 </div>

@@ -60,7 +60,8 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
                                             router.sess = req.session;
                                             router.sess.tableSet = true;
                                             router.sess.table="table"+tableNumber;
-                                            res.render('coloumnpreprocessor');
+                                            var htmlstr ='<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">×</button><strong>Heads up!</strong></div>'
+                                            res.render('datasourceselection');
                                         });
                                     });
                                   }

@@ -9,6 +9,7 @@
     <script src="../bower_components/babel/browser.js"></script>
     <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
@@ -19,38 +20,69 @@
     <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
 </head>
 <body>
+<div id="headerdiv" style="display: none;">datasourceselection</div>
+<%include header.ejs%>
 <script type="text/javascript">
     $( document ).ready(function() {
         $.material.init();
+        $("#datasetlistmodal").load('datasetlist');
+        $("#datauploadmodal").load('dataupload');
     });
 
 </script>
-<br/><br/><br/>
 <div class="row">
-    <div class="col-md-1">
-
-    </div>
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="well bs-component">
             <div class="row">
                 <div class="col-md-6" align="center">
-                    <a href="/dataupload" class="btn btn-info btn-lg">Upload new data set and proceed</a>
+                    <!--<a href="/dataupload" class="btn btn-info btn-lg">Upload new data set and proceed</a>-->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#datasetlist-dialog">Select Data Set and Proceed</button>
                 </div>
                 <div class="col-md-6" align="center">
-                    <a href="/datasetlist" class="btn btn-info btn-lg">Proceed with existing datasets</a>
+                    <!--<a href="/datasetlist" class="btn btn-info btn-lg">Proceed with existing datasets</a>-->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#dataupload-dialog">Upload new Data Set</button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-10">
-                <a href="/start" class="btn btn-warning">Back</a>
+                <a href="/start" class="btn btn-info">Back</a>
             </div>
             <div class="col-md-2">
 
             </div>
         </div>
     </div>
-    <div class="col-md-1">
+</div>
+<div id="datasetlist-dialog" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="datasetWarning" class="alert alert-dismissible alert-warning" style="display: none">
+                    <button id="datasetWarningBtn" type="button" class="close" >×</button>
+                    <h4>Warning!</h4>
+                    <b>Please select a dataset</b>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select DataSet</h4>
+            </div>
+            <div class="modal-body" id="datasetlistmodal">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dataupload-dialog" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload new DataSet</h4>
+            </div>
+            <div class="modal-body" id="datauploadmodal">
+
+            </div>
+        </div>
     </div>
 </div>
 </body>

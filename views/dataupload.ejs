@@ -11,6 +11,7 @@
     <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="../bower_components/bootstrap-fileinput/js/fileinput.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
@@ -29,15 +30,9 @@
     });
     $("#uploadform").validate();
 </script>
-<br/><br/><br/>
-
 <div class="row">
-    <div class="col-md-3">
-
-
-    </div>
-    <div class="col-md-6">
-        <div class="well bs-component">
+    <div class="col-md-12">
+        <div class="">
             <form class="form-horizontal" action="dataupload" method="post" enctype="multipart/form-data" id="uploadform">
                 <fieldset>
                     <legend>Please fill in the required details and upload the file</legend>
@@ -62,14 +57,13 @@
                     </div>
                 </fieldset>
             </form>
-            <br/><br/>
-            <div class="row">
+           <!-- <div class="row">
                 <div class="col-md-6">
                     <a href="/datasourceselection" class="btn btn-lg btn-info">Back to data source selection</a>
                 </div>
                 <div class="">
                 </div>
-            </div>
+            </div>-->
         </div>
 
     </div>

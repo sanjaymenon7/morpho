@@ -9,6 +9,7 @@
     "react": "~0.14.2",
     "react-checkbox-list": "*",
     "jquery-validation": "~1.14.0",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "flat-ui": "~2.2.2"
   }
 }
