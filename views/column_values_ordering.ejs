@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
+    <link rel="stylesheet" href="../bower_components/flat-ui/dist/css/flat-ui.css">
+    <script src="../bower_components/flat-ui/dist/js/flat-ui.js"></script>
+    <script src="../bower_components/flat-ui/docs/assets/js/application.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
 </head>
@@ -35,39 +38,65 @@
 
 
 <script type="text/babel">
-    $.ajax({
-        url : "http://localhost:3000/column_values_ordering/column_values_ordering_post",
-        type: "POST",
-        dataType: 'json',
-        success: function(data, textStatus, jqXHR)
-        {
-            console.log("success post column_values_ordering");
 
-            $(function() {
-                $.each(data, function(i, item) {
-                    var $tr = $('<tr>').append(
-                            $('<td>').text(item.rank),
-                            $('<td>').text(item.content),
-                            $('<td>').text(item.UID)
-                    ); //.appendTo('#records_table');
-                    console.log($tr.wrap('<p>').html());
-                });
-            });
+    $( document ).ready(function() {
+        $.ajax({
+            url: '/column_values_ordering/column_values_ordering_post',
+            type: 'POST',
+            dataType: 'json',
+            data: $('#sliderHead').serialize(),
+            success: function (data, textStatus, jqXHR) {
+                console.log("success post column_values_ordering");
+                var htmlData = '';
+                if (data) {
+                    var len = data.length;
 
-        },
+                    var txt = '<div class="table-bordered" ><thead><tr class="bg-primary"><th class="col-md-2 text-center">Name</th><th class="col-md-6 text-center">Value</th></tr></thead>';
+                    console.log('length is' + len);
+                    console.log(data);
+                    var columnValues = data[0].values;
+                    //console.log(columnValues);
+                    for (var i = 0; i < columnValues.length; i++) {
+                        console.log(columnValues[i]);
+                        txt += '<div class="row">';
+                        txt += '<div class="col-md-2 text-center">' + columnValues[i].value + '</div>';
+                        txt += '<div id="slider'+i+'" class="col-md-6 sliders" ></div>';
+                        txt += '</div>';
+                    }
+                    txt+="</table>";
+                    console.log(txt);
+                    $('#sliderHead').append(txt);
+                    var maxLength = columnValues.length;
+                    for(i=0;i<maxLength;i++){
+                        var $slider = $("#slider"+i);
+                        console.log($slider);
+                        if ($slider.length > 0) {
+                            $slider.slider({
+                                min: 0,
+                                max: maxLength,
+                                value: maxLength/2,
+                                orientation: "horizontal",
+                                range: "min"
+                            }).addSliderSegments($slider.slider("option").max);
+                        }
+                    }
 
-        error: function (jqXHR, textStatus, errorThrown)
-        {
+                }
+            },
 
-        }
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            }
+        });
     });
+
 
 </script>
 
 
 <body >
 
-<div id="sliderHead" class="tile">
+<div id="sliderHead" class="container">
 
 
 </div>
