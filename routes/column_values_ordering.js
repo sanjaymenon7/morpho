@@ -127,7 +127,29 @@ router.post('/column_values_ordering_post',function(req,res,next){
         responseJson.status=false;
         res.json(responseJson);
      } else {
-        res.json(dataNumeric);
+      db.open(function(err, db) {
+        var collection = db.collection(req.body.table);
+        var perfColumn = req.session.columnId;
+        var data = new Array()
+        var query = 'db.'+req.body.table+'_keys.distinct("_id");';
+
+        /*
+        db.eval(query, function(err, result){ 
+        if (collection){
+            //find min and max, and give them the default acv of 1
+            var min = db.collection.find().sort({a: 1}).limit(1);
+            var max = db.collection.find("id" => x).sort({"value" => -1}).limit(1).first();
+
+            var column = {columnName: , dataType: collection.dataType, values: {value: min, acv: 1, value: max, acv: 1}};
+            data.push(column);
+        }
+        else {
+            //Ordinal data
+            //find distinct values, then the middle value,  then set all to middle value
+        };
+       db.close(); */
+        }
+     }); 
      }
 })
 
