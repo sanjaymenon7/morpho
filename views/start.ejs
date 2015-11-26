@@ -27,33 +27,33 @@
     $( document ).ready(function() {
         $.material.init()
         $("#startform").validate();
-        $( "#startproceed" ).click(function() {
-            var data =
-                {
-                    "username": $("#inputUserName").val(),
-                }
-            if(! $("#startform").valid()) return false;
-            $.ajax({
-                url : "http://localhost:3000/start/submitinitdata",
-                type: "POST",
-                dataType: 'json',
-                data : data,
-                success: function(data, textStatus, jqXHR)
-                {
-                    console.log(data[0].success)
-                    if(data[0].success == true){
-                        location.href = "http://localhost:3000/datasourceselection";
-                    }
-
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-
-                }
-            });
-        });
-
+        
     });
+    function submitFunc(){
+        var data =
+            {
+                "username": $("#inputUserName").val(),
+            }
+        if(! $("#startform").valid()) return false;
+        $.ajax({
+            url : "http://localhost:3000/start/submitinitdata",
+            type: "POST",
+            dataType: 'json',
+            data : data,
+            success: function(data, textStatus, jqXHR)
+            {
+                console.log(data[0].success)
+                if(data[0].success == true){
+                    location.href = "http://localhost:3000/datasourceselection";
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+
+            }
+        });
+    }
 </script>
 
 
@@ -65,7 +65,7 @@
     </div>
     <div class="col-md-6">
         <div class="well bs-component">
-            <form class="form-horizontal" id="startform">
+            <form class="form-horizontal" id="startform" action="javascript:submitFunc();">
                 <fieldset>
                     <legend>Start Analysis</legend>
                     <div class="form-group is-empty">
@@ -86,7 +86,7 @@
 
             </div>
             <div class="col-md-2">
-                <button id="startproceed" class="btn btn-success">Proceed<div class="ripple-wrapper"></div></button>
+                <button id="startproceed" onclick="submitFunc();" class="btn btn-success">Proceed<div class="ripple-wrapper"></div></button>
             </div>
         </div>
     </div>
