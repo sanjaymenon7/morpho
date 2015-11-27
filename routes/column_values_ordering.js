@@ -130,7 +130,7 @@ router.post('/column_values_ordering_post',function(req,res,next){
       db.open(function(err, db) {
         var collection = db.collection(req.body.table);
         var perfColumn = req.session.columnId;
-        var data = new Array()
+        var data = new Array();
         var query = 'db.'+req.body.table+'_keys.distinct("_id");';
 
         /*
@@ -148,10 +148,10 @@ router.post('/column_values_ordering_post',function(req,res,next){
             //find distinct values, then the middle value,  then set all to middle value
         };
        db.close(); */
-        }
-     }); 
+        });
      }
-})
+
+});
 
 var findColumns = function(req, number_flag, callback){
   db.open(function(err, db) {
