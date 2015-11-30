@@ -14,9 +14,9 @@ router.get('/', function(req, res, next) {
      if (!req.session.loggedIn) {
         res.render("start");
       } else if (!req.session.tableSet) {
-        res.render("datasourceselection");
+        res.render("datasourceselection",{data: req.session.userId});
       } else {
-        res.render('coloumnpreprocessor');
+        res.render('coloumnpreprocessor',{data: req.session.userId});
       }  
 });
 

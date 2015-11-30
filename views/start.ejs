@@ -22,74 +22,89 @@
     <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
 </head>
 <body>
-<br/><br/><br/>
-<script type="text/javascript">
-    $( document ).ready(function() {
-        $.material.init()
-        $("#startform").validate();
-        
-    });
-    function submitFunc(){
-        var data =
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/start">Recommender<div class="ripple-container"></div></a>
+        </div>
+    </div>
+</div>
+<div class="well bs-component">
+    <br/><br/><br/>
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $.material.init()
+            $("#startform").validate();
+
+        });
+        function submitFunc(){
+            var data =
             {
                 "username": $("#inputUserName").val(),
             }
-        if(! $("#startform").valid()) return false;
-        $.ajax({
-            url : "http://localhost:3000/start/submitinitdata",
-            type: "POST",
-            dataType: 'json',
-            data : data,
-            success: function(data, textStatus, jqXHR)
-            {
-                console.log(data[0].success)
-                if(data[0].success == true){
-                    location.href = "http://localhost:3000/datasourceselection";
+            if(! $("#startform").valid()) return false;
+            $.ajax({
+                url : "http://localhost:3000/start/submitinitdata",
+                type: "POST",
+                dataType: 'json',
+                data : data,
+                success: function(data, textStatus, jqXHR)
+                {
+                    console.log(data[0].success)
+                    if(data[0].success == true){
+                        location.href = "http://localhost:3000/datasourceselection";
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+
                 }
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
 
 
-<div class="row">
-    <div class="col-md-3">
+    <div class="row">
+        <div class="col-md-3">
 
 
-    </div>
-    <div class="col-md-6">
-        <div class="well bs-component">
-            <form class="form-horizontal" id="startform" action="javascript:submitFunc();">
-                <fieldset>
-                    <legend>Start Analysis</legend>
-                    <div class="form-group is-empty">
-                        <label for="inputEmail" class="col-lg-2 control-label">User Email</label>
+        </div>
+        <div class="col-md-6">
+            <div class="">
+                <form class="form-horizontal" id="startform" action="javascript:submitFunc();">
+                    <fieldset>
+                        <legend>Start Analysis</legend>
+                        <div class="form-group is-empty">
+                            <label for="inputEmail" class="col-lg-2 control-label">User Email</label>
 
-                        <div class="col-lg-10">
-                            <input type="email" class="form-control" id="inputUserName" placeholder="User Name" name="username" required>
+                            <div class="col-lg-10">
+                                <input type="email" class="form-control" id="inputUserName" placeholder="User Name" name="username" required>
+                            </div>
+                            <span class="material-input"></span>
                         </div>
-                        <span class="material-input"></span>
-                    </div>
-                </fieldset>
-            </form>
-            <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-9">
-
+                    </fieldset>
+                </form>
+                <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
             </div>
-            <div class="col-md-2">
-                <button id="startproceed" onclick="submitFunc();" class="btn btn-success">Proceed<div class="ripple-wrapper"></div></button>
+
+            <div class="row">
+                <div class="col-md-9">
+
+                </div>
+                <div class="col-md-2">
+                    <button id="startproceed" onclick="submitFunc();" class="btn btn-success">Proceed<div class="ripple-wrapper"></div></button>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 
 </body>
