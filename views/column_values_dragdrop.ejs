@@ -1,0 +1,143 @@
+<!--
+* Created by Kaushik on 27.11.15.
+* for ordering the column values based on input from user.
+* The user will order the values in the performance column.
+* This is the view file.
+Trying the feature in drag and drop...
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Recommender</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/babel/browser.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="../bower_components/Sortable/Sortable.js"></script>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
+    <link rel="stylesheet" href="../bower_components/flat-ui/dist/css/flat-ui.css">
+
+    <script src="../bower_components/flat-ui/dist/js/flat-ui.js"></script>
+    <script src="../bower_components/flat-ui/docs/assets/js/application.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
+</head>
+
+
+
+
+
+<script type="text/babel">
+
+    $( document ).ready(function() {
+
+        sortableCaller();
+        $.ajax({
+            url: '/column_values_dragdrop/column_values_dragdrop_post',
+            type: 'POST',
+            dataType: 'json',
+            data: $('#initDiv').serialize(),
+            success: function (data, textStatus, jqXHR) {
+                console.log("success post column_values_dragdrop");
+                var htmlData = '';
+                if (data) {
+                    var len = data.length;
+
+                    var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
+                    console.log('length is' + len);
+                    console.log(data);
+                    var columnValues = data[0].values;
+                    //console.log(columnValues);
+                    for (var i = 0; i < columnValues.length; i++) {
+                        console.log(columnValues[i]);
+                        // commented because trying drag and drop here
+                        txt += '<li>' + columnValues[i].value + '</li>';
+
+                    }
+                    console.log(txt);
+                    $('#initList').append(txt);
+
+
+                }
+
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            }
+        });
+
+    });
+
+
+
+
+
+
+
+    function setPerfValueInJson(id){
+        console.log("inside setPerfValue function "+id);
+        /*
+
+
+         */
+    }
+
+</script>
+
+
+<body >
+
+<div id="initDiv" class="container">
+    <ul id="initList">
+
+    </ul>
+
+</div>
+<div id="positionedDiv" class="container ">
+    <ul id="positionedList" class="bg-primary" >
+        <li class="action-secondary">put Elements Here</li>
+    </ul>
+    
+</div>
+</body>
+<script>
+    //var initDiv=$('#initDiv');
+    //var positionedDiv=$('#positionedDiv');
+    function sortableCaller(){
+        var initList=document.getElementById("initList");
+        var positionedList=document.getElementById("positionedList");
+
+        Sortable.create(initList, {
+            group: 'shared',
+            animation: 150,
+            onAdd: function (evt){ console.log('onAdd.bar:', evt.item); },
+            onUpdate: function (evt){ console.log('onUpdate.bar:', evt.item); },
+            onRemove: function (evt){ console.log('onRemove.bar:', evt.item); },
+            onStart:function(evt){ console.log('onStart.foo:', evt.item);},
+            onEnd: function(evt){ console.log('onEnd.foo:', evt.item);}
+        });
+
+        Sortable.create(positionedList, {
+            group: 'shared',
+            animation: 150,
+            onAdd: function (evt){ console.log('onAdd.bar:', evt.item); },
+            onUpdate: function (evt){ console.log('onUpdate.bar:', evt.item); },
+            onRemove: function (evt){ console.log('onRemove.bar:', evt.item); },
+            onStart:function(evt){ console.log('onStart.foo:', evt.item);},
+            onEnd: function(evt){ console.log('onEnd.foo:', evt.item);}
+        });
+    }
+
+</script>
+</html>
