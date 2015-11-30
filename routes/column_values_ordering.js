@@ -128,29 +128,61 @@ router.post('/column_values_ordering_post',function(req,res,next){
         res.json(responseJson);
      } else {
       db.open(function(err, db) {
-        var collection = db.collection(req.body.table);
-        var perfColumn = req.session.columnId;
-        var data = new Array();
-        var query = 'db.'+req.body.table+'_keys.distinct("_id");';
-
-        /*
-        db.eval(query, function(err, result){ 
-        if (collection){
-            //find min and max, and give them the default acv of 1
-            var min = db.collection.find().sort({a: 1}).limit(1);
-            var max = db.collection.find("id" => x).sort({"value" => -1}).limit(1).first();
-
-            var column = {columnName: , dataType: collection.dataType, values: {value: min, acv: 1, value: max, acv: 1}};
-            data.push(column);
+        if(!err) {
+          var colFound = 0;
+          var collection = db.collection(req.session.table);
+          var collection_keys = db.collection(req.session.table+"_keys");
+          collection.findOne({}, function(err, doc) {
+            var query = 'db.'+req.session.table+'_keys.distinct("_id");';
+            db.eval(query, function(err, result){
+                for(i=0;i<result.length;i++){
+                    if (req.session.performance==i) {
+                      colFound = 1;
+                      if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] === "number") {
+                        var column = {columnName: result[i], dataType: "numeric", values: new Array()};
+                        var minOptions = {
+                            "limit": 1,
+                            "sort": [[[result[i]],'asc']]
+                        };
+                        var maxOptions = {
+                            "limit": 1,
+                            "sort": [[[result[i]],'desc']]
+                        };
+                        collection.find({}, minOptions).toArray(function(err1, result1){
+                            var value = {value: result1[0][column.columnName], acv: 1};
+                            (column.values).push(value);
+                            collection.find({}, maxOptions).toArray(function(err2, result2){
+                              var value = {value: result2[0][column.columnName], acv: 1};
+                              (column.values).push(value);
+                              db.close();
+                              res.json(column);
+                            });
+                        });
+                      }
+                      if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] !== "number") {
+                        var column = {columnName: result[i], dataType: "ordinal", values: new Array()};
+                        collection.distinct(column.columnName, function(err3, docs3) {
+                            var acv = parseInt(docs3.length/2);
+                            for(var j=0;j<docs3.length;j++){
+                                var value = {value: docs3[j], acv: acv};
+                                (column.values).push(value);
+                            }
+                            db.close();
+                            res.json(column);
+                        });
+                        
+                      }
+                    } 
+                }
+                if (!colFound) {
+                    responseJson.status=false;
+                    res.json(responseJson);
+                }
+            });
+          });
         }
-        else {
-            //Ordinal data
-            //find distinct values, then the middle value,  then set all to middle value
-        };
-       db.close(); */
-        });
-     }
-
+      });
+    }
 });
 
 var findColumns = function(req, number_flag, callback){
