@@ -14,15 +14,11 @@ Trying the feature in drag and drop...
     <title>Recommender</title>
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/babel/browser.js"></script>
-    <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
-    <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script src="../bower_components/Sortable/Sortable.js"></script>
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
     <link rel="stylesheet" href="../bower_components/flat-ui/dist/css/flat-ui.css">
@@ -61,7 +57,7 @@ Trying the feature in drag and drop...
                     for (var i = 0; i < columnValues.length; i++) {
                         console.log(columnValues[i]);
                         // commented because trying drag and drop here
-                        txt += '<li>' + columnValues[i].value + '</li>';
+                        txt += '<li class="dropdown-menu-inverse palette-turquoise">' + columnValues[i].value + '</li>';
 
                     }
                     console.log(txt);
@@ -80,33 +76,23 @@ Trying the feature in drag and drop...
     });
 
 
-
-
-
-
-
-    function setPerfValueInJson(id){
-        console.log("inside setPerfValue function "+id);
-        /*
-
-
-         */
-    }
-
 </script>
 
 
 <body >
-
-<div id="initDiv" class="container">
+<div id="headerdiv" style="display: none;">columnDragDrop</div>
+<%include header.ejs%>
+<div id="initDiv" class="container palette-green-sea">
+    <div class="tile-title palette-turquoise"> Available elements</div>
     <ul id="initList">
 
     </ul>
 
 </div>
-<div id="positionedDiv" class="container ">
+<div id="positionedDiv" class="container todo palette-alizarin ">
+    <div class="tile-title">Drop your ranking here</div>
     <ul id="positionedList" class="bg-primary" >
-        <li class="action-secondary">put Elements Here</li>
+        <li class="action-secondary"> </li>
     </ul>
     
 </div>
@@ -137,7 +123,7 @@ Trying the feature in drag and drop...
             onStart:function(evt){ console.log('onStart.foo:', evt.item);},
             onEnd: function(evt){ console.log('onEnd.foo:', evt.item);}
         });
-    }
+    }// end function sortableCaller().
 
 </script>
 </html>
