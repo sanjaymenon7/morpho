@@ -15,6 +15,7 @@ var datasetlist = require('./routes/datasetlist');
 var coloumnpreprocessor = require('./routes/coloumnpreprocessor');
 var columnValuesOrdering = require('./routes/column_values_ordering');
 var columnValuesDragDrop = require('./routes/column_values_dragdrop');
+var recommender = require('./routes/recommender');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/datasetlist', datasetlist);
 app.use('/coloumnpreprocessor', coloumnpreprocessor);
 app.use('/column_values_ordering',columnValuesOrdering);
 app.use('/column_values_dragdrop',columnValuesDragDrop);
+app.use('/recommender', recommender);
 
 // added these to handle bower components as well
 app.use(express.static(__dirname + '/public'));
