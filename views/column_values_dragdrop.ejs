@@ -33,19 +33,17 @@
 
         $.ajax({
             url: '/column_values_dragdrop/column_values_dragdrop_post',
-            type: 'POST',
-            dataType: 'json',
-            data: $('#initDiv').serialize(),
+            type: 'GET',
             success: function (data, textStatus, jqXHR) {
                 console.log("success post column_values_dragdrop");
                 var htmlData = '';
                 if (data) {
-                    var len = data.length;
+                    //var len = data.length;
 
                     var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
-                    console.log('length is' + len);
+                    //console.log('length is' + len);
                     console.log(data);
-                    var columnValues = data[0].values;
+                    var columnValues = data.values;
                     //console.log(columnValues);
                     for (var i = 0; i < columnValues.length; i++) {
                         console.log(columnValues[i]);

@@ -122,7 +122,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/column_values_ordering_post',function(req,res,next){
+router.get('/column_values_ordering_post',function(req,res,next){
      if (!req.session.loggedIn || !req.session.tableSet || !req.session.perfSet) {
         responseJson.status=false;
         res.json(responseJson);
@@ -183,6 +183,20 @@ router.post('/column_values_ordering_post',function(req,res,next){
         }
       });
     }
+});
+
+router.post('/column_values_ordering_result',function(req,res,next){
+    if (!req.session.loggedIn || !req.session.tableSet || !req.session.perfSet) {
+        responseJson.status=false;
+        res.json(responseJson);
+     } else {
+        router.sess = req.session;
+        router.sess.perfOrderSet = true;
+        router.sess.perfColType = req.body.dataType;
+        router.sess.perfColValues = req.body.values;
+        responseJson.status=true;
+        res.json(responseJson);
+     }
 });
 
 var findColumns = function(req, number_flag, callback){
