@@ -1,12 +1,3 @@
-<!--
-* Created by Kaushik on 27.11.15.
-* for ordering the column values based on input from user.
-* The user will order the values in the performance column.
-* This is the view file.
-Trying the feature in drag and drop...
-
--->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,29 +6,31 @@ Trying the feature in drag and drop...
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/babel/browser.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script src="../bower_components/Sortable/Sortable.js"></script>
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
-    <link rel="stylesheet" href="../bower_components/flat-ui/dist/css/flat-ui.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
 
-    <script src="../bower_components/flat-ui/dist/js/flat-ui.js"></script>
-    <script src="../bower_components/flat-ui/docs/assets/js/application.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
+    <link rel="" media="screen" href="../bower_components/bootstrap-material-design/fonts/Material-Design-Icons.svg">
+<style>
+        /*ul*/
+        /*{*/
+            /*list-style-type: none;*/
+        /*}*/
+</style>
 </head>
 
-
-
-
-
 <script type="text/babel">
-
+    $.material.init()
     $( document ).ready(function() {
 
-        sortableCaller();
+
         $.ajax({
             url: '/column_values_dragdrop/column_values_dragdrop_post',
             type: 'POST',
@@ -57,7 +50,7 @@ Trying the feature in drag and drop...
                     for (var i = 0; i < columnValues.length; i++) {
                         console.log(columnValues[i]);
                         // commented because trying drag and drop here
-                        txt += '<li class="dropdown-menu-inverse palette-turquoise">' + columnValues[i].value + '</li>';
+                        txt += '<li class="dropdown-menu-inverse">' + columnValues[i].value + '</li>';
 
                     }
                     console.log(txt);
@@ -65,7 +58,7 @@ Trying the feature in drag and drop...
 
 
                 }
-
+                sortableCaller();
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -78,52 +71,111 @@ Trying the feature in drag and drop...
 
 </script>
 
-
 <body >
-<div id="headerdiv" style="display: none;">columnDragDrop</div>
-<%include header.ejs%>
-<div id="initDiv" class="container palette-green-sea">
-    <div class="tile-title palette-turquoise"> Available elements</div>
-    <ul id="initList">
+<div class="row" id="headSortableDiv">
+    <div id="initDiv" class="col-md-4 container">
+        <div class="tile-title "> Available elements</div>
+        <ul id="initList">
 
-    </ul>
+        </ul>
+
+    </div>
+    <div class="col-md-1"></div>
+    <div id="positionedDiv" class="col-md-4 container">
+        <div id="newPosition" class="row tile-title alert-black glyphicon-asterisk">+
+            <!--  this div is used to add new elements. when an element is added here, you will be adding another div and
+                    creating the div on the fly. it should happen on the addition of an element here.
+                    -->
+            <div class="btn-fab-material-amber-300" onclick="newDivCreator(this)">new div;lkj</div>
+            <ul id="newPositionedList1" class="alert-primary" >
+                <li class="action-secondary"> add New Element Here ++</li>
+            </ul>
+
+        </div>
+        <div id="position1" class=" row tile-title">Drop your ranking here
+            <ul id="positionedList1" class="alert-primary" >
+                <li class="action-secondary"> </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    </div>
 
 </div>
-<div id="positionedDiv" class="container todo palette-alizarin ">
-    <div class="tile-title">Drop your ranking here</div>
-    <ul id="positionedList" class="bg-primary" >
-        <li class="action-secondary"> </li>
-    </ul>
-    
-</div>
+
 </body>
 <script>
     //var initDiv=$('#initDiv');
     //var positionedDiv=$('#positionedDiv');
+    var currentDiv= "position1";
     function sortableCaller(){
         var initList=document.getElementById("initList");
-        var positionedList=document.getElementById("positionedList");
+        var positionedList1=document.getElementById("positionedList1");
 
-        Sortable.create(initList, {
-            group: 'shared',
+        var initDiv=document.getElementById("initDiv");
+        var positionedDiv= document.getElementById("positionedDiv");// used for adding new element using newPosition
+
+        createSortableElement(initList,'sortableList');
+        createSortableElement(positionedList1,'sortableList');
+        createSortableElement(initDiv,'sortableDiv');
+        createSortableElement(document.getElementById('position1'),'sortableDiv');
+
+
+        Sortable.create(document.getElementById("newPosition"), {
+            group: 'sortableDiv',
             animation: 150,
-            onAdd: function (evt){ console.log('onAdd.bar:', evt.item); },
-            onUpdate: function (evt){ console.log('onUpdate.bar:', evt.item); },
-            onRemove: function (evt){ console.log('onRemove.bar:', evt.item); },
-            onStart:function(evt){ console.log('onStart.foo:', evt.item);},
-            onEnd: function(evt){ console.log('onEnd.foo:', evt.item);}
+            onAdd: function (evt){
+
+                newDivCreator();
+            },// end onAdd()
+            onUpdate: function (evt){ console.log('newposition onpudate', evt.item); },
+            onRemove: function (evt){ console.log('newposition onRemove.bar:', evt.item); },
+            onStart:function(evt){ console.log('newposition onStart.foo:', evt.item);},
+            onEnd: function(evt){ console.log('newposition onEnd.foo:', evt.item);}
         });
 
-        Sortable.create(positionedList, {
-            group: 'shared',
-            animation: 150,
-            onAdd: function (evt){ console.log('onAdd.bar:', evt.item); },
-            onUpdate: function (evt){ console.log('onUpdate.bar:', evt.item); },
-            onRemove: function (evt){ console.log('onRemove.bar:', evt.item); },
-            onStart:function(evt){ console.log('onStart.foo:', evt.item);},
-            onEnd: function(evt){ console.log('onEnd.foo:', evt.item);}
-        });
+
     }// end function sortableCaller().
 
+    function createSortableElement( divId, groupId){
+        Sortable.create(divId,{
+            group: ''+groupId,
+            animation: 150,
+            onAdd: function (evt){ console.log('createsortableElement onAdd:'+divId+' for group:'+groupId, evt.item); },
+            onUpdate: function (evt){ console.log('createsortableElement onUpdate:'+divId+' for group:'+groupId, evt.item); },
+            onRemove: function (evt){ console.log('createsortableElement onRemove:'+divId+' for group:'+groupId, evt.item); },
+            onStart:function(evt){ console.log('createsortableElement onStart:'+divId+' for group:'+groupId, evt.item);},
+            onEnd: function(evt){ console.log('createsortableElement onEnd:'+divId+' for group:'+groupId, evt.item);}
+        });
+    }// end fucntion sortableCaller().
+
+    function newDivCreator(evt){
+        var counter=currentDiv.substr(currentDiv.length-1);
+        console.log("counter is: "+counter);
+        counter++;
+        var clr=counter*counter*473+100000;
+        var newDiv= '<div id="position'+counter+'" class="row tile-title"><i class="material-icons">folder</i>';
+
+        newDiv+='<ul id="positionedList'+counter+'"  style="background-color:'+clr+'"> <li class="action-secondary"> </li></ul></div>';
+        var tempDiv= document.getElementById('positionedDiv');
+        //tempDiv.append(newDiv);
+        $('#positionedDiv').append(newDiv);
+
+        console.log('new Div:'+ newDiv);
+        console.log('child new div appended here');
+        tempstr1='position'+counter;
+        tempstr2='positionList'+counter;
+        createSortableElement(document.getElementById('position'+counter),'sortableDiv');
+        createSortableElement(document.getElementById('positionedList'+counter),'sortableList');
+
+        currentDiv='position'+counter;
+        console.log('onAdd.bar:', evt.item);
+    }
+
+    function divRemover(divElement){
+
+    }
 </script>
 </html>

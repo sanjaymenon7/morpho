@@ -12,7 +12,8 @@ var mongo = require('mongodb'),
     Db = mongo.Db;
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
-
+// use the performance column value from session variable.
+//
 var responseJson =
 {
     "status": true
@@ -119,6 +120,8 @@ router.get('/', function(req, res, next) {
     //} else {
     //    res.render('column_values_dragdrop');
     //}
+    console.log('in function of get colummnvaluesdragdrop');
+
     res.render('column_values_dragdrop');
 });
 
