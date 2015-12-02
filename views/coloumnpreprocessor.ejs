@@ -79,9 +79,13 @@
             }.bind(this)
         });
         $( "#selectperfcol" ).click(function() {
-
+            var idVal =$('input[name=datasetlist]:radio:checked').val()
+            var isFiltered = $("[id="+idVal+"]").parent('.divcover').attr('filtered');
             if($('input[name=datasetlist]:radio:checked').val() === undefined){
                 $("#perfcoltWarning").css("display","block");
+            }
+            else if( isFiltered == 'true'){
+                $("#perColSelectInfo").css("display","block");
             }
             else{
                 selectedColArray=[];
@@ -92,7 +96,7 @@
                     //console.log( index + ": " + ele.id );
                     selectedColArray.push(ele.id);
                 })
-                console.log(selectedColArray);
+               // console.log(selectedColArray);
                 var data =
                 {
                     "perfColId": selectedVal,
@@ -104,7 +108,7 @@
                     data : data,
                     success: function(data, textStatus, jqXHR)
                     {
-                        console.log(data.status)
+                       // console.log(data.status)
                         if(data.status == true){
                             location.href = "http://localhost:3000/column_values_ordering";
                         }
@@ -122,22 +126,43 @@
 
             $("#perfcoltWarning").css("display","none");
         });
+        $( "#colfilterinfoBtn" ).click(function() {
+
+            $("#colfilterinfo").css("display","none");
+        });
+        $( "#perColSelectInfoBtn" ).click(function() {
+
+            $("#perColSelectInfo").css("display","none");
+        });
 
         $('.parentContainer').on('click', '.header', function(){
             // do something
             //console.log('inside');
-
-            if($(this).parent('.divcover').attr('filtered') == 'false')
-            {
-                $(this).parent('.divcover').fadeTo('fast',0.1)
-                $(this).parent('.divcover').attr('filtered','true')
-            }else if($(this).parent('.divcover').attr('filtered') == 'true'){
-                $(this).parent('.divcover').fadeTo('fast',1)
-                $(this).parent('.divcover').attr('filtered','false')
+            console.log($(this).attr('id'));
+            console.log($('input[name=datasetlist]:radio:checked').val());
+            if(($(this).attr('id') == $('input[name=datasetlist]:radio:checked').val())&&($(this).parent('.divcover').attr('filtered') == 'false')){
+                $("#colfilterinfo").css("display","block");
+            }else{
+                if($(this).parent('.divcover').attr('filtered') == 'false')
+                {
+                    $(this).parent('.divcover').fadeTo('fast',0.1)
+                    $(this).parent('.divcover').attr('filtered','true')
+                }else if($(this).parent('.divcover').attr('filtered') == 'true'){
+                    $(this).parent('.divcover').fadeTo('fast',1)
+                    $(this).parent('.divcover').attr('filtered','false')
+                }
             }
-
         });
-
+        $('#perfcolList').on('click', 'input[name=datasetlist]:radio', function(){
+            // Do something interesting here
+            console.log("Changed");
+            var idVal =$('input[name=datasetlist]:radio:checked').val()
+            console.log($("[id="+idVal+"]").parent('.divcover').attr('filtered'));
+            var isFiltered = $("[id="+idVal+"]").parent('.divcover').attr('filtered');
+            if( isFiltered == 'true'){
+                $("#perColSelectInfo").css("display","block");
+            }
+        });
     });
 </script>
 <div class="well bs-cpmponent">
@@ -145,6 +170,16 @@
         <button id="perfcoltWarningBtn" type="button" class="close" >×</button>
         <h4>Warning!</h4>
         <b>Please select one performance coloumn</b>
+    </div>
+    <div id ="colfilterinfo" class="alert alert-dismissible alert-info" style="display: none">
+        <button id="colfilterinfoBtn" type="button" class="close">×</button>
+        <h4>Information</h4>
+        <b>You cannot filter the performance column!</b>
+    </div>
+    <div id ="perColSelectInfo" class="alert alert-dismissible alert-info" style="display: none">
+        <button id="perColSelectInfoBtn" type="button" class="close">×</button>
+        <h4>Information</h4>
+        <b>You cannot set this as the performance column as this column is  already filtered,Please change the performance column selection!</b>
     </div>
 
     <div class="row">
