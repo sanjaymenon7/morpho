@@ -27,7 +27,8 @@ router.get('/', function(req, res, next) {
       } else if(!req.session.perfSet){
         res.render('coloumnpreprocessor');
       } else {
-        res.render('column_values_dragdrop');
+        res.render('column_values_dragdrop',{data: req.session.userId});
+
       }
 });
 
