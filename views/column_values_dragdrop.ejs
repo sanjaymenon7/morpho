@@ -10,7 +10,9 @@
     <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script src="../bower_components/Sortable/Sortable.js"></script>
+    <script src="../bower_components/pleasejs/dist/Please.js"></script>
 
+    <link rel="" media="screen" href="../bower_components/flat-ui/fonts/glyphicons/flat-ui-icons-regular.ttf">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
@@ -27,9 +29,9 @@
 </head>
 
 <script type="text/babel">
-    $.material.init()
-    $( document ).ready(function() {
 
+    $( document ).ready(function() {
+        $.material.init();
 
         $.ajax({
             url: '/column_values_dragdrop/column_values_dragdrop_post',
@@ -38,9 +40,7 @@
                 console.log("success post column_values_dragdrop");
                 var htmlData = '';
                 if (data) {
-                    //var len = data.length;
-
-                    var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
+                     var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
                     //console.log('length is' + len);
                     console.log(data);
                     var columnValues = data.values;
@@ -53,10 +53,16 @@
                     }
                     console.log(txt);
                     $('#initList').append(txt);
-
+                    if(data.dataType=='nominal'){
+                        nominalDivCreator();
+                    }
+                    else{
+                        ordinalDivCreator();
+                    }
 
                 }
-                sortableCaller();
+
+
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -70,29 +76,33 @@
 </script>
 
 <body >
+<div id="headerdiv" style="display: none;">columnDragDrop</div>
+
+
 <div class="row" id="headSortableDiv">
-    <div id="initDiv" class="col-md-4 container">
-        <div class="tile-title "> Available elements</div>
+    <div class="col-md-4 "><div id="initDiv" class="panel panel-info">
+        <div class="panel-heading"> Available elements</div>
         <ul id="initList">
 
         </ul>
 
     </div>
+    </div>
     <div class="col-md-1"></div>
     <div id="positionedDiv" class="col-md-4 container">
-        <div id="newPosition" class="row tile-title alert-black glyphicon-asterisk">+
-            <!--  this div is used to add new elements. when an element is added here, you will be adding another div and
-                    creating the div on the fly. it should happen on the addition of an element here.
-                    -->
-            <div class="btn-fab-material-amber-300" onclick="newDivCreator(this)">new div;lkj</div>
-            <ul id="newPositionedList1" class="alert-primary" >
-                <li class="action-secondary"> add New Element Here ++</li>
-            </ul>
+        <!--<div id="newPosition" class="row label label-success ">-->
+            <!--&lt;!&ndash;  this div is used to add new elements. when an element is added here, you will be adding another div and-->
+                    <!--creating the div on the fly. it should happen on the addition of an element here.-->
+                    <!--&ndash;&gt;-->
 
-        </div>
+            <!--<ul id="newPositionedList1" class="alert-primary" >-->
+                <!--<li class="action-secondary"> add New Element Here ++</li>-->
+            <!--</ul>-->
+
+        <!--</div>-->
         <div id="position1" class=" row tile-title">Drop your ranking here
             <ul id="positionedList1" class="alert-primary" >
-                <li class="action-secondary"> </li>
+                <li class="action-secondary" id="emptyForRemove"> </li>
             </ul>
         </div>
 
@@ -102,7 +112,10 @@
     </div>
 
 </div>
+<div class="button">
+    <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Add new row</a>
 
+</div>
 </body>
 <script>
     //var initDiv=$('#initDiv');
@@ -121,18 +134,18 @@
         createSortableElement(document.getElementById('position1'),'sortableDiv');
 
 
-        Sortable.create(document.getElementById("newPosition"), {
-            group: 'sortableDiv',
-            animation: 150,
-            onAdd: function (evt){
-
-                newDivCreator();
-            },// end onAdd()
-            onUpdate: function (evt){ console.log('newposition onpudate', evt.item); },
-            onRemove: function (evt){ console.log('newposition onRemove.bar:', evt.item); },
-            onStart:function(evt){ console.log('newposition onStart.foo:', evt.item);},
-            onEnd: function(evt){ console.log('newposition onEnd.foo:', evt.item);}
-        });
+//        Sortable.create(document.getElementById("newPosition"), {
+//            group: 'sortableDiv',
+//            animation: 150,
+//            onAdd: function (evt){
+//
+//                newDivCreator();
+//            },// end onAdd()
+//            onUpdate: function (evt){ console.log('newposition onpudate', evt.item); },
+//            onRemove: function (evt){ console.log('newposition onRemove.bar:', evt.item); },
+//            onStart:function(evt){ console.log('newposition onStart.foo:', evt.item);},
+//            onEnd: function(evt){ console.log('newposition onEnd.foo:', evt.item);}
+//        });
 
 
     }// end function sortableCaller().
@@ -141,7 +154,13 @@
         Sortable.create(divId,{
             group: ''+groupId,
             animation: 150,
-            onAdd: function (evt){ console.log('createsortableElement onAdd:'+divId+' for group:'+groupId, evt.item); },
+            onAdd: function (evt){
+                console.log('add for div: '+divId.id);
+                $(divId.id).has('#emptyForRemove').remove();
+                //if(document.getElementById(divId.id).getElementById('emptyForRemove')!=null)
+                  //  document.getElementById(divId.id).getElementById('emptyForRemove').remove();
+
+                console.log('createsortableElement onAdd:'+divId+' for group:'+groupId, evt.item); },
             onUpdate: function (evt){ console.log('createsortableElement onUpdate:'+divId+' for group:'+groupId, evt.item); },
             onRemove: function (evt){ console.log('createsortableElement onRemove:'+divId+' for group:'+groupId, evt.item); },
             onStart:function(evt){ console.log('createsortableElement onStart:'+divId+' for group:'+groupId, evt.item);},
@@ -153,27 +172,52 @@
         var counter=currentDiv.substr(currentDiv.length-1);
         console.log("counter is: "+counter);
         counter++;
-        var clr=counter*counter*473+100000;
-        var newDiv= '<div id="position'+counter+'" class="row tile-title"><i class="material-icons">folder</i>';
+        var clr=Please.make_color();
+        var newDiv= '<div id="position'+counter+'" class="row tile-title">';
 
-        newDiv+='<ul id="positionedList'+counter+'"  style="background-color:'+clr+'"> <li class="action-secondary"> </li></ul></div>';
+        newDiv+='<ul id="positionedList'+counter+'"  style="background-color:'+clr+'"> <li id="emptyForRemove" class="action-secondary"> </li></ul>'
+                newDiv+='<div class=" alert-inverse" ><a href="javascript:divRemover(position'+counter+' )" class="btn btn-raised btn-primary">DEL</a></div></div>';
         var tempDiv= document.getElementById('positionedDiv');
         //tempDiv.append(newDiv);
         $('#positionedDiv').append(newDiv);
 
         console.log('new Div:'+ newDiv);
         console.log('child new div appended here');
-        tempstr1='position'+counter;
-        tempstr2='positionList'+counter;
         createSortableElement(document.getElementById('position'+counter),'sortableDiv');
         createSortableElement(document.getElementById('positionedList'+counter),'sortableList');
 
         currentDiv='position'+counter;
-        console.log('onAdd.bar:', evt.item);
-    }
+
+    }// end function newDivCreator.
 
     function divRemover(divElement){
+        console.log('called by element '+divElement.id);
+        var toDelete=document.getElementById(divElement.id  );
+        var initDiv=document.getElementById("initDiv");
+        var toMove=toDelete.children;
+        var listElements;
+        console.log('tomove elements ');
+        console.log(toMove);
+
+        for(i=0;i<toMove.length;i++){
+            if (toMove[i].type=='ul')
+                listElements=toMove[i].children;
+        }
+        console.log('listElements ');
+        console.log(listElements);
+        toMove[0].style.backgroundColor='';
+
+        $("#initDiv").append(toMove[0]);
+        $("#"+divElement.id).remove();
+
 
     }
+    function nominalDivCreator(){
+
+    }// end functiion nominalDivCreator.
+
+    function ordinalDivCreator(){
+        sortableCaller();
+    }// end function OrdinalDivCreator.
 </script>
 </html>
