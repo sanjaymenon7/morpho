@@ -21,10 +21,10 @@
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
     <link rel="" media="screen" href="../bower_components/bootstrap-material-design/fonts/Material-Design-Icons.svg">
 <style>
-        /*ul*/
-        /*{*/
-            /*list-style-type: none;*/
-        /*}*/
+        ul
+        {
+            list-style-type: none;
+        }
 </style>
 </head>
 
@@ -61,8 +61,6 @@
                     }
 
                 }
-
-
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -77,7 +75,7 @@
 
 <body >
 <div id="headerdiv" style="display: none;">columnDragDrop</div>
-
+<%include header.ejs%>
 
 <div class="row" id="headSortableDiv">
     <div class="col-md-4 "><div id="initDiv" class="panel panel-info">
@@ -100,9 +98,9 @@
             <!--</ul>-->
 
         <!--</div>-->
-        <div id="position1" class=" row tile-title">Drop your ranking here
+        <div id="position1" class=" row panel-primary">
             <ul id="positionedList1" class="alert-primary" >
-                <li class="action-secondary" id="emptyForRemove"> </li>
+                <li class="action-secondary" id="emptyForRemove"> Drop your ranking here</li>
             </ul>
         </div>
 
@@ -157,10 +155,31 @@
             onAdd: function (evt){
                 console.log('add for div: '+divId.id);
                 $(divId.id).has('#emptyForRemove').remove();
+                var markerId=-1;
+                for(i=0;i<divId.children.length;i++){
+                    console.log('element: '+divId.children[i]);
+                    console.log(divId.children[i]);
+                    console.log('markerId inside for  '+markerId);
+                    if(divId.children[i].id=='emptyForRemove')
+                    {
+                        console.log(divId.children[i]);
+                        //divId.children[i].style();
+                        markerId=i;
+                        break;
+                    }
+
+                }
+                if(markerId!=-1)
+                {
+                    console.log("inside markerid ");
+                    console.log(markerId);
+                    divId.children[markerId].remove();
+                    markerId=-1;
+                }
                 //if(document.getElementById(divId.id).getElementById('emptyForRemove')!=null)
                   //  document.getElementById(divId.id).getElementById('emptyForRemove').remove();
 
-                console.log('createsortableElement onAdd:'+divId+' for group:'+groupId, evt.item); },
+            console.log('createsortableElement onAdd:'+divId+' for group:'+groupId, evt.item); },
             onUpdate: function (evt){ console.log('createsortableElement onUpdate:'+divId+' for group:'+groupId, evt.item); },
             onRemove: function (evt){ console.log('createsortableElement onRemove:'+divId+' for group:'+groupId, evt.item); },
             onStart:function(evt){ console.log('createsortableElement onStart:'+divId+' for group:'+groupId, evt.item);},
@@ -173,10 +192,11 @@
         console.log("counter is: "+counter);
         counter++;
         var clr=Please.make_color();
-        var newDiv= '<div id="position'+counter+'" class="row tile-title">';
+        var newDiv= '<div id="position'+counter+'" class="row tile-title" style="background-color:'+clr+'">';
 
-        newDiv+='<ul id="positionedList'+counter+'"  style="background-color:'+clr+'"> <li id="emptyForRemove" class="action-secondary"> </li></ul>'
-                newDiv+='<div class=" alert-inverse" ><a href="javascript:divRemover(position'+counter+' )" class="btn btn-raised btn-primary">DEL</a></div></div>';
+        newDiv+='<ul id="positionedList'+counter+'" > <li id="emptyForRemove" class=" emptyForRemove action-secondary">Drop Here </li></ul>'
+        newDiv+='<div class="" ><a href="javascript:divRemover(position'+counter+' )" ';
+        newDiv+= 'class="btn- btn-raised btn-sm">Delete Selection<div class="ripple-container"></div></a></div></div>';
         var tempDiv= document.getElementById('positionedDiv');
         //tempDiv.append(newDiv);
         $('#positionedDiv').append(newDiv);
