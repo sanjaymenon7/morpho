@@ -6,14 +6,24 @@ var mongo = require('mongodb'),
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
 
+router.get('/', function(req, res, next) {
+    if (req.session.loggedIn) {
+        res.render('recommender',{data: req.session.userId});
+    } else {
+        res.render('start');
+    }
+});
+
+var responseJson =
+{
+    "status": true
+}
+
 // A library to change string to hyphen string
 var slugify = require("underscore.string/slugify");
 
 router.get('/get-data', function(req, res, next) {
-   if (!req.session.loggedIn || !req.session.tableSet || !req.session.perfSet || !req.session.perfOrderSet) {
-    responseJson.status=false;
-    res.json(responseJson);
-  } else {
+
     db.open(function(err, db) {
       if(!err) {
         var columnJSON = new Array();
@@ -30,7 +40,7 @@ router.get('/get-data', function(req, res, next) {
                 columnJSON.push(header);
               }
             }
-            //console.log(columnJSON);
+            console.log(columnJSON);
             collection.find({}).toArray(function(err, docs) {
                   var k=0;
                   for(i=0;i<result.length;i++){
@@ -50,7 +60,7 @@ router.get('/get-data', function(req, res, next) {
         });
       }
     });
-  }
+
 });
 
 module.exports = router;

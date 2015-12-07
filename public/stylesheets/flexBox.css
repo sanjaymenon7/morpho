@@ -24,3 +24,18 @@
     color: #2f4154;
     background-color: lightblue;
 }
+
+.header-recommend{
+    background-color:#03a9f4;
+    color: white;
+    height: 40px;
+}
+
+.specs-recommend{
+    color: #2f4154;
+    background-color: aliceblue;
+}
+
+.selected-recommendation{
+    background-color: lawngreen;
+}
