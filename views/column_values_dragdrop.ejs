@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Recommender</title>
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/babel/browser.js"></script>
@@ -20,17 +20,21 @@
 
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
     <link rel="" media="screen" href="../bower_components/bootstrap-material-design/fonts/Material-Design-Icons.svg">
-<style>
-        ul
-        {
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
+    <style>
+        ul {
             list-style-type: none;
         }
-</style>
+    </style>
+
+
 </head>
 
-<script type="text/babel">
-
-    $( document ).ready(function() {
+<script type="text/javascript">
+    var mainData;// use this to alter the json in the client side.
+    var mapMaindata = new Map();
+    $(document).ready(function () {
         $.material.init();
 
         $.ajax({
@@ -40,24 +44,19 @@
                 console.log("success post column_values_dragdrop");
                 var htmlData = '';
                 if (data) {
-                     var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
-                    //console.log('length is' + len);
-                    console.log(data);
-                    var columnValues = data.values;
-                    //console.log(columnValues);
-                    for (var i = 0; i < columnValues.length; i++) {
-                        console.log(columnValues[i]);
-                        // commented because trying drag and drop here
-                        txt += '<li class="dropdown-menu-inverse">' + columnValues[i].value + '</li>';
 
+                    mainData = data;
+                    for (var i = 0; i < mainData.values.length; i++) {
+                        mapMaindata.set(mainData.values[i].value, mainData.values[i].acv);
+                        console.log('i=' + i + ' and item: ' + mapMaindata.get(mainData.values[i].value));
+                        console.log('something here');
                     }
-                    console.log(txt);
-                    $('#initList').append(txt);
-                    if(data.dataType=='nominal'){
-                        nominalDivCreator();
+
+                    if (data.dataType == 'numeric') {
+                        numericDivCreator(mainData);
                     }
-                    else{
-                        ordinalDivCreator();
+                    else {
+                        ordinalDivCreator(mainData);
                     }
 
                 }
@@ -73,171 +72,271 @@
 
 </script>
 
-<body >
+
+<body>
 <div id="headerdiv" style="display: none;">columnDragDrop</div>
-<%include header.ejs%>
+<% include header.ejs %>
 
-<div class="row" id="headSortableDiv">
-    <div class="col-md-4 "><div id="initDiv" class="panel panel-info">
-        <div class="panel-heading"> Available elements</div>
-        <ul id="initList">
+<div class="row">
+    <div class="col-md-12">
+        <div class="well bs-component" style="min-height:350px">
+            <div class="row panel-info" id="numericDiv" style="display:none;" >
+                <div class="col-md-2"></div>
+                <div class="col-md-6 panel-info"  >
+                    <div class="panel-heading">
+                        Priority for Nominal Data
+                    </div>
+                    <!--<div class="row">-->
 
-        </ul>
+                    <!--<div class="col-md-2">-->
 
-    </div>
-    </div>
-    <div class="col-md-1"></div>
-    <div id="positionedDiv" class="col-md-4 container">
-        <!--<div id="newPosition" class="row label label-success ">-->
-            <!--&lt;!&ndash;  this div is used to add new elements. when an element is added here, you will be adding another div and-->
-                    <!--creating the div on the fly. it should happen on the addition of an element here.-->
-                    <!--&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="col-md-8" >&ndash;&gt;-->
+                    <!--&lt;!&ndash;<ul id="initNumericList" style="padding:30px;">&ndash;&gt;-->
 
-            <!--<ul id="newPositionedList1" class="alert-primary" >-->
-                <!--<li class="action-secondary"> add New Element Here ++</li>-->
-            <!--</ul>-->
+                    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
 
-        <!--</div>-->
-        <div id="position1" class=" row panel-primary">
-            <ul id="positionedList1" class="alert-primary" >
-                <li class="action-secondary" id="emptyForRemove"> Drop your ranking here</li>
-            </ul>
+                    <div class="row " id="numericRadioDiv">
+                        <div class="col-md-12" >
+                            <div style=" border-style: solid; border-width: 1px; border-color: lightblue">
+                                <div class="radio radio-primary">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
+                                               checked="" onclick="numericJsonReturn('asc');">
+
+                                        <div id="asc"></div>
+                                    </label>
+                                </div>
+                                <div class="radio radio-primary">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"
+                                               onclick="numericJsonReturn('dsc')">
+
+                                        <div id="dsc"></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row" id="ordinalDiv" style="display:none">
+                <div class="col-md-8 panel-body">
+                    <div class="row" id="headSortableDiv">
+                        <div class="col-md-4 ">
+                            <div id="initDiv" class="panel panel-info">
+                                <div class="panel-heading"> Available elements</div>
+                                <ul id="initOrdinalList">
+
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div id="positionedDiv" class="col-md-4 container">
+                            <div id="position1" class="panel panel-info">
+                                <div class="panel-heading"> Drag Elements Here</div>
+                                <ul id="positionedList1" style="min-height:80px"></ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="button">
+                    <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Add new row</a>
+
+                </div>
+                <div class="button">
+
+                </div>
+            </div>
+
         </div>
-
     </div>
-
-
-    </div>
-
-</div>
-<div class="button">
-    <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Add new row</a>
-
 </div>
 </body>
 <script>
     //var initDiv=$('#initDiv');
     //var positionedDiv=$('#positionedDiv');
-    var currentDiv= "position1";
-    function sortableCaller(){
-        var initList=document.getElementById("initList");
-        var positionedList1=document.getElementById("positionedList1");
+    // // <li id="emptyForRemove" class="alert-info"> Add your elements here</li>
+    var currentDiv = "position1";
+    function sortableCaller() {
+        var initOrdinalList = document.getElementById("initOrdinalList");
+        var positionedList1 = document.getElementById("positionedList1");
 
-        var initDiv=document.getElementById("initDiv");
-        var positionedDiv= document.getElementById("positionedDiv");// used for adding new element using newPosition
+        var initDiv = document.getElementById("initDiv");
+        var positionedDiv = document.getElementById("positionedDiv");// used for adding new element using newPosition
 
-        createSortableElement(initList,'sortableList');
-        createSortableElement(positionedList1,'sortableList');
-        createSortableElement(initDiv,'sortableDiv');
-        createSortableElement(document.getElementById('position1'),'sortableDiv');
-
-
-//        Sortable.create(document.getElementById("newPosition"), {
-//            group: 'sortableDiv',
-//            animation: 150,
-//            onAdd: function (evt){
-//
-//                newDivCreator();
-//            },// end onAdd()
-//            onUpdate: function (evt){ console.log('newposition onpudate', evt.item); },
-//            onRemove: function (evt){ console.log('newposition onRemove.bar:', evt.item); },
-//            onStart:function(evt){ console.log('newposition onStart.foo:', evt.item);},
-//            onEnd: function(evt){ console.log('newposition onEnd.foo:', evt.item);}
-//        });
+        createSortableElement(initOrdinalList, 'sortableList');
+        createSortableElement(positionedList1, 'sortableList');
+        createSortableElement(initDiv, 'sortableDiv', 'TitleElement');
+        createSortableElement(document.getElementById('position1'), 'sortableDiv', 'TitleElement');// TODO : add the element wise logic here.
 
 
     }// end function sortableCaller().
 
-    function createSortableElement( divId, groupId){
-        Sortable.create(divId,{
-            group: ''+groupId,
+    function createSortableElement(divId, groupId, handleElement) {
+        if (!handleElement)
+        // handleElement=divId;// doing this when handleElement is not passed
+            console.log('handleElement:' + handleElement);
+
+        Sortable.create(divId, {
+            group: '' + groupId,
             animation: 150,
-            onAdd: function (evt){
-                console.log('add for div: '+divId.id);
+            handle: handleElement,
+            filter: 'panel-title',
+            onAdd: function (evt) {
+                console.log('add for div: ' + divId.id);
                 $(divId.id).has('#emptyForRemove').remove();
-                var markerId=-1;
-                for(i=0;i<divId.children.length;i++){
-                    console.log('element: '+divId.children[i]);
+                var markerId = -1;
+                for (i = 0; i < divId.children.length; i++) {
+                    console.log('element: ' + divId.children[i]);
                     console.log(divId.children[i]);
-                    console.log('markerId inside for  '+markerId);
-                    if(divId.children[i].id=='emptyForRemove')
-                    {
+                    console.log('markerId inside for  ' + markerId);
+                    if (divId.children[i].id == 'emptyForRemove') {
                         console.log(divId.children[i]);
                         //divId.children[i].style();
-                        markerId=i;
+                        markerId = i;
                         break;
                     }
 
                 }
-                if(markerId!=-1)
-                {
+                if (markerId != -1) {
                     console.log("inside markerid ");
                     console.log(markerId);
                     divId.children[markerId].remove();
-                    markerId=-1;
+                    markerId = -1;
                 }
                 //if(document.getElementById(divId.id).getElementById('emptyForRemove')!=null)
-                  //  document.getElementById(divId.id).getElementById('emptyForRemove').remove();
+                //  document.getElementById(divId.id).getElementById('emptyForRemove').remove();
 
-            console.log('createsortableElement onAdd:'+divId+' for group:'+groupId, evt.item); },
-            onUpdate: function (evt){ console.log('createsortableElement onUpdate:'+divId+' for group:'+groupId, evt.item); },
-            onRemove: function (evt){ console.log('createsortableElement onRemove:'+divId+' for group:'+groupId, evt.item); },
-            onStart:function(evt){ console.log('createsortableElement onStart:'+divId+' for group:'+groupId, evt.item);},
-            onEnd: function(evt){ console.log('createsortableElement onEnd:'+divId+' for group:'+groupId, evt.item);}
+                console.log('createsortableElement onAdd:' + divId + ' for group:' + groupId, evt.item);
+            },
+            onUpdate: function (evt) {
+                console.log('createsortableElement onUpdate:' + divId + ' for group:' + groupId, evt.item);
+            },
+            onRemove: function (evt) {
+                console.log('createsortableElement onRemove:' + divId + ' for group:' + groupId, evt.item);
+            },
+            onStart: function (evt) {
+                console.log('createsortableElement onStart:' + divId + ' for group:' + groupId, evt.item);
+            },
+            onEnd: function (evt) {
+                console.log('createsortableElement onEnd:' + divId + ' for group:' + groupId, evt.item);
+            }
         });
     }// end fucntion sortableCaller().
+    // TODO
+    // colour number based on o of elements
 
-    function newDivCreator(evt){
-        var counter=currentDiv.substr(currentDiv.length-1);
-        console.log("counter is: "+counter);
+    function newDivCreator(evt) {
+        var counter = currentDiv.substr(currentDiv.length - 1);
+        console.log("counter is: " + counter);
         counter++;
-        var clr=Please.make_color();
-        var newDiv= '<div id="position'+counter+'" class="row tile-title" style="background-color:'+clr+'">';
-
-        newDiv+='<ul id="positionedList'+counter+'" > <li id="emptyForRemove" class=" emptyForRemove action-secondary">Drop Here </li></ul>'
-        newDiv+='<div class="" ><a href="javascript:divRemover(position'+counter+' )" ';
-        newDiv+= 'class="btn- btn-raised btn-sm">Delete Selection<div class="ripple-container"></div></a></div></div>';
-        var tempDiv= document.getElementById('positionedDiv');
+        var clr = Please.make_color();
+        var newDiv = '<div id="position' + counter + '" class="panel panel-info" style="background-color:' + clr + '">';
+        newDiv += '<div class="panel-heading" > ';
+        newDiv += '<div class="row" ><div class="col-md-10">Drag Elements Here</div><div class="col-md-2" > <a href="javascript:divRemover(position' + counter + ' )" <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> </div> </div> ';
+        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" > </ul>'
+        //newDiv += '<div class="" ><a href="javascript:divRemover(position' + counter + ' )"  class="btn- btn-raised btn-sm">Delete Selection';
+        newDiv += '<div class="ripple-container"></div></a></div></div>';
+        var tempDiv = document.getElementById('positionedDiv');
         //tempDiv.append(newDiv);
         $('#positionedDiv').append(newDiv);
 
-        console.log('new Div:'+ newDiv);
+        console.log('new Div:' + newDiv);
         console.log('child new div appended here');
-        createSortableElement(document.getElementById('position'+counter),'sortableDiv');
-        createSortableElement(document.getElementById('positionedList'+counter),'sortableList');
+        createSortableElement(document.getElementById('position' + counter), 'sortableDiv');
+        createSortableElement(document.getElementById('positionedList' + counter), 'sortableList');
 
-        currentDiv='position'+counter;
+        currentDiv = 'position' + counter;
 
     }// end function newDivCreator.
 
-    function divRemover(divElement){
-        console.log('called by element '+divElement.id);
-        var toDelete=document.getElementById(divElement.id  );
-        var initDiv=document.getElementById("initDiv");
-        var toMove=toDelete.children;
+    function divRemover(divElement) {
+        console.log('called by element ' + divElement.id);
+        var toDelete = document.getElementById(divElement.id);
+        var initDiv = document.getElementById("initDiv");
+        var toMove = toDelete.children;
         var listElements;
         console.log('tomove elements ');
         console.log(toMove);
 
-        for(i=0;i<toMove.length;i++){
-            if (toMove[i].type=='ul')
-                listElements=toMove[i].children;
+        for (i = 0; i < toMove.length; i++) {
+            if (toMove[i].tagName == 'UL')
+                listElements = toMove[i].children;
         }
         console.log('listElements ');
         console.log(listElements);
-        toMove[0].style.backgroundColor='';
+        toMove[0].style.backgroundColor = '';
 
-        $("#initDiv").append(toMove[0]);
-        $("#"+divElement.id).remove();
+        $("#initOrdinalList").append(listElements);
+        $("#" + divElement.id).remove();
 
 
     }
-    function nominalDivCreator(){
 
-    }// end functiion nominalDivCreator.
+    function numericDivCreator(data) {
+        document.getElementById('numericDiv').style.display = 'block';
+        document.getElementById('ordinalDiv').innerHTML = "";
 
-    function ordinalDivCreator(){
+        console.log('numeric element here');
+        var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
+        //console.log('length is' + len);
+        console.log(data);
+        var columnValues = data.values;
+        //console.log(columnValues);
+//        for (var i = 0; i < columnValues.length; i++) {
+//            console.log(columnValues[i]);
+//            // commented because trying drag and drop here
+//            txt += '<li class="">' + columnValues[i].value + '</li>';
+//
+//        }
+
+        console.log(txt);
+        $('#initNumericList').append(txt);
+        $('#asc').append('Ascending Value<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value+'</b>');
+        $('#dsc').append('Descending Value<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value+'</b>');
+        //$('#numericRadioDiv').append(txt2);
+
+    }// end functiion numericDivCreator.
+
+    function ordinalDivCreator(data) {
+        document.getElementById('ordinalDiv').style.display = 'block';
+        document.getElementById('numericDiv').innerHTML = "";
+        var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
+        //console.log('length is' + len);
+        console.log(data);
+        var columnValues = data.values;
+        //console.log(columnValues);
+        for (var i = 0; i < columnValues.length; i++) {
+            console.log(columnValues[i]);
+            // commented because trying drag and drop here
+            txt += '<li class="dropdown-menu-inverse">' + columnValues[i].value + '</li>';
+
+        }
+        console.log(txt);
+        $('#initOrdinalList').append(txt);
         sortableCaller();
     }// end function OrdinalDivCreator.
+
+    function numericJsonReturn(ascOrDsc) {
+
+        if (ascOrDsc == 'asc') {
+            mainData.values[0].acv = mainData.values[0].value;
+            mainData.values[1].acv = mainData.values[1].value;
+        }
+        else {
+            mainData.values[0].acv = mainData.values[1].value;
+            mainData.values[1].acv = mainData.values[0].value;
+        }
+    }// end function numericJsonReturn.
 </script>
 </html>
