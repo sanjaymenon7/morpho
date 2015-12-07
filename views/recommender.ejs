@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Recommender</title>
+    <script src="../bower_components/react/react-dom.js"></script>
+    <script src="../bower_components/react/react.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/babel/browser.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
+    <link rel='stylesheet' href='/stylesheets/flexBox.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+<body>
+<div id="headerdiv" style="display: none;">recommender</div>
+<%include header.ejs%>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $.material.init();
+        $.ajax({
+            url: 'http://localhost:3000/recommender/get-data',
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+
+                // console.log(data)
+                var datahtml='';
+                var colhtml='';
+                for (i=0;i<data.length;i++){
+                    var datahtml='';
+                    var colhtml='';
+                    // console.log(data[i].column_header.name);
+                    var colData =data[i].column_data;
+                    datahtml= datahtml+('<div class ="child header-recommend tile-title"  id="'+ data[i].column_header.id +'" ><a>'+ data[i].column_header.name +'</a></div>');
+                    for(j=0;j<colData.length;j++){
+                        //  console.log(colData[j].value);
+                        colhtml=colhtml+('<div class ="child specs-recommend" id="'+colData[j].id+'" isSelected="false">'+colData[j].value +'</div>');
+                    }
+                    var htmlDivs = '<div class="divcover" filtered="false">'+datahtml+colhtml +'</div>';
+                    $("#mainDataDiv").append(htmlDivs);
+                }
+
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+        $('.parentContainer').on('click', '.specs-recommend', function(){
+            // do something
+            console.log('inside');
+            console.log($(this).attr('id'));
+                if($(this).attr('isSelected') == 'false')
+                {
+                    $(this).addClass( "selected-recommendation" );
+                    $(this).attr('isSelected','true')
+                }else if($(this).attr('isSelected') == 'true'){
+                    $(this).removeClass( "selected-recommendation" );
+                    $(this).attr('isSelected','false')
+                }
+
+        });
+    });
+</script>
+<div class="well bs-cpmponent">
+    <div class="row">
+        <div class="col-md-10">
+            <legend>Select required items and click Submit for recommendations</legend>
+        </div>
+        <div class="col-md-2">
+            <button id="recommendBtn" class="btn btn-lg btn-primary">Submit<div class="ripple-wrapper"></div></button>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+                <div id="mainDataDiv" class="parentContainer">
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+
+</html>
