@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
     <title>Recommender</title>
     <script src="../bower_components/react/react-dom.js"></script>
     <script src="../bower_components/react/react.js"></script>
@@ -10,6 +10,9 @@
     <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/javascripts/d3.parsets.js"></script>
+    <script src="/javascripts/highlight.min.js"></script>
 
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
@@ -19,6 +22,7 @@
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
     <link rel='stylesheet' href='/stylesheets/flexBox.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/d3.parsets.css' />
 
 </head>
 <body>
@@ -70,23 +74,58 @@
                 }
 
         });
+        //on click of submit button
+        $( "#recommendBtn" ).click(function() {
+
+            $("#recommend-matrix").css("display","none");
+            $("#recommend-graph").css("display","block");
+            var chart = d3.parsets()
+                    .dimensions(["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"])
+                    .width(1500)
+                    .height(2000);
+            var vis = d3.select("#vis").append("svg")
+                    .attr("width", chart.width())
+                    .attr("height", chart.height());
+
+            d3.csv("../data/data1.csv", function(error, csv) {
+                vis.datum(csv).call(chart);
+            });
+        });
     });
 </script>
 <div class="well bs-cpmponent">
-    <div class="row">
-        <div class="col-md-10">
-            <legend>Select required items and click Submit for recommendations</legend>
+    <div id="recommend-matrix" style="display: block;">
+        <div class="row">
+            <div class="col-md-10">
+                <legend>Select required items and click Submit for recommendations</legend>
+            </div>
+            <div class="col-md-2">
+                <button id="recommendBtn" class="btn btn-lg btn-primary">Submit<div class="ripple-wrapper"></div></button>
+            </div>
         </div>
-        <div class="col-md-2">
-            <button id="recommendBtn" class="btn btn-lg btn-primary">Submit<div class="ripple-wrapper"></div></button>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <div class="row">
-        <div class="col-md-12">
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
                 <div id="mainDataDiv" class="parentContainer">
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="recommend-graph" style="display: none;">
+        <div class="row">
+            <div class="col-md-10">
+                <legend>Current recommendations</legend>
+            </div>
+            <div class="col-md-2">
+                <button id="recommendBackBtn" class="btn btn-lg btn-primary">Back<div class="ripple-wrapper"></div></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="vis">
+                </div>
+            </div>
         </div>
     </div>
 </div>
