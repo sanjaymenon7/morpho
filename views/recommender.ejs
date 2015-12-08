@@ -91,6 +91,12 @@
                 vis.datum(csv).call(chart);
             });
         });
+
+        $( "#recommendBackBtn" ).click(function() {
+
+            $("#recommend-matrix").css("display","block");
+            $("#recommend-graph").css("display","none");
+        });
     });
 </script>
 <div class="well bs-cpmponent">
@@ -107,7 +113,7 @@
         <br/>
         <div class="row">
             <div class="col-md-12">
-                <div id="mainDataDiv" class="parentContainer">
+                <div id="mainDataDiv" class="parentContainer" style="max-height: 700px; overflow-y: auto">
                 </div>
             </div>
         </div>
