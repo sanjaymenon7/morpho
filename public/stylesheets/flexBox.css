@@ -34,6 +34,8 @@
 .specs-recommend{
     color: #2f4154;
     background-color: aliceblue;
+    cursor: pointer;
+    cursor: hand;
 }
 
 .selected-recommendation{
