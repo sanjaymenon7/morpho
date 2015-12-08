@@ -249,14 +249,22 @@
         var initElement=document.getElementById('initOrdinalList')
         if(initElement.getElementsByTagName('li').length>0){
             alert('please order all Elements to the right before proceeding');
-
+            return;
         }
-        for(i=0;i<mainData.values;i++){
+        var countOfDiv=currentDiv.substr(currentDiv.length-1);
+        if(mainData.dataType != 'numeric') {
+            for(var i=1;i<=countOfDiv;i++){
+                listParentUpdater('positionedList'+i);
+            }
+        }
+        for(i=0;i<mainData.values.length;i++){
             console.log('maindata value at '+i);
-            console.log(mapMaindata.get(mainData.values[i]));
-            mainData.values[i].acv=mapMaindata.get(mainData.values[i]);
-        }
+            console.log(mapMaindata.get(mainData.values[i].value)+'   ... '+mainData.values[i].acv);
+            mainData.values[i].acv=mapMaindata.get(mainData.values[i].value);
 
+        }
+        console.log("main data: ");
+        console.log(mainData);
         $.ajax({
             url: '/column_values_dragdrop/column_values_dragdrop_post',
             type: 'GET',
