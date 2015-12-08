@@ -21,6 +21,7 @@ var responseJson =
 
 // A library to change string to hyphen string
 var slugify = require("underscore.string/slugify");
+var _ = require("underscore");
 
 router.get('/get-data', function(req, res, next) {
 
