@@ -13,6 +13,9 @@ var db = new Db('morphologicalrecommender', server);
 // Multer - A lib to manage uploads
 var multer  = require('multer');
 
+// A library to change string to hyphen string
+var slugify = require("underscore.string/slugify");
+
 // For Linux, Mac - Please change the path of uploads to same folder as MongoDB
 var upload = multer({ dest: configVariables.configLines.uploadDestination});
 
@@ -52,17 +55,38 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
                                   } else {
                                     projects.insertOne({"name":req.body.project_name, "description":req.body.project_description, "userId":req.session.userId, "table":"table"+tableNumber}, function(err2, results2){
                                         assert.equal(err2, null);
-                                        //console.log("project inserted");
-                                        dataTables.updateOne({"tableNumber":tableNumber}, {"tableNumber":tableNumber+1}, function(err1, results1){
-                                            assert.equal(err1, null);
-                                            //console.log("table number incremented");
-                                            db.close();
-                                            router.sess = req.session;
-                                            router.sess.tableSet = true;
-                                            router.sess.table="table"+tableNumber;
-                                            var htmlstr ='<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">×</button><strong>Heads up!</strong></div>'
-                                            res.render('datasourceselection',{data: req.session.userId});
-                                        });
+                                            var collection_distinct = db.collection("table"+tableNumber+"_keys");
+                                            var i;
+                                            var query = 'db.table'+tableNumber+'_keys.distinct("_id");';
+                                            db.eval(query, function(err, result){
+                                                result.forEach(function(item, index){
+                                                  if (item!="_id") {
+                                                    var collection = db.collection("table"+tableNumber);
+                                                    var query_distinct = 'db.table'+tableNumber+'.distinct("'+item+'");';
+                                                    db.eval(query_distinct, function(err4, docs4){
+                                                      console.log(err4);
+                                                      var distinct_values = new Array();
+                                                      for(var j=0;j<docs4.length;j++){
+                                                        var value = {value: docs4[j], id:slugify(item)+"-"+j}
+                                                        distinct_values.push(value);
+                                                      }
+                                                      console.log(item);
+                                                      //console.log(distinct_values);
+                                                      collection_distinct.update({"_id":item},{"value":distinct_values});
+                                                    });
+                                                  }
+                                                });
+                                                dataTables.updateOne({"tableNumber":tableNumber}, {"tableNumber":tableNumber+1}, function(err1, results1){
+                                                      assert.equal(err1, null);
+                                                      //console.log("table number incremented");
+                                                      //db.close();
+                                                      router.sess = req.session;
+                                                      router.sess.tableSet = true;
+                                                      router.sess.table="table"+tableNumber;
+                                                      var htmlstr ='<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">×</button><strong>Heads up!</strong></div>'
+                                                      res.render('datasourceselection',{data: req.session.userId});
+                                                });
+                                            });
                                     });
                                   }
                                 });
