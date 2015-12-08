@@ -50,11 +50,16 @@
 
                     mainData = data;
                     for (var i = 0; i < mainData.values.length; i++) {
-                        mapMaindata.set(mainData.values[i].value, mainData.values[i].acv);
+                        mapMaindata.set(mainData.values[i].value.trim(), mainData.values[i].acv);
                         console.log('i=' + i + ' and item: ' + mapMaindata.get(mainData.values[i].value));
-                        console.log('something here');
+                        //console.log('something here');
 
                     }
+
+                    var tempValues=mapMaindata.keys();
+                    mapMaindata.forEach(function(value, key) {
+                        console.log(key + " = " + value);
+                    }, mapMaindata);
 
                     if (data.dataType == 'numeric') {
                         numericDivCreator(mainData);
@@ -137,7 +142,7 @@
                         <div id="positionedDiv" class="col-md-4 container" style="max-height:400px;overflow-y: auto">
                             <div id="position1" class="panel panel-info">
                                 <div class="panel-heading"> Drag Elements Here</div>
-                                <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('position1')"></ul>
+                                <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
                             </div>
                         </div>
@@ -157,7 +162,7 @@
                 <div class="col-md-6">
                     </div>
                 <div class="col-md-2">
-                    <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Next Step</a>
+                    <a href="javascript:nextStep()" class="btn btn-raised btn-info">Next Step</a>
                 </div>
 
             </div>
@@ -170,6 +175,7 @@
     //var positionedDiv=$('#positionedDiv');
     // // <li id="emptyForRemove" class="alert-info"> Add your elements here</li>
     var currentDiv = "position1";
+
     function sortableCaller() {
         var initOrdinalList = document.getElementById("initOrdinalList");
         var positionedList1 = document.getElementById("positionedList1");
@@ -180,7 +186,7 @@
         createSortableElement(initOrdinalList, 'sortableList');
         createSortableElement(positionedList1, 'sortableList');
         createSortableElement(initDiv, 'headSortableDiv', 'TitleElement');
-        createSortableElement(document.getElementById('position1'), 'headSortableDiv', 'TitleElement');// TODO : add the element wise logic here.
+        createSortableElement(document.getElementById('position1'), 'headSortableDiv', 'TitleElement');
 
 
     }// end function sortableCaller().
@@ -218,15 +224,56 @@
         });
     }// end fucntion sortableCaller().
 
-    function updateAcvValue(listElement,divId,action){
-
-    }// end function updateAccValue().
-
     function listParentUpdater(elementId){
         console.log('listParentUpdater: ' +elementId);
-        var listElement=console.log(document.getElementById(elementId));
+        var divCount=elementId.substring(elementId.length-1);
+        var listElement=document.getElementById(elementId);
+        for(var i=0;i<listElement.children.length;i++){
+            console.log('element now is : ');
+            console.log(listElement.getElementsByTagName('li')[i]);
+            if(listElement.getElementsByTagName('li')[i])
+            {
+                var innerValue=listElement.getElementsByTagName('li')[i].innerHTML;
+                console.log('innerValue '+innerValue);
+                console.log('current value in mapmaindata: '+mapMaindata.get(innerValue));
+                console.log('divcount: '+divCount);
+                mapMaindata.set(innerValue,divCount);
+            }
+
+
+        }
 
     }// end function listParentUpdater.
+
+    function nextStep(){
+        var initElement=document.getElementById('initOrdinalList')
+        if(initElement.getElementsByTagName('li').length>0){
+            alert('please order all Elements to the right before proceeding');
+
+        }
+        for(i=0;i<mainData.values;i++){
+            console.log('maindata value at '+i);
+            console.log(mapMaindata.get(mainData.values[i]));
+            mainData.values[i].acv=mapMaindata.get(mainData.values[i]);
+        }
+
+        $.ajax({
+            url: '/column_values_dragdrop/column_values_dragdrop_post',
+            type: 'GET',
+            data: mainData,
+            //contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                console.log("success post column_values_result");
+                window.location='/recommender';
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('something went wrong here..');
+            }
+        });
+
+    }// end of nextStep.
     function colorGenerator(){
 
         divColors=Please.make_color({
@@ -247,7 +294,7 @@
         var newDiv = '<div id="position' + counter + '" class="panel panel-info" style="background-color:' + divColors[counter%mainData.values.length] + '">';
         newDiv += '<div class="panel-heading" > ';
         newDiv += '<div class="row" ><div class="col-md-10 ">Drag Elements Here</div><div class="col-md-2" > <a href="javascript:divRemover(position' + counter + ' )" <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> </div> </div> ';
-        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'position'+counter+'\')">';
+        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'positionedList'+counter+'\')">';
         //newDiv += '<div class="" ><a href="javascript:divRemover(position' + counter + ' )"  class="btn- btn-raised btn-sm">Delete Selection';
         newDiv += '<div class="ripple-container"></div></a></div></div>';
         var tempDiv = document.getElementById('positionedDiv');
@@ -282,11 +329,6 @@
 
         $("#initOrdinalList").append(listElements);
         $("#" + divElement.id).remove();
-
-//        var counter = currentDiv.substr(currentDiv.length - 1);
-//        console.log("counter is: " + counter);
-//        counter--;
-//        currentDiv = 'position' + counter;
 
     }
 
