@@ -41,7 +41,7 @@ router.get('/get-data', function(req, res, next) {
                 columnJSON.push(header);
               }
             }
-            //console.log(columnJSON);
+            console.log(columnJSON);
             collection.find({}).toArray(function(err, docs) {
                   var k=0;
                   for(i=0;i<result.length;i++){
@@ -56,7 +56,7 @@ router.get('/get-data', function(req, res, next) {
                     }
                   }
 
-                  //sorts out duplicate values and outputs them via console.log
+                  //Detect duplicates
                   for (var n=0; n<columnJSON.length; n++){
                   var uniques = columnJSON[n].column_data;
 
@@ -69,10 +69,32 @@ router.get('/get-data', function(req, res, next) {
                       return true;
                     }
                   });
-                  console.log(uniques);
+
+                  //Replace (redundant) column_data with uniques. Array size is unchanged
+                  var replaceObject = function(a, b) {
+                    var prop;
+
+                    for (prop in columnJSON[n].column_data) delete columnJSON[n].column_data[prop];
+                      for (prop in uniques) columnJSON[n].column_data[prop] = uniques[prop]; 
+                    };
+                  replaceObject(columnJSON[n].column_data, uniques);
+
+                  //Remove empty elements from array (resize)
+                  function cleanArray(actual) {
+                    var cleanArray = new Array();
+                    for (var i = 0; i < actual.length; i++) {
+                      if (actual[i]) {
+                        cleanArray.push(actual[i]);
+                      }
+                    }
+                    return columnJSON[n].column_data = cleanArray;
+                  };
+                    cleanArray(columnJSON[n].column_data);
+
+                  //console.log(columnJSON[n].column_data);
                 }
                   res.setHeader('Content-Type', 'application/json');
-                  res.send(JSON.stringify(uniques, null, "    "));
+                  res.send(JSON.stringify(columnJSON, null, "    "));
                   db.close();
             });
         });
