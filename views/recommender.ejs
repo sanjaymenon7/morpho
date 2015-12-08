@@ -30,6 +30,7 @@
 <%include header.ejs%>
 <script type="text/javascript">
     $( document ).ready(function() {
+
         $.material.init();
         $.ajax({
             url: 'http://localhost:3000/recommender/get-data',
@@ -76,9 +77,21 @@
         });
         //on click of submit button
         $( "#recommendBtn" ).click(function() {
-
+            selectedItems=[];
+            $('#selecteditemsdiv').empty();
             $("#recommend-matrix").css("display","none");
             $("#recommend-graph").css("display","block");
+            var selectedItems =[];
+            var itemsHtml = '';
+            $('div[isselected="true"]').each(function() {
+                console.log($( this ).text());
+                selectedItems.push($( this ).text());
+                itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
+            });
+            $('#selecteditemsdiv').append(itemsHtml);
+
+
+
             var chart = d3.parsets()
                     .dimensions(["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"])
                     .width(1500)
@@ -93,7 +106,7 @@
         });
 
         $( "#recommendBackBtn" ).click(function() {
-
+            selectedItems=[];
             $("#recommend-matrix").css("display","block");
             $("#recommend-graph").css("display","none");
         });
@@ -125,6 +138,13 @@
             </div>
             <div class="col-md-2">
                 <button id="recommendBackBtn" class="btn btn-lg btn-primary">Back<div class="ripple-wrapper"></div></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Selected values</h4>
+                <div id="selecteditemsdiv" style="max-width: 500px; overflow: auto;height: 50px; ">
+                </div>
             </div>
         </div>
         <div class="row">
