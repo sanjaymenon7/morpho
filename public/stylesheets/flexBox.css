@@ -39,3 +39,9 @@
 .selected-recommendation{
     background-color: lawngreen;
 }
+
+.child-recommend{
+    vertical-align: middle;
+    border: 1px ridge darkgrey;
+    text-align: center;
+}
