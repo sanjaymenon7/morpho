@@ -78,11 +78,6 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
                                                 });
                                                 dataTables.updateOne({"tableNumber":tableNumber}, {"tableNumber":tableNumber+1}, function(err1, results1){
                                                       assert.equal(err1, null);
-                                                      //console.log("table number incremented");
-                                                      //db.close();
-                                                      router.sess = req.session;
-                                                      router.sess.tableSet = true;
-                                                      router.sess.table="table"+tableNumber;
                                                       var htmlstr ='<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">×</button><strong>Heads up!</strong></div>'
                                                       res.render('datasourceselection',{data: req.session.userId});
                                                 });
