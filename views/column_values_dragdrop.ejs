@@ -34,6 +34,9 @@
 <script type="text/javascript">
     var mainData;// use this to alter the json in the client side.
     var mapMaindata = new Map();
+    var divColors=new Array(); // used to create the divColors for Ordinal data.
+    //var mapValuesToAcv=new Map();
+
     $(document).ready(function () {
         $.material.init();
 
@@ -50,6 +53,7 @@
                         mapMaindata.set(mainData.values[i].value, mainData.values[i].acv);
                         console.log('i=' + i + ' and item: ' + mapMaindata.get(mainData.values[i].value));
                         console.log('something here');
+
                     }
 
                     if (data.dataType == 'numeric') {
@@ -86,17 +90,6 @@
                     <div class="panel-heading">
                         Priority for Nominal Data
                     </div>
-                    <!--<div class="row">-->
-
-                    <!--<div class="col-md-2">-->
-
-                    <!--</div>-->
-                    <!--&lt;!&ndash;<div class="col-md-8" >&ndash;&gt;-->
-                    <!--&lt;!&ndash;<ul id="initNumericList" style="padding:30px;">&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--</div>-->
 
                     <div class="row " id="numericRadioDiv">
                         <div class="col-md-12" >
@@ -127,37 +120,47 @@
 
             <div class="row" id="ordinalDiv" style="display:none">
                 <div class="col-md-8 panel-body">
-                    <div class="row" id="headSortableDiv">
+                    <div class="row" id="headSortableDiv" >
+                        <div class="col-md-1">
+                        </div>
                         <div class="col-md-4 ">
                             <div id="initDiv" class="panel panel-info">
-                                <div class="panel-heading"> Available elements</div>
-                                <ul id="initOrdinalList">
+                                <div class="panel-heading "> Available elements</div>
+                                <ul id="initOrdinalList" style="min-height:80px" ondrop="javascript:listParentUpdater('initOrdinalList')">
 
                                 </ul>
 
                             </div>
                         </div>
-                        <div class="col-md-1"></div>
-                        <div id="positionedDiv" class="col-md-4 container">
+                        <div class="col-md-1">
+                            </div>
+                        <div id="positionedDiv" class="col-md-4 container" style="max-height:400px;overflow-y: auto">
                             <div id="position1" class="panel panel-info">
                                 <div class="panel-heading"> Drag Elements Here</div>
-                                <ul id="positionedList1" style="min-height:80px"></ul>
+                                <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('position1')"></ul>
 
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Add new row</a>
 
+                        </div>
                     </div>
-                </div>
-
-                <div class="button">
-                    <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Add new row</a>
 
                 </div>
-                <div class="button">
 
-                </div>
             </div>
+            <div class="row button" id="buttonsDiv" >
+                <div class="col-md-2">
+                    <a href="/coloumnpreprocessor" class="btn btn-raised btn-info">Back</a>
+                </div>
+                <div class="col-md-6">
+                    </div>
+                <div class="col-md-2">
+                    <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Next Step</a>
+                </div>
 
+            </div>
         </div>
     </div>
 </div>
@@ -176,48 +179,26 @@
 
         createSortableElement(initOrdinalList, 'sortableList');
         createSortableElement(positionedList1, 'sortableList');
-        createSortableElement(initDiv, 'sortableDiv', 'TitleElement');
-        createSortableElement(document.getElementById('position1'), 'sortableDiv', 'TitleElement');// TODO : add the element wise logic here.
+        createSortableElement(initDiv, 'headSortableDiv', 'TitleElement');
+        createSortableElement(document.getElementById('position1'), 'headSortableDiv', 'TitleElement');// TODO : add the element wise logic here.
 
 
     }// end function sortableCaller().
 
     function createSortableElement(divId, groupId, handleElement) {
-        if (!handleElement)
-        // handleElement=divId;// doing this when handleElement is not passed
-            console.log('handleElement:' + handleElement);
+
 
         Sortable.create(divId, {
             group: '' + groupId,
             animation: 150,
             handle: handleElement,
-            filter: 'panel-title',
+            filter: '.panel-heading',
             onAdd: function (evt) {
                 console.log('add for div: ' + divId.id);
-                $(divId.id).has('#emptyForRemove').remove();
-                var markerId = -1;
-                for (i = 0; i < divId.children.length; i++) {
-                    console.log('element: ' + divId.children[i]);
-                    console.log(divId.children[i]);
-                    console.log('markerId inside for  ' + markerId);
-                    if (divId.children[i].id == 'emptyForRemove') {
-                        console.log(divId.children[i]);
-                        //divId.children[i].style();
-                        markerId = i;
-                        break;
-                    }
-
-                }
-                if (markerId != -1) {
-                    console.log("inside markerid ");
-                    console.log(markerId);
-                    divId.children[markerId].remove();
-                    markerId = -1;
-                }
-                //if(document.getElementById(divId.id).getElementById('emptyForRemove')!=null)
-                //  document.getElementById(divId.id).getElementById('emptyForRemove').remove();
-
+                // logic for handling empty element and removing was here.
                 console.log('createsortableElement onAdd:' + divId + ' for group:' + groupId, evt.item);
+                console.log(this);
+                //console.log(this.el.parentElement.id);
             },
             onUpdate: function (evt) {
                 console.log('createsortableElement onUpdate:' + divId + ' for group:' + groupId, evt.item);
@@ -230,21 +211,43 @@
             },
             onEnd: function (evt) {
                 console.log('createsortableElement onEnd:' + divId + ' for group:' + groupId, evt.item);
+                //console.log(this);
+                //console.log('parent: '+this.el.parentElement.id);
+
             }
         });
     }// end fucntion sortableCaller().
-    // TODO
-    // colour number based on o of elements
+
+    function updateAcvValue(listElement,divId,action){
+
+    }// end function updateAccValue().
+
+    function listParentUpdater(elementId){
+        console.log('listParentUpdater: ' +elementId);
+        var listElement=console.log(document.getElementById(elementId));
+
+    }// end function listParentUpdater.
+    function colorGenerator(){
+
+        divColors=Please.make_color({
+            golden: true,
+            base_color: '#03a9f4',
+            colors_returned: mainData.values.length *2
+
+        });
+       // console.log(divColors);
+
+    }// end function colorGenerator().
 
     function newDivCreator(evt) {
-        var counter = currentDiv.substr(currentDiv.length - 1);
+        var counter = currentDiv.substr(8,  currentDiv.length - 1);
         console.log("counter is: " + counter);
         counter++;
         var clr = Please.make_color();
-        var newDiv = '<div id="position' + counter + '" class="panel panel-info" style="background-color:' + clr + '">';
+        var newDiv = '<div id="position' + counter + '" class="panel panel-info" style="background-color:' + divColors[counter%mainData.values.length] + '">';
         newDiv += '<div class="panel-heading" > ';
-        newDiv += '<div class="row" ><div class="col-md-10">Drag Elements Here</div><div class="col-md-2" > <a href="javascript:divRemover(position' + counter + ' )" <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> </div> </div> ';
-        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" > </ul>'
+        newDiv += '<div class="row" ><div class="col-md-10 ">Drag Elements Here</div><div class="col-md-2" > <a href="javascript:divRemover(position' + counter + ' )" <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> </div> </div> ';
+        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'position'+counter+'\')">';
         //newDiv += '<div class="" ><a href="javascript:divRemover(position' + counter + ' )"  class="btn- btn-raised btn-sm">Delete Selection';
         newDiv += '<div class="ripple-container"></div></a></div></div>';
         var tempDiv = document.getElementById('positionedDiv');
@@ -253,8 +256,8 @@
 
         console.log('new Div:' + newDiv);
         console.log('child new div appended here');
-        createSortableElement(document.getElementById('position' + counter), 'sortableDiv');
-        createSortableElement(document.getElementById('positionedList' + counter), 'sortableList');
+        createSortableElement(document.getElementById('position' + counter), 'sortableDiv','title-heading');
+        createSortableElement(document.getElementById('positionedList' + counter), 'sortableList','','position'+counter);
 
         currentDiv = 'position' + counter;
 
@@ -273,47 +276,26 @@
             if (toMove[i].tagName == 'UL')
                 listElements = toMove[i].children;
         }
-        console.log('listElements ');
-        console.log(listElements);
+//        console.log('listElements ');
+//        console.log(listElements);
         toMove[0].style.backgroundColor = '';
 
         $("#initOrdinalList").append(listElements);
         $("#" + divElement.id).remove();
 
+//        var counter = currentDiv.substr(currentDiv.length - 1);
+//        console.log("counter is: " + counter);
+//        counter--;
+//        currentDiv = 'position' + counter;
 
     }
 
-    function numericDivCreator(data) {
-        document.getElementById('numericDiv').style.display = 'block';
-        document.getElementById('ordinalDiv').innerHTML = "";
-
-        console.log('numeric element here');
-        var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
-        //console.log('length is' + len);
-        console.log(data);
-        var columnValues = data.values;
-        //console.log(columnValues);
-//        for (var i = 0; i < columnValues.length; i++) {
-//            console.log(columnValues[i]);
-//            // commented because trying drag and drop here
-//            txt += '<li class="">' + columnValues[i].value + '</li>';
-//
-//        }
-
-        console.log(txt);
-        $('#initNumericList').append(txt);
-        $('#asc').append('Ascending Value<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value+'</b>');
-        $('#dsc').append('Descending Value<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value+'</b>');
-        //$('#numericRadioDiv').append(txt2);
-
-    }// end functiion numericDivCreator.
-
     function ordinalDivCreator(data) {
+        colorGenerator();
         document.getElementById('ordinalDiv').style.display = 'block';
         document.getElementById('numericDiv').innerHTML = "";
         var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
-        //console.log('length is' + len);
-        console.log(data);
+
         var columnValues = data.values;
         //console.log(columnValues);
         for (var i = 0; i < columnValues.length; i++) {
@@ -326,6 +308,28 @@
         $('#initOrdinalList').append(txt);
         sortableCaller();
     }// end function OrdinalDivCreator.
+
+    function numericDivCreator(data) {
+        document.getElementById('numericDiv').style.display = 'block';
+        document.getElementById('ordinalDiv').innerHTML = "";
+
+        //console.log('numeric element here');
+        var txt = '';//'<div class="table-bordered " ><thead><div class=" row"><div class="col-md-2 text-center">Name</div><div class="col-md-6 text-center">Value</div></div></thead><br><br>';
+        var columnValues = data.values;
+        //console.log(columnValues);
+//        for (var i = 0; i < columnValues.length; i++) {
+//            console.log(columnValues[i]);
+//            // commented because trying drag and drop here
+//            txt += '<li class="">' + columnValues[i].value + '</li>';
+//
+//        }
+
+        $('#initNumericList').append(txt);
+        $('#asc').append('Ascending Value<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value+'</b>');
+        $('#dsc').append('Descending Value<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value+'</b>');
+        //$('#numericRadioDiv').append(txt2);
+
+    }// end functiion numericDivCreator.
 
     function numericJsonReturn(ascOrDsc) {
 
