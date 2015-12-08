@@ -105,6 +105,8 @@ router.post('/column_values_dragdrop_result',function(req,res,next){
         router.sess.perfColType = req.body.dataType;
         router.sess.perfColValues = req.body.values;
         responseJson.status=true;
+        console.log(req.body.dataType);
+        console.log(req.body.values);
         res.json(responseJson);
      }
 });
