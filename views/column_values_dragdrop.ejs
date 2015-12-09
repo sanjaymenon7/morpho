@@ -154,10 +154,12 @@
                         </div>
                         <div id="positionedDiv" class="col-md-3 container" style="max-height:400px;overflow-y: auto">
                             <div id="position1" class="panel panel-info">
-                                <div class="panel-heading"> Group Elements Here</div>
-                                <div class="form-group ">
-                                    <input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">
-                                </div>
+                                <!--<div class="panel-heading"> Group Elements Here</div>-->
+                                <!--<div class="form-group ">-->
+                                    <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
+                                    <!---->
+                                <!--</div>-->
+                                <div class="label-info h3" id="groupInput1" style="padding-left: 30px; margin-top: 0px; color:white" contenteditable="true"> Group: 1</div>
                                 <ul id="positionedList1" style="min-height:80px"
                                     ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
@@ -364,10 +366,12 @@
         newDiv += '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> ';
 
         newDiv += ' </div> </div> ';
-        newDiv+= '<div class="form-group"> ';
+        //newDiv+= '<div class="form-group"> ';
         //newDiv+='<label class="control-label">Group Label</label>';
-        newDiv += '<input class="form-control" placeholder="Label for Group '+counter+'" style="padding-left:20px" id="groupInput' + counter + '" type="text">';
-        newDiv+='</div>';
+        //newDiv+='<div class="label-primary" > Group: '+counter+'</div>';
+        newDiv+='<div class="label-primary h3" style="padding-left: 30px; margin-top: 0px; color:white" contenteditable="true" id="groupInput'+counter+'"> Group:'+counter+'</div>';
+        //newDiv += '<input class="form-control" placeholder="Label for Group '+counter+'" style="padding-left:20px" id="groupInput' + counter + '" type="text">';
+        //newDiv+='</div>';
         newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'positionedList' + counter + '\')">';
         //newDiv += '<div class="" ><a href="javascript:divRemover(position' + counter + ' )"  class="btn- btn-raised btn-sm">Delete Selection';
         newDiv += '<div class="ripple-container"></div></a></div></div>';
