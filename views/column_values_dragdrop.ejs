@@ -160,8 +160,7 @@
                                     <!---->
                                 <!--</div>-->
                                 <div class="label-info h3" id="groupInput1" style="padding-left: 30px; margin-top: 0px; color:white" contenteditable="true"> Group: 1</div>
-                                <ul id="positionedList1" style="min-height:80px"
-                                    ondrop="javascript:listParentUpdater('positionedList1')"></ul>
+                                <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
                             </div>
                         </div>
@@ -287,10 +286,13 @@
 
             for (var i = 1; i <= countOfDiv; i++) {
                 listParentUpdater('positionedList' + i);
-                if (!document.getElementById('groupInput' + i).value) {
+                if( !$.trim( $('#groupInput'+i).html() ).length ){
                     $('#warningMessage').text("Enter Group label for group: " + i + " before proceeding");
                     $('#warning').css("display", "block");
                     return;
+                }
+                if (!document.getElementById('groupInput' + i).value) {
+                    // for checking of input value..
                 }
             }
 
@@ -301,7 +303,7 @@
             mainData.values[i].acv = mapMaindata.get(mainData.values[i].value);
 
             if(mainData.dataType != 'numeric'){
-                var label = document.getElementById('groupInput' + mainData.values[i].acv).value;
+                var label = document.getElementById('groupInput' + mainData.values[i].acv).innerHTML;
                 console.log('label: ' + label);
                 mainData.values[i].label = label;
             }
