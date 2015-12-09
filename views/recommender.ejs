@@ -75,34 +75,47 @@
                 }
 
         });
-        //on click of submit button
-        $( "#recommendBtn" ).click(function() {
-            selectedItems=[];
-            $('#selecteditemsdiv').empty();
-            $("#recommend-matrix").css("display","none");
-            $("#recommend-graph").css("display","block");
-            var selectedItems =[];
-            var itemsHtml = '';
-            $('div[isselected="true"]').each(function() {
-                console.log($( this ).text());
-                selectedItems.push($( this ).text());
-                itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
-            });
-            $('#selecteditemsdiv').append(itemsHtml);
-
-
+        function drawVisualization(dimensions, filename){
+            console.log(dimensions);
+            console.log(filename);
 
             var chart = d3.parsets()
-                    .dimensions(["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"])
-                    .width(1500)
-                    .height(2000);
+                    .dimensions(dimensions)
+                    .width(1400)
+                    .height(790);
             var vis = d3.select("#vis").append("svg")
                     .attr("width", chart.width())
                     .attr("height", chart.height());
 
-            d3.json("../data?filename=9f570ca81fa11d84309ea85de78f9c12.json", function(error, csv) {
+            d3.json("../data?filename="+filename+"", function(error, csv) {
                 vis.datum(csv).call(chart);
             });
+        }
+        //on click of submit button
+        $( "#recommendBtn" ).click(function() {
+            if( $('div[isselected="true"]').length >0){
+                selectedItems=[];
+                $('#selecteditemsdiv').empty();
+                $('#vis').empty();
+                $("#recommend-matrix").css("display","none");
+                $("#recommend-graph").css("display","block");
+                var selectedItems =[];
+                var itemsHtml = '';
+                $('div[isselected="true"]').each(function() {
+                    console.log($( this ).text());
+                    selectedItems.push($( this ).text());
+                    itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
+                });
+                $('#selecteditemsdiv').append(itemsHtml);
+                dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
+                fileName = 'data1.csv'
+                drawVisualization(dimennsions, fileName);
+
+            }
+            else{
+                $("#recommendertWarning").css("display","block");
+            }
+
         });
 
         $( "#recommendBackBtn" ).click(function() {
@@ -110,9 +123,19 @@
             $("#recommend-matrix").css("display","block");
             $("#recommend-graph").css("display","none");
         });
+        $( "#recommenderWarningBtn" ).click(function() {
+
+            $("#recommendertWarning").css("display","none");
+        });
     });
+
 </script>
 <div class="well bs-cpmponent">
+    <div id="recommendertWarning" class="alert alert-dismissible alert-warning" style="display: none">
+        <button id="recommenderWarningBtn" type="button" class="close" >×</button>
+        <h4>Warning!</h4>
+        <b>Please select atleast one item to proceed!</b>
+    </div>
     <div id="recommend-matrix" style="display: block;">
         <div class="row">
             <div class="col-md-10">
