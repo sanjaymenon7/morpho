@@ -144,7 +144,7 @@ router.post('/prepareJson', function(req, res, next) {
                             for(var j=0;j<(req.session.perfColValues).length;j++){
                                 for(var k=0;k<docs2.length;k++){
                                     if (docs2[k][req.session.perfCol]==req.session.perfColValues[j].value) {
-                                        docs2[k][req.session.perfCol]=req.session.perfColValues[j].acv
+                                        docs2[k][req.session.perfCol]=req.session.perfColValues[j].label
                                         modifiedJson.push(docs2[k]);
                                     }
                                 }

@@ -78,11 +78,12 @@
         function drawVisualization(dimensions, filename){
             //console.log(dimensions);
             //console.log(filename);
-
+            var ht=window.screen.availHeight;
+            var width=window.screen.availWidth;
             var chart = d3.parsets()
                     .dimensions(dimensions)
-                    .width(1400)
-                    .height(790);
+                    .width(width-200)
+                    .height(ht);
             var vis = d3.select("#vis").append("svg")
                     .attr("width", chart.width())
                     .attr("height", chart.height());
