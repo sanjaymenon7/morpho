@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var configVariables= require('../configVariables');
 
 var responseJson =
 {
@@ -16,7 +17,7 @@ var responseJson =
 });*/
 
 router.get('/', function(req, res){
-  var file = './data/'+req.query.filename;
+  var file = configVariables.configLines.uploadDestination+req.query.filename;
   res.download(file);
 });
 
