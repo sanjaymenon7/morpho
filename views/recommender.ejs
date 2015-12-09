@@ -99,17 +99,42 @@
                 $('#vis').empty();
                 $("#recommend-matrix").css("display","none");
                 $("#recommend-graph").css("display","block");
-                var selectedItems =[];
                 var itemsHtml = '';
                 $('div[isselected="true"]').each(function() {
                     console.log($( this ).text());
-                    selectedItems.push($( this ).text());
+                    selectedItems.push($( this ).attr('id'));
                     itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
                 });
                 $('#selecteditemsdiv').append(itemsHtml);
-                dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
-                fileName = 'data1.csv'
-                drawVisualization(dimennsions, fileName);
+                //dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
+                //fileName = 'data1.csv'
+               // drawVisualization(dimennsions, fileName);
+                console.log(selectedItems);
+                var data =
+                {
+                    "selected_items": selectedItems
+                }
+                $.ajax({
+                    url : "http://localhost:3000/recommender/prepareJson",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data : JSON.stringify(data),
+                    cache: false,
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        console.log(data.filename);
+                        console.log(data.columns);
+                        drawVisualization(data.columns, data.filename);
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+
+                    }
+                });
+
+
 
             }
             else{
