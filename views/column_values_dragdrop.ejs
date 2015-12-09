@@ -34,7 +34,7 @@
 <script type="text/javascript">
     var mainData;// use this to alter the json in the client side.
     var mapMaindata = new Map();
-    var divColors=new Array(); // used to create the divColors for Ordinal data.
+    var divColors = new Array(); // used to create the divColors for Ordinal data.
     //var mapValuesToAcv=new Map();
 
     $(document).ready(function () {
@@ -51,15 +51,16 @@
                     mainData = data;
                     for (var i = 0; i < mainData.values.length; i++) {
                         mapMaindata.set(mainData.values[i].value, mainData.values[i].acv);
-                        console.log('i=' + i + ' and item: ' + mapMaindata.get(mainData.values[i].value));
+                        //console.log('i=' + i + ' and item: ' + mapMaindata.get(mainData.values[i].value));
                         //console.log('something here');
 
                     }
 
-                    var tempValues=mapMaindata.keys();
-                    mapMaindata.forEach(function(value, key) {
-                        console.log(key + " = " + value);
-                    }, mapMaindata);
+                    var tempValues = mapMaindata.keys();
+                    // loop to parse thru maps
+//                    mapMaindata.forEach(function (value, key) {
+//                        console.log(key + " = " + value);
+//                    }, mapMaindata);
 
                     if (data.dataType == 'numeric') {
                         numericDivCreator(mainData);
@@ -85,26 +86,27 @@
 <body>
 <div id="headerdiv" style="display: none;">columnDragDrop</div>
 <% include header.ejs %>
-<form class="bs-component"  >
+<!--<form class="bs-component"  >-->
 <div class="row">
     <div class="col-md-12">
         <div class="well bs-component" style="min-height:350px">
             <br><br>
+
             <div id="warning" class="alert alert-dismissible alert-warning" style="display: none">
-                <button id="warningBtn" type="button" class="close" >×</button>
+                <button id="warningBtn" type="button" class="close">×</button>
                 <h4>Warning!</h4>
-                <b>Please group all Elements to the right before proceeding</b>
+                <div id="warningMessage"></div>
             </div>
-            <div class="row panel-info" id="numericDiv" style="display:none;" >
+            <div class="row panel-info" id="numericDiv" style="display:none;">
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 panel-info"  >
+                <div class="col-md-6 panel-info">
                     <div class="panel-heading">
                         Priority for Nominal Data
                     </div>
 
                     <div class="row " id="numericRadioDiv">
-                        <div class="col-md-12" >
+                        <div class="col-md-12">
                             <div style=" border-style: solid; border-width: 1px; border-color: lightblue">
                                 <div class="radio radio-primary">
                                     <label>
@@ -134,33 +136,35 @@
             <div class="row" id="ordinalDiv" style="display:none">
                 <div class="col-md-11 panel-body">
 
-                    <div class="row" id="headSortableDiv" >
+                    <div class="row" id="headSortableDiv">
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-4 ">
                             <div id="initDiv" class="panel panel-info" style="max-height:300px;overflow-y: auto">
                                 <div class="panel-heading "> Available elements</div>
                                 <div>
-                                <ul id="initOrdinalList" style="min-height:80px" ondrop="javascript:listParentUpdater('initOrdinalList')">
+                                    <ul id="initOrdinalList" style="min-height:80px"
+                                        ondrop="javascript:listParentUpdater('initOrdinalList')">
 
-                                </ul>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-1">
-                            </div>
+                        </div>
                         <div id="positionedDiv" class="col-md-3 container" style="max-height:400px;overflow-y: auto">
                             <div id="position1" class="panel panel-info">
                                 <div class="panel-heading"> Group Elements Here</div>
                                 <div class="form-group ">
-                                <input class="form-control" placeholder="Group Label" id="focusedInput1" type="text">
+                                    <input class="form-control" style="padding-left:20px" placeholder="Group Label" id="groupInput1" type="text">
                                 </div>
-                                <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('positionedList1')"></ul>
+                                <ul id="positionedList1" style="min-height:80px"
+                                    ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
                             </div>
                         </div>
                         <div class="col-md-1">
-                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-success">Add new row</a>
+                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-success" style="margin-top: 0px">Add New Group</a>
 
                         </div>
                     </div>
@@ -169,12 +173,13 @@
 
             </div>
             <br><br><br><br>
-            <div class="row button" id="buttonsDiv" >
+
+            <div class="row button" id="buttonsDiv">
                 <div class="col-md-2">
                     <a href="/coloumnpreprocessor" class="btn btn-raised btn-info">Back</a>
                 </div>
                 <div class="col-md-8">
-                    </div>
+                </div>
                 <div class="col-md-2">
                     <a href="javascript:nextStep()" class="btn btn-raised btn-info">Next Step</a>
                 </div>
@@ -183,7 +188,7 @@
         </div>
     </div>
 </div>
-</form >
+
 </body>
 <script>
     //var initDiv=$('#initDiv');
@@ -239,53 +244,73 @@
         });
     }// end fucntion sortableCaller().
 
-    function listParentUpdater(elementId){
-        console.log('listParentUpdater: ' +elementId);
-        var divCount=elementId.substring(elementId.length-1);
-        var listElement=document.getElementById(elementId);
-        for(var i=0;i<listElement.children.length;i++){
+    function listParentUpdater(elementId) {
+        console.log('listParentUpdater: ' + elementId);
+        var divCount = elementId.substring(elementId.length - 1);
+        var listElement = document.getElementById(elementId);
+        for (var i = 0; i < listElement.children.length; i++) {
             console.log('element now is : ');
             console.log(listElement.getElementsByTagName('li')[i]);
-            if(listElement.getElementsByTagName('li')[i])
-            {
-                var innerValue=listElement.getElementsByTagName('li')[i].innerHTML;
-                console.log('innerValue '+innerValue);
-                console.log('current value in mapmaindata: '+mapMaindata.get(innerValue));
-                console.log('divcount: '+divCount);
-                mapMaindata.set(innerValue,divCount);
+            if (listElement.getElementsByTagName('li')[i]) {
+                var innerValue = listElement.getElementsByTagName('li')[i].innerHTML;
+                console.log('innerValue ' + innerValue);
+                console.log('current value in mapmaindata: ' + mapMaindata.get(innerValue));
+                console.log('divcount: ' + divCount);
+                mapMaindata.set(innerValue, divCount);
             }
 
 
         }
 
     }// end function listParentUpdater.
-//TODO
+    //TODO
     // scrollbar and divisions for the page..
-    $( "#warningBtn" ).click(function() {
+    $("#warningBtn").click(function () {
 
-        $("#warning").css("display","none");
+        $("#warning").css("display", "none");
     });
 
-    function nextStep(){
-        if(mainData.dataType != 'numeric') {
-            var initElement=document.getElementById('initOrdinalList')
-            if(initElement.getElementsByTagName('li').length>0){
-                $('#warning').css("display","block");
-                alert('please order all Elements to the right before proceeding');
+    function nextStep() {
+        if (mainData.dataType != 'numeric') {
+            var initElement = document.getElementById('initOrdinalList')
+            if (initElement.getElementsByTagName('li').length > 0) {
+                //console.log($('#warningInput'))
+                $('#warningMessage').text("Please group all Elements to the right before proceeding") ;
+                $('#warning').css("display", "block");
+
                 return;
             }
-            var countOfDiv=currentDiv.substr(currentDiv.length-1);
 
-            for(var i=1;i<=countOfDiv;i++){
-                listParentUpdater('positionedList'+i);
+            var countOfDiv = currentDiv.substr(currentDiv.length - 1);
 
+            for (var i = 1; i <= countOfDiv; i++) {
+                listParentUpdater('positionedList' + i);
+                if (!document.getElementById('groupInput' + i).value) {
+                    $('#warningMessage').text("Enter Group label for group: " + i + " before proceeding");
+                    $('#warning').css("display", "block");
+                    return;
+                }
             }
 
         }
-        for(i=0;i<mainData.values.length;i++){
-            console.log('maindata value at '+i);
-            console.log(mapMaindata.get(mainData.values[i].value)+'   ... '+mainData.values[i].acv);
-            mainData.values[i].acv=mapMaindata.get(mainData.values[i].value);
+        for (i = 0; i < mainData.values.length; i++) {
+            console.log('maindata value at ' + i);
+            console.log(mapMaindata.get(mainData.values[i].value) + '   ... ' + mainData.values[i].acv);
+            mainData.values[i].acv = mapMaindata.get(mainData.values[i].value);
+
+            if(mainData.dataType != 'numeric'){
+                var label = document.getElementById('groupInput' + mainData.values[i].acv).value;
+                console.log('label: ' + label);
+                mainData.values[i].label = label;
+            }
+            else{
+                if($('#optionsRadios1').checked)
+                    numericJsonReturn('asc');
+                else
+                    numericJsonReturn('dsc');
+                
+            }
+
 
         }
         console.log("main data: ");
@@ -299,7 +324,7 @@
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
                 console.log("success post column_values_result");
-                window.location='/recommender';
+                window.location = '/recommender';
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -308,36 +333,42 @@
         });
 
     }// end of nextStep.
-    function colorGenerator(){
 
-        divColors=Please.make_color({
+    // generates the color to be used for the new groups that are created.
+    //
+    function colorGenerator() {
+
+        divColors = Please.make_color({
             golden: true,
             base_color: 'lightcyan',
             grayscale: true,
-            colors_returned: mainData.values.length *2
+            colors_returned: mainData.values.length * 2
 
         });
-       // console.log(divColors);
+        // console.log(divColors);
 
     }// end function colorGenerator().
 
+    // used to create the dynamic divisions which are used for grouping elements.
+    //
     function newDivCreator(evt) {
-        var counter = currentDiv.substr(8,  currentDiv.length - 1);
-        console.log("counter is: " + counter);
+        var counter = currentDiv.substr(8, currentDiv.length - 1);
+        //console.log("counter is: " + counter);
         counter++;
         var clr = Please.make_color();
         var newDiv = '<div id="position' + counter + '" class="panel panel-info"';
-        newDiv+= ' style="background-color:' + divColors[counter%mainData.values.length] + '">';
+        newDiv += ' style="background-color:' + divColors[counter % mainData.values.length] + '">';
         newDiv += '<div class="panel-heading" > ';
         newDiv += '<div class="row" ><div class="col-md-10 ">Group Elements Here</div><div class="col-md-2" >';
-        newDiv+= '<a href="javascript:divRemover(position' + counter + ' )" ';
-        newDiv+= '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> ' ;
+        newDiv += '<a href="javascript:divRemover(position' + counter + ' )" ';
+        newDiv += '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> ';
 
-        newDiv+= ' </div> </div> ';
-        newDiv+= '<div class="form-group "> ';
-        newDiv+= '<input class="form-control" placeholder="Group Label" id="focusedInput'+counter+'" type="text">';
+        newDiv += ' </div> </div> ';
+        newDiv+= '<div class="form-group"> ';
+        //newDiv+='<label class="control-label">Group Label</label>';
+        newDiv += '<input class="form-control" placeholder="Group Label" style="padding-left:20px" id="focusedInput' + counter + '" type="text">';
         newDiv+='</div>';
-        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'positionedList'+counter+'\')">';
+        newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'positionedList' + counter + '\')">';
         //newDiv += '<div class="" ><a href="javascript:divRemover(position' + counter + ' )"  class="btn- btn-raised btn-sm">Delete Selection';
         newDiv += '<div class="ripple-container"></div></a></div></div>';
         var tempDiv = document.getElementById('positionedDiv');
@@ -345,22 +376,23 @@
         $('#positionedDiv').append(newDiv);
 
         console.log('new Div:' + newDiv);
-        console.log('child new div appended here');
-        createSortableElement(document.getElementById('position' + counter), 'sortableDiv','title-heading');
-        createSortableElement(document.getElementById('positionedList' + counter), 'sortableList','','position'+counter);
+        //console.log('child new div appended here');
+        createSortableElement(document.getElementById('position' + counter), 'sortableDiv', 'title-heading');
+        createSortableElement(document.getElementById('positionedList' + counter), 'sortableList', '', 'position' + counter);
 
         currentDiv = 'position' + counter;
 
     }// end function newDivCreator.
 
+    // To delete the dynamic divs
     function divRemover(divElement) {
-        console.log('called by element ' + divElement.id);
+        //console.log('called by element ' + divElement.id);
         var toDelete = document.getElementById(divElement.id);
         var initDiv = document.getElementById("initDiv");
         var toMove = toDelete.children;
         var listElements;
-        console.log('tomove elements ');
-        console.log(toMove);
+        //console.log('tomove elements ');
+        //console.log(toMove);
 
         for (i = 0; i < toMove.length; i++) {
             if (toMove[i].tagName == 'UL')
@@ -375,6 +407,8 @@
 
     }
 
+    // Create the entire ordinal Division. We used this function to segregate the creation of
+    // ordinal and numeric view logic.
     function ordinalDivCreator(data) {
         colorGenerator();
         document.getElementById('ordinalDiv').style.display = 'block';
@@ -389,11 +423,12 @@
             txt += '<li class="dropdown-menu-inverse">' + columnValues[i].value + '</li>';
 
         }
-        console.log(txt);
+        //console.log(txt);
         $('#initOrdinalList').append(txt);
         sortableCaller();
     }// end function OrdinalDivCreator.
 
+    // To create the numeric divisions.
     function numericDivCreator(data) {
         document.getElementById('numericDiv').style.display = 'block';
         document.getElementById('ordinalDiv').innerHTML = "";
@@ -410,12 +445,13 @@
 //        }
 
         $('#initNumericList').append(txt);
-        $('#asc').append('Ascending Value<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value+'</b>');
-        $('#dsc').append('Descending Value<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value+'</b>');
+        $('#asc').append('Ascending Value<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value + '</b>');
+        $('#dsc').append('Descending Value<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value + '</b>');
         //$('#numericRadioDiv').append(txt2);
 
     }// end functiion numericDivCreator.
 
+    // this returns just the inverted values when ascending or descding is chosen in the check boxes.
     function numericJsonReturn(ascOrDsc) {
 
         if (ascOrDsc == 'asc') {
