@@ -16,6 +16,7 @@ var coloumnpreprocessor = require('./routes/coloumnpreprocessor');
 var columnValuesOrdering = require('./routes/column_values_ordering');
 var columnValuesDragDrop = require('./routes/column_values_dragdrop');
 var recommender = require('./routes/recommender');
+var data = require('./routes/data');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/coloumnpreprocessor', coloumnpreprocessor);
 app.use('/column_values_ordering',columnValuesOrdering);
 app.use('/column_values_dragdrop',columnValuesDragDrop);
 app.use('/recommender', recommender);
+app.use('/data', data);
 
 // added these to handle bower components as well
 app.use(express.static(__dirname + '/public'));
