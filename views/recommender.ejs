@@ -75,6 +75,22 @@
                 }
 
         });
+        function drawVisualization(dimensions, filename){
+            console.log(dimensions);
+            console.log(filename);
+
+            var chart = d3.parsets()
+                    .dimensions(dimensions)
+                    .width(1400)
+                    .height(800);
+            var vis = d3.select("#vis").append("svg")
+                    .attr("width", chart.width())
+                    .attr("height", chart.height());
+
+            d3.csv("../data?filename="+filename+"", function(error, csv) {
+                vis.datum(csv).call(chart);
+            });
+        }
         //on click of submit button
         $( "#recommendBtn" ).click(function() {
             selectedItems=[];
@@ -90,20 +106,10 @@
                 itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
             });
             $('#selecteditemsdiv').append(itemsHtml);
+            dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
+            fileName = 'data1.csv'
+            drawVisualization(dimennsions, fileName);
 
-
-
-            var chart = d3.parsets()
-                    .dimensions(["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"])
-                    .width(1400)
-                    .height(1000);
-            var vis = d3.select("#vis").append("svg")
-                    .attr("width", chart.width())
-                    .attr("height", chart.height());
-
-            d3.csv("../data?filename=data1.csv", function(error, csv) {
-                vis.datum(csv).call(chart);
-            });
         });
 
         $( "#recommendBackBtn" ).click(function() {
