@@ -85,12 +85,19 @@
 <body>
 <div id="headerdiv" style="display: none;">columnDragDrop</div>
 <% include header.ejs %>
-
+<form class="bs-component"  >
 <div class="row">
     <div class="col-md-12">
         <div class="well bs-component" style="min-height:350px">
+            <br><br>
+            <div id="warning" class="alert alert-dismissible alert-warning" style="display: none">
+                <button id="warningBtn" type="button" class="close" >×</button>
+                <h4>Warning!</h4>
+                <b>Please group all Elements to the right before proceeding</b>
+            </div>
             <div class="row panel-info" id="numericDiv" style="display:none;" >
-                <div class="col-md-2"></div>
+
+                <div class="col-md-3"></div>
                 <div class="col-md-6 panel-info"  >
                     <div class="panel-heading">
                         Priority for Nominal Data
@@ -121,33 +128,39 @@
                     </div>
 
                 </div>
+
             </div>
 
             <div class="row" id="ordinalDiv" style="display:none">
-                <div class="col-md-8 panel-body">
+                <div class="col-md-11 panel-body">
+
                     <div class="row" id="headSortableDiv" >
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                         </div>
                         <div class="col-md-4 ">
-                            <div id="initDiv" class="panel panel-info">
+                            <div id="initDiv" class="panel panel-info" style="max-height:300px;overflow-y: auto">
                                 <div class="panel-heading "> Available elements</div>
+                                <div>
                                 <ul id="initOrdinalList" style="min-height:80px" ondrop="javascript:listParentUpdater('initOrdinalList')">
 
                                 </ul>
-
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1">
                             </div>
-                        <div id="positionedDiv" class="col-md-4 container" style="max-height:400px;overflow-y: auto">
+                        <div id="positionedDiv" class="col-md-3 container" style="max-height:400px;overflow-y: auto">
                             <div id="position1" class="panel panel-info">
-                                <div class="panel-heading"> Drag Elements Here</div>
+                                <div class="panel-heading"> Group Elements Here</div>
+                                <div class="form-group ">
+                                <input class="form-control" placeholder="Group Label" id="focusedInput1" type="text">
+                                </div>
                                 <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-info">Add new row</a>
+                        <div class="col-md-1">
+                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-success">Add new row</a>
 
                         </div>
                     </div>
@@ -155,11 +168,12 @@
                 </div>
 
             </div>
+            <br><br><br><br>
             <div class="row button" id="buttonsDiv" >
                 <div class="col-md-2">
                     <a href="/coloumnpreprocessor" class="btn btn-raised btn-info">Back</a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     </div>
                 <div class="col-md-2">
                     <a href="javascript:nextStep()" class="btn btn-raised btn-info">Next Step</a>
@@ -169,6 +183,7 @@
         </div>
     </div>
 </div>
+</form >
 </body>
 <script>
     //var initDiv=$('#initDiv');
@@ -244,11 +259,18 @@
         }
 
     }// end function listParentUpdater.
+//TODO
+    // scrollbar and divisions for the page..
+    $( "#warningBtn" ).click(function() {
+
+        $("#warning").css("display","none");
+    });
 
     function nextStep(){
         if(mainData.dataType != 'numeric') {
             var initElement=document.getElementById('initOrdinalList')
             if(initElement.getElementsByTagName('li').length>0){
+                $('#warning').css("display","block");
                 alert('please order all Elements to the right before proceeding');
                 return;
             }
@@ -256,7 +278,9 @@
 
             for(var i=1;i<=countOfDiv;i++){
                 listParentUpdater('positionedList'+i);
+
             }
+
         }
         for(i=0;i<mainData.values.length;i++){
             console.log('maindata value at '+i);
@@ -288,7 +312,8 @@
 
         divColors=Please.make_color({
             golden: true,
-            base_color: '#03a9f4',
+            base_color: 'lightcyan',
+            grayscale: true,
             colors_returned: mainData.values.length *2
 
         });
@@ -301,9 +326,17 @@
         console.log("counter is: " + counter);
         counter++;
         var clr = Please.make_color();
-        var newDiv = '<div id="position' + counter + '" class="panel panel-info" style="background-color:' + divColors[counter%mainData.values.length] + '">';
+        var newDiv = '<div id="position' + counter + '" class="panel panel-info"';
+        newDiv+= ' style="background-color:' + divColors[counter%mainData.values.length] + '">';
         newDiv += '<div class="panel-heading" > ';
-        newDiv += '<div class="row" ><div class="col-md-10 ">Drag Elements Here</div><div class="col-md-2" > <a href="javascript:divRemover(position' + counter + ' )" <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> </div> </div> ';
+        newDiv += '<div class="row" ><div class="col-md-10 ">Group Elements Here</div><div class="col-md-2" >';
+        newDiv+= '<a href="javascript:divRemover(position' + counter + ' )" ';
+        newDiv+= '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></div> ' ;
+
+        newDiv+= ' </div> </div> ';
+        newDiv+= '<div class="form-group "> ';
+        newDiv+= '<input class="form-control" placeholder="Group Label" id="focusedInput'+counter+'" type="text">';
+        newDiv+='</div>';
         newDiv += '<ul id="positionedList' + counter + '" style="min-height:80px" ondrop="javascript:listParentUpdater(\'positionedList'+counter+'\')">';
         //newDiv += '<div class="" ><a href="javascript:divRemover(position' + counter + ' )"  class="btn- btn-raised btn-sm">Delete Selection';
         newDiv += '<div class="ripple-container"></div></a></div></div>';
