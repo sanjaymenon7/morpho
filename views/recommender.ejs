@@ -76,8 +76,8 @@
 
         });
         function drawVisualization(dimensions, filename){
-            console.log(dimensions);
-            console.log(filename);
+            //console.log(dimensions);
+            //console.log(filename);
 
             var chart = d3.parsets()
                     .dimensions(dimensions)
@@ -99,17 +99,48 @@
                 $('#vis').empty();
                 $("#recommend-matrix").css("display","none");
                 $("#recommend-graph").css("display","block");
-                var selectedItems =[];
                 var itemsHtml = '';
                 $('div[isselected="true"]').each(function() {
                     console.log($( this ).text());
-                    selectedItems.push($( this ).text());
+                    selectedItems.push($( this ).attr('id'));
                     itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
                 });
                 $('#selecteditemsdiv').append(itemsHtml);
-                dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
-                fileName = 'data1.csv'
-                drawVisualization(dimennsions, fileName);
+                //dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
+                //fileName = 'data1.csv'
+               // drawVisualization(dimennsions, fileName);
+                console.log(selectedItems);
+                var data =
+                {
+                    "selected_items": selectedItems
+                }
+                $.ajax({
+                    url : "http://localhost:3000/recommender/prepareJson",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data : JSON.stringify(data),
+                    cache: false,
+                    success: function(data, textStatus, jqXHR)
+                    {
+
+                        //console.log(data.filename);
+                        //console.log(data.columns);
+                        if(data.success == true){
+                         drawVisualization(data.columns, data.filename);
+                        }
+                        else{
+                            $("#visualizationWarning").css("display","block");
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+
+                    }
+                });
+
+
 
             }
             else{
@@ -127,6 +158,10 @@
 
             $("#recommendertWarning").css("display","none");
         });
+        $( "#visualizationWarningBtn" ).click(function() {
+
+            $("#visualizationWarning").css("display","none");
+        });
     });
 
 </script>
@@ -135,6 +170,11 @@
         <button id="recommenderWarningBtn" type="button" class="close" >×</button>
         <h4>Warning!</h4>
         <b>Please select atleast one item to proceed!</b>
+    </div>
+    <div id="visualizationWarning" class="alert alert-dismissible alert-warning" style="display: none">
+        <button id="visualizationWarningBtn" type="button" class="close" >×</button>
+        <h4>Oops!</h4>
+        <b>Something went wrong, please try again!</b>
     </div>
     <div id="recommend-matrix" style="display: block;">
         <div class="row">
@@ -157,7 +197,7 @@
     <div id="recommend-graph" style="display: none;">
         <div class="row">
             <div class="col-md-10">
-                <legend>Current recommendations</legend>
+                <legend>Recommendation</legend>
             </div>
             <div class="col-md-2">
                 <button id="recommendBackBtn" class="btn btn-lg btn-primary">Back<div class="ripple-wrapper"></div></button>
