@@ -36,10 +36,9 @@ router.get('/get-data', function(req, res, next) {
        var columnJSON = new Array();
        var collection = db.collection(req.session.table+"_keys");
        collection.find().toArray(function(err, docs) {
-           //console.log(docs);
            var k=0;
            for (var col=0; col<docs.length; col++){
-              if (docs[col]._id!="_id" && (req.session.columns).indexOf(col)!=-1){
+              if (docs[col]._id!="_id" && (req.session.selectedCols).indexOf(docs[col]._id)!=-1){
                 var header = {column_header:{name:docs[col]._id, id:col}, column_data: new Array()};
                 columnJSON.push(header);
                 for (var val=0; val<(docs[col].value).length; val++){
