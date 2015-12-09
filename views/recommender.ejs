@@ -79,6 +79,7 @@
         $( "#recommendBtn" ).click(function() {
             selectedItems=[];
             $('#selecteditemsdiv').empty();
+            $('#vis').empty();
             $("#recommend-matrix").css("display","none");
             $("#recommend-graph").css("display","block");
             var selectedItems =[];
@@ -94,13 +95,13 @@
 
             var chart = d3.parsets()
                     .dimensions(["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"])
-                    .width(1500)
-                    .height(2000);
+                    .width(1400)
+                    .height(1000);
             var vis = d3.select("#vis").append("svg")
                     .attr("width", chart.width())
                     .attr("height", chart.height());
 
-            d3.csv("../data?filename=data.csv", function(error, csv) {
+            d3.csv("../data?filename=data1.csv", function(error, csv) {
                 vis.datum(csv).call(chart);
             });
         });
