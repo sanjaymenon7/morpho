@@ -100,7 +100,7 @@
                     .attr("width", chart.width())
                     .attr("height", chart.height());
 
-            d3.csv("../data?filename=data.csv", function(error, csv) {
+            d3.json("../data?filename=9f570ca81fa11d84309ea85de78f9c12.json", function(error, csv) {
                 vis.datum(csv).call(chart);
             });
         });
