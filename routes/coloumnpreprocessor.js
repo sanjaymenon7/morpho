@@ -71,7 +71,23 @@ router.post('/setDataSet',function(req,res,next){
         }
         //console.log(columns);
         router.sess.columns=columns;
-        res.json(responseJson)
+        db.open(function(err, db) {
+            if(!err) {
+                var query = 'db.'+req.session.table+'_keys.distinct("_id");';
+                db.eval(query, function(err, result){
+                    var selectedColumns = new Array();
+                   selectedColumns.push(result[req.body.perfColId]);
+                    for(i=0;i<result.length;i++){
+                      if (result[i]!="_id" && i!=req.body.perfColId && columns.indexOf(i)!=-1) {
+                        selectedColumns.push(result[i]);
+                      }                     
+                    }
+                    router.sess.selectedCols = selectedColumns;
+                    db.close();
+                    res.json(responseJson);
+                });
+            }
+        });
      }
 });
 
