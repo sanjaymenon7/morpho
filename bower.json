@@ -12,6 +12,7 @@
     "jquery": "~2.1.4",
     "flat-ui": "~2.2.2",
     "Sortable": "~1.4.2",
-    "pleasejs": "~0.4.2"
+    "pleasejs": "~0.4.2",
+    "chance": "~0.8.0"
   }
 }
