@@ -10,11 +10,12 @@
     <script src="../bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <script src="../bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/javascripts/d3.parsets.js"></script>
     <script src="/javascripts/highlight.min.js"></script>
 
-
+    <link rel="stylesheet" href="../bower_components/jquery-ui/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
@@ -98,7 +99,7 @@
                 selectedItems=[];
                 $('#selecteditemsdiv').empty();
                 $('#vis').empty();
-                $("#recommend-matrix").css("display","none");
+               // $("#recommend-matrix").css("display","none");
                 $("#recommend-graph").css("display","block");
                 var itemsHtml = '';
                 $('div[isselected="true"]').each(function() {
@@ -152,8 +153,8 @@
 
         $( "#recommendBackBtn" ).click(function() {
             selectedItems=[];
-            $("#recommend-matrix").css("display","block");
-            $("#recommend-graph").css("display","none");
+           // $("#recommend-matrix").css("display","block");
+           // $("#recommend-graph").css("display","none");
         });
         $( "#recommenderWarningBtn" ).click(function() {
 
@@ -162,6 +163,15 @@
         $( "#visualizationWarningBtn" ).click(function() {
 
             $("#visualizationWarning").css("display","none");
+        });
+        var icons = {
+            header: "ui-icon-circle-arrow-e",
+            activeHeader: "ui-icon-circle-arrow-s"
+        };
+        $( "#accordion" ).accordion({
+            collapsible: true,
+            heightStyle: "content",
+            icons: icons
         });
     });
 
@@ -177,31 +187,39 @@
         <h4>Oops!</h4>
         <b>Something went wrong, please try again!</b>
     </div>
-    <div id="recommend-matrix" style="display: block;">
-        <div class="row">
-            <div class="col-md-10">
-                <legend>Select required items and click Submit for recommendations</legend>
-            </div>
-            <div class="col-md-2">
-                <button id="recommendBtn" class="btn btn-lg btn-primary">Submit<div class="ripple-wrapper"></div></button>
-            </div>
+    <div id="accordion" class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Value Matrix</h3>
         </div>
-        <br/>
-        <br/>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="mainDataDiv" class="parentContainer" style="max-height: 700px; overflow-y: auto">
+        <div class="panel-body" style="height: inherit;">
+            <div id="recommend-matrix" style="display: block;">
+                <div class="row">
+                    <div class="col-md-10">
+                        <legend>Select required items and click Submit for recommendations</legend>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="recommendBtn" class="btn btn-lg btn-primary">Submit<div class="ripple-wrapper"></div></button>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="mainDataDiv" class="parentContainer" style="max-height: 300px; overflow-y: auto">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="recommend-graph" style="display: none;">
         <div class="row">
             <div class="col-md-10">
                 <legend>Recommendation</legend>
             </div>
             <div class="col-md-2">
-                <button id="recommendBackBtn" class="btn btn-lg btn-primary">Back<div class="ripple-wrapper"></div></button>
+                <!--<button id="recommendBackBtn" class="btn btn-lg btn-primary">Back<div class="ripple-wrapper"></div></button>-->
             </div>
         </div>
         <div class="row">
