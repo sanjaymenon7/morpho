@@ -1,0 +1,28 @@
+Company Name,Phone Name,Operating System,Resolution,Camera,Processor,System Memory,Built-in Storage,Multiple SIM Cards,SIM Card
+OnePlus,One,Android (5.1),1080 x 1920 pixels,13 megapixels,Quad-core,3072 MB RAM,64 GB,0,micro
+Motorola,Moto X,Android (5.1),1080 x 1920 pixels,21 megapixels,Octa-core,2048 MB RAM,32 GB,0,nano
+Asus,Zenfone 2,Android (5.0),720 x 1280 pixels,13 megapixels,Quad-core,2048 MB RAM,16 GB,1,micro
+Samsung,Galaxy S5,Android (5.0),1080 x 1920 pixels,16 megapixels,Quad-core,2048 MB RAM,32 GB,0,micro
+Samsung,Galaxy A8,Android (5.1),1080 x 1920 pixels,16 megapixels,Octa-core,2048 MB RAM,32 GB,0,nano
+Samsung,Z3,Tizen (2.3),720 x 1280 pixels,8 megapixels,Quad-core,1024 MB RAM,8 GB,1,normal
+Samsung,Galaxy J5,Android (5.0),720 x 1280 pixels,13 megapixels,Quad-core,1536 MB RAM,8 GB,0,micro
+Samsung,Galaxy Grand Neo Plus,Android (4.0),480 x 800 pixels,5 megapixels,Quad-core,1024 MB RAM,8 GB,1,normal
+Samsung,Galaxy Note 5,Android (5.1),1440 x 2560 pixels,16 megapixels,Octa-core,4096 MB RAM,64 GB,0,nano
+OnePlus,X,Android (5.1),1080 x 1920 pixels,13 megapixels,Quad-core,3072 MB RAM,16 GB,0,nano
+Samsung,Galaxy S6,Android (5.1),1440 x 2560 pixels,16 megapixels,Octa-core,3072 MB RAM,128 GB,0,nano
+Motorola,Nexus 6,Android (5.1),1440 x 2560 pixels,13 megapixels,Quad-core,3072 MB RAM,64 GB,0,nano
+Sony,Xperia Z5 Compact,Android (5.1),720 x 1280 pixels,23 megapixels,Octa-core,2048 MB RAM,32 GB,0,nano
+Sony,Xperia Z5 Premium,Android (5.1),2160 x 3840 pixels,23 megapixels,Octa-core,3072 MB RAM,32 GB,0,nano
+Sony,Xperia M,Android (5.0),1080 x 1920 pixels,21.5 megapixels,Octa-core,3072 MB RAM,16 GB,0,nano
+Sony,Xperia C5 Ultra,Android (5.0),1080 x 1920 pixels,13 megapixels,Octa-core,2048 MB RAM,16 GB,0,nano
+Sony,Xperia Z4 V,Android (5.1),1440 x 2560 pixels,20.7 megapixels,Octa-core,3072 MB RAM,32 GB,0,nano
+Sony,Xperia Z3+,Android (5.0),1080 x 1920 pixels,20.7 megapixels,Octa-core,3072 MB RAM,32 GB,0,nano
+Sony,Xperia C4,Android (5.0),1080 x 1920 pixels,13 megapixels,Octa-core,16 GB RAM,16 GB,0,nano
+Sony,Xperia M4 Aqua,Android (5.0),720 x 1280 pixels,13 megapixels,Octa-core,16 GB RAM,16 GB,0,nano
+Sony,Xperia E4,Android (4.4.4),540 x 960 pixels,5 megapixels,Quad-core,8 GB RAM,8 GB,0,micro
+Microsoft,Lumia 950,Windows (10 Mobile),1440 x 2560 pixels,20 megapixels,Hexa-core,3072 MB RAM,32 GB,0,nano
+LG,Nexus 5X,Android (6.0),1080 x 1920 pixels,12.3 megapixels,Hexa-core,2048 MB RAM,32 GB,0,nano
+Sony,Xperia Z5,Android (5.1),1080 x 1920 pixels,23 megapixels,Octa-core,3072 MB RAM,32 GB,0,nano
+LG,G4,Android (5.1),1440 x 2560 pixels,16 megapixels,Hexa-core,3072 MB RAM,32 GB,0,micro
+Xiamo,MI 4I,Android (5.0),1080 x 1920 pixels,13 megapixels,Octa-core,2048 MB RAM,32 GB,1,micro
+Huawei,Nexus 6P,Android (6.0),1440 x 2560 pixels,12.3 megapixels,Octa-core,3072 MB RAM,128 GB,0,nano
