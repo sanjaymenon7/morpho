@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET start start page. */
 router.get('/', function(req, res, next) {
     if (req.session.loggedIn) {
-        res.render('datasourceselection',{data: req.session.userId});
+        res.render('datasourceselection',{uploaderror:"false", data: req.session.userId});
     } else {
         res.render('start');
     }

@@ -37,7 +37,7 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
             var projects = db.collection("projects");
             projects.find({"name":req.body.project_name, "userId": req.session.userId}).toArray(function(err3, docs3) {
                 if(docs3.length>0){
-                    res.send("Sorry "+req.body.project_name+" already exists in our database");
+                    res.render('datasourceselection',{uploaderror:"true",data: req.session.userId});
                 } else{
                     dataTables.find().toArray(function(err, docs) {
                         var tableNumber = docs[0]["tableNumber"];
@@ -79,7 +79,7 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
                                                 dataTables.updateOne({"tableNumber":tableNumber}, {"tableNumber":tableNumber+1}, function(err1, results1){
                                                       assert.equal(err1, null);
                                                       var htmlstr ='<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">×</button><strong>Heads up!</strong></div>'
-                                                      res.render('datasourceselection',{data: req.session.userId});
+                                                      res.render('datasourceselection',{uploaderror:"false",data: req.session.userId});
                                                 });
                                             });
                                     });

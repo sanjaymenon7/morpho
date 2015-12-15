@@ -32,7 +32,7 @@ router.post('/submitinitdata',function(req,res,next){
                     router.sess.userId=req.body.username;
                     data[0].success=true;
                     res.json(data);
-                    res.render("datasourceselection");
+                    res.render("datasourceselection",{uploaderror:"false", data: req.session.userId});
                 }
                 else {
                     users.insert({"username":req.body.username});
@@ -42,7 +42,7 @@ router.post('/submitinitdata',function(req,res,next){
                     router.sess.userId=req.body.username;
                     data[0].success=true;
                     res.json(data);
-                    res.render("datasourceselection");
+                    res.render("datasourceselection",{uploaderror:"false", data: req.session.userId});
                 }
 				db.close();
 			});
