@@ -130,6 +130,8 @@
                         //console.log(data.columns);
                         if(data.success == true){
                          drawVisualization(data.columns, data.filename);
+                            $('#ui-id-1').trigger('click');
+                            //$('html, body').animate({ scrollTop: $('#recommend-graph').offset().top }, 'slow');
                         }
                         else{
                             $("#visualizationWarning").css("display","block");
