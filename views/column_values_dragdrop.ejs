@@ -36,7 +36,7 @@
     var mainData;// use this to alter the json in the client side.
     var mapMaindata = new Map();
     var divColors = new Array(); // used to create the divColors for Ordinal data.
-    var removedDivIds= new Set();
+    var removedDivIds = new Set();
     //var mapValuesToAcv=new Map();
 
     $(document).ready(function () {
@@ -97,6 +97,7 @@
             <div id="warning" class="alert alert-dismissible alert-warning" style="display: none">
                 <button id="warningBtn" type="button" class="close">×</button>
                 <h4>Warning!</h4>
+
                 <div id="warningMessage"></div>
             </div>
             <div class="row panel-info" id="numericDiv" style="display:none;">
@@ -138,6 +139,17 @@
             <div class="row" id="ordinalDiv" style="display:none">
                 <div class="col-md-11 panel-body">
 
+                    <div class="row">
+                        <div class="col-md-8"></div>
+                        <div class="label-info col-md-4" style="color:white">
+                                <i>
+                                    Group the Elements with increasing priority.
+                                    Elements placed in the same group have same priority.
+                                    Group names are editable.
+                                </i>
+                        </div>
+                    </div>
+                    <br><br>
                     <div class="row" id="headSortableDiv">
                         <div class="col-md-2">
                         </div>
@@ -158,18 +170,22 @@
                             <div id="position1" class="panel panel-info">
                                 <!--<div class="panel-heading"> Group Elements Here</div>-->
                                 <!--<div class="form-group ">-->
-                                    <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
-                                    <!---->
+                                <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
+                                <!---->
                                 <!--</div>-->
-                                <div class="label-info h4" id="groupInput1" style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:white" contenteditable="true">
+                                <div class="label-info h4" id="groupInput1"
+                                     style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:white"
+                                     contenteditable="true">
                                     Group Here
                                 </div>
-                                <ul id="positionedList1" style="min-height:80px" ondrop="javascript:listParentUpdater('positionedList1')"></ul>
+                                <ul id="positionedList1" style="min-height:80px"
+                                    ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
                             </div>
                         </div>
                         <div class="col-md-1">
-                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-success" style="margin-top: 0px">Add New Group</a>
+                            <a href="javascript:newDivCreator(this)" class="btn btn-raised btn-success"
+                               style="margin-top: 0px">Add New Group</a>
 
                         </div>
                     </div>
@@ -280,7 +296,7 @@
             var initElement = document.getElementById('initOrdinalList')
             if (initElement.getElementsByTagName('li').length > 0) {
                 //console.log($('#warningInput'))
-                $('#warningMessage').text("Please group all Elements to the right before proceeding") ;
+                $('#warningMessage').text("Please group all Elements to the right before proceeding");
                 $('#warning').css("display", "block");
 
                 return;
@@ -289,9 +305,9 @@
             var countOfDiv = currentDiv.substr(currentDiv.length - 1);
 
             for (var i = 1; i <= countOfDiv; i++) {
-                if($('#position'+i).length){
+                if ($('#position' + i).length) {
                     listParentUpdater('positionedList' + i);
-                    if( !$.trim( $('#groupInput'+i).html() ).length ){
+                    if (!$.trim($('#groupInput' + i).html()).length) {
                         $('#warningMessage').text("Enter Group label for group: " + i + " before proceeding");
                         $('#warning').css("display", "block");
                         return;
@@ -309,16 +325,22 @@
             console.log(mapMaindata.get(mainData.values[i].value) + '   ... ' + mainData.values[i].acv);
             mainData.values[i].acv = mapMaindata.get(mainData.values[i].value);
 
-            if(mainData.dataType != 'numeric'){
+            if (mainData.dataType != 'numeric') {
                 var label = document.getElementById('groupInput' + mainData.values[i].acv).innerHTML;
                 console.log('label: ' + label);
                 mainData.values[i].label = label;
             }
-            else{
-                if($('#optionsRadios1').checked)
+            else {
+                if ($('#optionsRadios1').prop("checked")){
                     numericJsonReturn('asc');
-                else
+                    console.log('inside nextstep and in numeric selection. asc passed');
+                }
+
+                else if($('#optionsRadios2').prop("checked")){
                     numericJsonReturn('dsc');
+                    console.log('inside nextstep and in numeric selection. dsc passed');
+                }
+
 
             }
 
@@ -370,9 +392,9 @@
         newDiv += ' style="background-color:' + divColors[counter % mainData.values.length] + '">';
         //newDiv += '<div class="panel-heading" > ';
 
-        newDiv+='<div class="row label-primary  " style="margin:0px">';
-        newDiv+='<div class="h4 col-md-9" style=" padding-top:3px;padding-bottom:3px;  padding-left: 30px; margin-top: 0px; color:white" contenteditable="true" ';
-        newDiv+='id="groupInput'+counter+'" >New Group </div>';
+        newDiv += '<div class="row label-primary  " style="margin:0px">';
+        newDiv += '<div class="h4 col-md-9" style=" padding-top:3px;padding-bottom:3px;  padding-left: 30px; margin-top: 0px; color:white" contenteditable="true" ';
+        newDiv += 'id="groupInput' + counter + '" >New Group </div>';
         newDiv += '<div class="col-md-3"> <a href="javascript:divRemover(position' + counter + ' )" ';
         newDiv += '<span class="glyphicon glyphicon-remove " aria-hidden="true"></span> </a></div></div>';
 
@@ -405,7 +427,7 @@
         //console.log(toMove);
 
         for (i = 0; i < toMove.length; i++) {
-            if (toMove[i].tagName == 'UL' )
+            if (toMove[i].tagName == 'UL')
                 listElements = toMove[i].children;
         }
 //        console.log('listElements ');
@@ -455,8 +477,8 @@
 //        }
 
         $('#initNumericList').append(txt);
-        $('#asc').append('Ascending Value<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value + '</b>');
-        $('#dsc').append('Descending Value<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value + '</b>');
+        $('#asc').append('<b> ' + columnValues[0].value + '</b> is better than <b> ' + columnValues[1].value + '</b>');
+        $('#dsc').append('<b> ' + columnValues[1].value + '</b> is better than <b> ' + columnValues[0].value + '</b>');
         //$('#numericRadioDiv').append(txt2);
 
     }// end functiion numericDivCreator.
@@ -465,13 +487,17 @@
     function numericJsonReturn(ascOrDsc) {
 
         if (ascOrDsc == 'asc') {
-            mainData.values[0].acv = mainData.values[0].value;
-            mainData.values[1].acv = mainData.values[1].value;
+            mainData.values[0].acv = "1"; // mainData.values[0].value;
+            mainData.values[1].acv = "2"; // mainData.values[1].value;
+            console.log('numeric json. asc selected');
         }
         else {
-            mainData.values[0].acv = mainData.values[1].value;
-            mainData.values[1].acv = mainData.values[0].value;
+            mainData.values[0].acv = "2"; // mainData.values[1].value;
+            mainData.values[1].acv = "1"; // mainData.values[0].value;
+            console.log('numeric json. dsc selected');
+
         }
+        console.log(mainData.values);
     }// end function numericJsonReturn.
 </script>
 </html>
