@@ -27,6 +27,12 @@
     $( document ).ready(function() {
         $("#input-1").fileinput({'showUpload':false, 'previewFileType':'any'});
         $.material.init();
+        $('#uploadform').submit(function(){
+            if(($('#inputAnalysisName').val().length>=2)&&($('#textArea').val().length>=2))
+                $('#uploadform').find('button[type=submit]').prop('disabled', true);
+            else
+                $('#uploadform').find('button[type=submit]').prop('disabled', false);
+        });
     });
     $("#uploadform").validate();
 </script>
