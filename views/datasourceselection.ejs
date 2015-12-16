@@ -31,6 +31,10 @@
 
             $("#uploadtWarning").css("display","none");
         });
+        $( "#uploadinfoBtn" ).click(function() {
+
+            $("#uploadinfo").css("display","none");
+        });
     });
 
 </script>
@@ -42,6 +46,13 @@
                 <button id="uploadtWarningBtn" type="button" class="close" >×</button>
                 <h4>Warning!</h4>
                 <b>Sorry dataset with the same name already exists in our database!,Please choose another analysis name.</b>
+            </div>
+            <% } %>
+            <%if (uploaderror == "success"){%>
+            <div id ="uploadinfo" class="alert alert-dismissible alert-info" style="display: block">
+                <button id="uploadinfoBtn" type="button" class="close">×</button>
+                <h4>Information</h4>
+                <b>Data has been uploaded successfully!</b>
             </div>
             <% } %>
             <div class="row">

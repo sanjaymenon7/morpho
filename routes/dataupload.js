@@ -79,7 +79,7 @@ router.post('/',upload.single('data_file'), function(req, res, next) {
                                                 dataTables.updateOne({"tableNumber":tableNumber}, {"tableNumber":tableNumber+1}, function(err1, results1){
                                                       assert.equal(err1, null);
                                                       var htmlstr ='<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">×</button><strong>Heads up!</strong></div>'
-                                                      res.render('datasourceselection',{uploaderror:"false",data: req.session.userId});
+                                                      res.render('datasourceselection',{uploaderror:"success",data: req.session.userId});
                                                 });
                                             });
                                     });
