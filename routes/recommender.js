@@ -70,13 +70,24 @@ router.post('/prepareJson', function(req, res, next) {
                         break;
                     }
                 }
-                condition[docs[0]._id] = docs[0].value[item_index].value;
+                if (condition[docs[0]._id] != undefined) {
+                    if (condition[docs[0]._id]['$in'] != undefined) {
+                        (condition[docs[0]._id]['$in']).push(docs[0].value[item_index].value);
+                    } else {
+                        var temp = condition[docs[0]._id];
+                        condition[docs[0]._id] = {"$in": new Array()};
+                        condition[docs[0]._id]["$in"].push(temp);
+                        (condition[docs[0]._id]['$in']).push(docs[0].value[item_index].value);
+                    }
+                } else {
+                    condition[docs[0]._id] = docs[0].value[item_index].value;
+                }
                 if (index == selected_items.length-1) {
                     var sort = {};
                     if (req.session.perfColType=="numeric") {
                         sort = req.session.perfSort;
                     }
-                    console.log(condition);
+                    //console.log(condition);
                     var collection = db.collection(req.session.table);
                     collection.find(condition).sort(sort).toArray(function(err2,docs2){
                         var jsonFile=docs2;
@@ -95,6 +106,10 @@ router.post('/prepareJson', function(req, res, next) {
                                 }
                             }
                             var jsonFile = modifiedJson;
+                        } else {
+                            for(var l=0;l<docs2.length;l++){
+                                docs2[l][req.session.perfCol] = " "+docs2[l][req.session.perfCol];
+                            }
                         }
                         var hash = crypto.createHash('md5').update(req.session.userId).digest('hex');
                         fs.writeFile(configVariables.configLines.uploadDestination+hash+".json", JSON.stringify(jsonFile), "utf8",function(err3,res4){
