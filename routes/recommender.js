@@ -61,6 +61,7 @@ router.post('/prepareJson', function(req, res, next) {
         var collection_keys = db.collection(req.session.table+"_keys");
         var selected_items = req.body.selected_items;
         var condition = {};
+        var counter = -1;
         selected_items.forEach(function(item, index){
             collection_keys.find({"value.id":item}).toArray(function(err, docs){
                 var item_index = 0;
@@ -70,6 +71,7 @@ router.post('/prepareJson', function(req, res, next) {
                         break;
                     }
                 }
+                //console.log(docs);
                 if (condition[docs[0]._id] != undefined) {
                     if (condition[docs[0]._id]['$in'] != undefined) {
                         (condition[docs[0]._id]['$in']).push(docs[0].value[item_index].value);
@@ -82,7 +84,8 @@ router.post('/prepareJson', function(req, res, next) {
                 } else {
                     condition[docs[0]._id] = docs[0].value[item_index].value;
                 }
-                if (index == selected_items.length-1) {
+                counter++;
+                if (counter == selected_items.length-1) {
                     var sort = {};
                     if (req.session.perfColType=="numeric") {
                         sort = req.session.perfSort;
