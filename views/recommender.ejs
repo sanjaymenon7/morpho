@@ -14,6 +14,8 @@
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/javascripts/d3.parsets.js"></script>
     <script src="/javascripts/highlight.min.js"></script>
+    <script src="/javascripts/d3.parcoords.js"></script>
+    <script src="/javascripts/d3.svg.multibrush.js"></script>
 
     <link rel="stylesheet" href="../bower_components/jquery-ui/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
@@ -24,6 +26,7 @@
     <link rel='stylesheet' href='/stylesheets/flexBox.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/d3.parsets.css' />
+    <link rel='stylesheet' href='/stylesheets/d3.parcoords.css' />
 
 </head>
 <body>
@@ -177,6 +180,51 @@
         });
     });
 
+    d3.csv('data/data1.csv', function(data) {
+        var colorgen = d3.scale.ordinal()
+                .range(["#0000ff","#ff0000","#00ff00",
+                    "#00ffff","#ffff00","#ff00ff","#ff7f00",
+                    "#cab2d6","#6a3d9a","#ffff99","#b15928"]);
+        var types = {
+            "Company Name": "string",
+            "SIM Card": "string",
+            "Multiple SIM Cards": "string",
+            "Phone Name": "string",
+            "Operating System": "string",
+            "Physical Size (inches)": "number",
+            "Resolution (pixels)": "number",
+            "Pixel Density (ppi)": "number",
+            "Camera (MP)": "number",
+            "Front Camera (MP)": "number",
+            "Processor": "string",
+            "Clock Rate (Mhz)": "number",
+            "System Memory": "string",
+            "Built-in Storage (GB)": "string",
+            "Battery Capacity (mAh)": "number",
+        }
+        var dimensions = ["Built-in Storage (GB)", "Company Name", "Phone Name", "Operating System", "Physical Size (inches)", "SIM Card"];
+        //console.log(data);
+        var color = function(data) { return colorgen(data["SIM Card"]); };
+        var parcoords = d3.parcoords()("#example")
+                .data(data)
+                //.hideAxis(["_id"])
+                .types(types)
+                .dimensions(dimensions)
+                .color(color)
+                .alpha(0.3)
+                .composite("darken")
+                .margin({ top: 24, left: 10, bottom: 10, right: 0 })
+                .mode("queue")
+                .render()
+                .brushMode("1D-axes-multi")
+                .alphaOnBrushed(0.3)
+                .brushedColor("#000");
+
+
+
+        parcoords.svg.selectAll("text")
+                .style("font", "10px sans-serif");
+    });
 </script>
 <div class="well bs-cpmponent">
     <div id="recommendertWarning" class="alert alert-dismissible alert-warning" style="display: none">
@@ -189,6 +237,7 @@
         <h4>Oops!</h4>
         <b>Something went wrong, please try again!</b>
     </div>
+    <div id="example" class="parcoords" style="width:1350px;height:630px"></div>
     <div id="accordion" class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Value Matrix</h3>
