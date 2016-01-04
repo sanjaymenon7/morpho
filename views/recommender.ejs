@@ -180,7 +180,7 @@
         });
     });
 
-    d3.csv('data/data1.csv', function(data) {
+    d3.json('recommender/get-all-data', function(data) {
         var colorgen = d3.scale.ordinal()
                 .range(["#0000ff","#ff0000","#00ff00",
                     "#00ffff","#ffff00","#ff00ff","#ff7f00",

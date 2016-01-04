@@ -43,7 +43,6 @@ router.get('/get-data', function(req, res, next) {
                 columnJSON.push(header);
                 for (var val=0; val<(docs[col].value).length; val++){
                   (columnJSON[k].column_data).push({value:docs[col].value[val].value, id:docs[col].value[val].id});
-                  
                 }
                 k++;
               }
@@ -51,6 +50,18 @@ router.get('/get-data', function(req, res, next) {
             res.json(columnJSON);
             db.close();
            });
+     }
+   });
+});
+
+router.get('/get-all-data', function(req, res, next) {
+    db.open(function(err, db) {
+     if(!err) {
+       var collection = db.collection(req.session.table);
+       collection.find().toArray(function(err, docs) {
+        console.log(docs);
+        res.json(docs);
+       });    
      }
    });
 });
