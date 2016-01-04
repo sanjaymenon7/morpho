@@ -191,7 +191,7 @@
             "Multiple SIM Cards": "string",
             "Phone Name": "string",
             "Operating System": "string",
-            "Physical Size (inches)": "number",
+            "Physical Size": "string",
             "Resolution (pixels)": "number",
             "Pixel Density (ppi)": "number",
             "Camera (MP)": "number",
@@ -199,10 +199,10 @@
             "Processor": "string",
             "Clock Rate (Mhz)": "number",
             "System Memory": "string",
-            "Built-in Storage (GB)": "string",
-            "Battery Capacity (mAh)": "number",
+            "Built-in Storage": "string",
+            "Battery Capacity (mAh)": "number"
         }
-        var dimensions = ["Built-in Storage (GB)", "Company Name", "Phone Name", "Operating System", "Physical Size (inches)", "SIM Card"];
+        var dimensions = ["Built-in Storage", "Company Name", "Phone Name", "Operating System", "Physical Size", "SIM Card"];
         //console.log(data);
         var color = function(data) { return colorgen(data["SIM Card"]); };
         var parcoords = d3.parcoords()("#example")
