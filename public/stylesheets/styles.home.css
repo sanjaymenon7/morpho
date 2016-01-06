@@ -45,7 +45,9 @@ background-size: cover; }
 
 /* Logo */
 .logo {
-display: inline; }
+display: inline;
+margin-left: 38px;
+margin-top: 20px; }
 
 /* Button Outline disable */
 .btn:focus, .btn:active {
@@ -116,32 +118,21 @@ width: 90%; }
 
 .section-2-img-container {
 width: 100%;
+margin-top: 25px;
 text-align: center;
 display: inline-block; }
-
-.section-2-ask {
-width: 33%;
-display: inline; }
-
-.section-2-extract {
-width: 33%;
-display: inline; }
-
-.section-2-interpret {
-width: 33%;
-display: inline; }
 
 .section-2-little-header {
 font-type: "Proxima Nova Regular";
 font-size: 16pt;
-margin-top: 15px;
+margin-top: 25px;
 text-align: center;
 display: block; }
 
 .section-2-usp {
 font-type: "Proxima Nova Regular";
 font-size: 14pt;
-margin-top: 15px;
+margin-top: 25px;
 text-align: center;
 display: block;
 }
