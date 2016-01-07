@@ -32,11 +32,12 @@ var responseJson =
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { name: 'Express',data: phoneInfo.phoneSpecs });
+  res.render('home');
  // res.json(phoneInfo.phoneSpecs)
  //res.send(phoneInfo.phoneSpecs[0].CompanyName);
  //console.log(phoneInfo.phoneSpecs[0]);
 });
+
 //Mock Service to populate mock main data
 router.get('/mainData',function(req,res,next){
   res.json(perfColFilterResponse)
