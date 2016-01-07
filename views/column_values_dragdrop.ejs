@@ -52,7 +52,7 @@
 
                     mainData = data;
                     for (var i = 0; i < mainData.values.length; i++) {
-                        mapMaindata.set(mainData.values[i].value, mainData.values[i].acv);
+                        mapMaindata.set(mainData.values[i].value, -1);
                         //console.log('i=' + i + ' and item: ' + mapMaindata.get(mainData.values[i].value));
                         //console.log('something here');
 
@@ -149,13 +149,14 @@
                                 </i>
                         </div>
                     </div>
-                    <br><br>
+                    <br><br> 
                     <div class="row" id="headSortableDiv">
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-4 ">
                             <div id="initDiv" class="panel panel-info" style="max-height:300px;overflow-y: auto">
                                 <div class="panel-heading "> Available elements</div>
+
                                 <div>
                                     <ul id="initOrdinalList" style="min-height:80px"
                                         ondrop="javascript:listParentUpdater('initOrdinalList')">
@@ -296,10 +297,14 @@
             var initElement = document.getElementById('initOrdinalList')
             if (initElement.getElementsByTagName('li').length > 0) {
                 //console.log($('#warningInput'))
-                $('#warningMessage').text("Please group all Elements to the right before proceeding");
-                $('#warning').css("display", "block");
+                // commented because we dont need to throw a warnign right now.
+                //$('#warningMessage').text("Please group all Elements to the right before proceeding");
+                //$('#warning').css("display", "block");
 
-                return;
+                for(var i=0;i<initElement.getElementsByTagName('li').length;i++){
+                    mainData.values
+                }
+                //return;
             }
 
             var countOfDiv = currentDiv.substr(currentDiv.length - 1);
@@ -326,9 +331,17 @@
             mainData.values[i].acv = mapMaindata.get(mainData.values[i].value);
 
             if (mainData.dataType != 'numeric') {
-                var label = document.getElementById('groupInput' + mainData.values[i].acv).innerHTML;
-                console.log('label: ' + label);
-                mainData.values[i].label = label;
+                //if(mainData.values[i].)
+                if(mainData.values[i].acv==-1){
+                    mainData.values[i].label= "Unassigned group";
+                }
+                else{
+                    var label = document.getElementById('groupInput' + mainData.values[i].acv).innerHTML;
+                    console.log('label: ' + label);
+                    mainData.values[i].label = label;
+                }
+
+
             }
             else {
                 if ($('#optionsRadios1').prop("checked")){
