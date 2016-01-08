@@ -185,45 +185,37 @@
                 .range(["#0000ff","#ff0000","#00ff00",
                     "#00ffff","#ffff00","#ff00ff","#ff7f00",
                     "#cab2d6","#6a3d9a","#ffff99","#b15928"]);
-        var types = {
-            "Company Name": "string",
-            "SIM Card": "string",
-            "Multiple SIM Cards": "string",
-            "Phone Name": "string",
-            "Operating System": "string",
-            "Physical Size": "string",
-            "Resolution (pixels)": "number",
-            "Pixel Density (ppi)": "number",
-            "Camera (MP)": "number",
-            "Front Camera (MP)": "number",
-            "Processor": "string",
-            "Clock Rate (Mhz)": "number",
-            "System Memory": "string",
-            "Built-in Storage": "string",
-            "Battery Capacity (mAh)": "number"
-        }
-        var dimensions = ["Built-in Storage", "Company Name", "Phone Name", "Operating System", "Physical Size", "SIM Card"];
-        //console.log(data);
-        var color = function(data) { return colorgen(data["SIM Card"]); };
-        var parcoords = d3.parcoords()("#example")
-                .data(data)
-                //.hideAxis(["_id"])
-                .types(types)
-                .dimensions(dimensions)
-                .color(color)
-                .alpha(0.3)
-                .composite("darken")
-                .margin({ top: 24, left: 10, bottom: 10, right: 0 })
-                .mode("queue")
-                .render()
-                .brushMode("1D-axes-multi")
-                .alphaOnBrushed(0.3)
-                .brushedColor("#000");
+        $.ajax({
+            url : "http://localhost:3000/recommender/get-parallel-coords-column-metadata",
+            type: "GET",
+            cache: false,
+            success: function(colData, textStatus, jqXHR)
+            {
+                var color = function(data) { return colorgen(data["SIM Card"]); };
+                var parcoords = d3.parcoords()("#example")
+                        .data(data)
+                        //.hideAxis(["_id"])
+                        .types(colData.types)
+                        .dimensions(colData.dimensions)
+                        .color(color)
+                        .alpha(0.3)
+                        .composite("darken")
+                        .margin({ top: 24, left: 10, bottom: 10, right: 0 })
+                        .mode("queue")
+                        .render()
+                        .brushMode("1D-axes-multi")
+                        .alphaOnBrushed(0.3)
+                        .brushedColor("#000");
+                        
+                parcoords.svg.selectAll("text")
+                    .style("font", "10px sans-serif");
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
 
-
-
-        parcoords.svg.selectAll("text")
-                .style("font", "10px sans-serif");
+            }
+        });
+        
     });
 </script>
 <div class="well bs-cpmponent">
