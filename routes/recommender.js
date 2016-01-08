@@ -75,6 +75,40 @@ router.get('/get-all-data', function(req, res, next) {
    });
 });
 
+router.get('/get-parallel-coords-column-metadata', function(req, res, next) {
+    db.open(function(err, db) {
+        if(!err) {
+          var collection = db.collection(req.session.table);
+          var collection_keys = db.collection(req.session.table+"_keys");
+          var column_info = {
+            "dimensions": new Array(),
+            "types": {}
+          }
+          collection.findOne({}, function(err, doc) {
+            var query = 'db.'+req.session.table+'_keys.distinct("_id");';
+            db.eval(query, function(err, result){
+                for(var i=0;i<result.length;i++){
+                    if(result[i]!="_id"){
+                        if (doc.hasOwnProperty(result[i]) && typeof doc[result[i]] === "number") {
+                            column_info.types[result[i]] = "number";
+                        } else {
+                            column_info.types[result[i]] = "string";
+                        }
+                        if (i==req.session.performance)
+                            column_info.dimensions.push(result[i]);
+                    }
+                }
+                for(var i=0;i<result.length;i++){
+                    if (result[i]!="_id" && i!=req.session.performance && req.session.selectedCols.indexOf(result[i])!=-1)
+                        column_info.dimensions.push(result[i]);
+                };
+                res.json(column_info);
+            });
+          });
+        }
+    });
+});
+
 router.post('/prepareJson', function(req, res, next) {
     db.open(function(err, db) {
       if(!err) {
