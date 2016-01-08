@@ -59,6 +59,15 @@ router.get('/get-all-data', function(req, res, next) {
      if(!err) {
        var collection = db.collection(req.session.table);
        collection.find().toArray(function(err, docs) {
+        if (req.session.perfColType=="ordinal") {
+            for(var j=0;j<(req.session.perfColValues).length;j++){
+                for(var k=0;k<docs.length;k++){
+                    if (docs[k][req.session.perfCol]==req.session.perfColValues[j].value) {
+                        docs[k][req.session.perfCol]=req.session.perfColValues[j].label;
+                    }
+                }
+            }
+        }
         console.log(docs);
         res.json(docs);
        });    
