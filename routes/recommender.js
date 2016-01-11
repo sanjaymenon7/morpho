@@ -68,7 +68,18 @@ router.get('/get-all-data', function(req, res, next) {
                 }
             }
         }
-        console.log(docs);
+        // Comment out after Kaushik's range frontend part
+        /*
+        else {
+            for(var j=0;j<(req.session.perfColValues).length;j++){
+                for(var k=0;k<docs.length;k++){
+                    if (docs[k][req.session.perfCol]>=req.session.perfColValues[j].minVal && docs[k][req.session.perfCol]<=req.session.perfColValues[j].maxVal) {
+                        docs[k][req.session.perfCol]=req.session.perfColValues[j].label;
+                    }
+                }
+            }
+        }
+        */
         res.json(docs);
        });    
      }
@@ -94,8 +105,11 @@ router.get('/get-parallel-coords-column-metadata', function(req, res, next) {
                         } else {
                             column_info.types[result[i]] = "string";
                         }
-                        if (i==req.session.performance)
+                        if (i==req.session.performance){
+                            // Comment out after Kaushik's range frontend part
+                            // column_info.types[result[i]] = "string";
                             column_info.dimensions.push(result[i]);
+                        }
                     }
                 }
                 for(var i=0;i<result.length;i++){
@@ -125,7 +139,6 @@ router.post('/prepareJson', function(req, res, next) {
                         break;
                     }
                 }
-                //console.log(docs);
                 if (condition[docs[0]._id] != undefined) {
                     if (condition[docs[0]._id]['$in'] != undefined) {
                         (condition[docs[0]._id]['$in']).push(docs[0].value[item_index].value);
@@ -140,19 +153,18 @@ router.post('/prepareJson', function(req, res, next) {
                 }
                 counter++;
                 if (counter == selected_items.length-1) {
+                    // Remove after Kaushik's range frontend part
                     var sort = {};
                     if (req.session.perfColType=="numeric") {
                         sort = req.session.perfSort;
                     }
-                    //console.log(condition);
+                    // till here
                     var collection = db.collection(req.session.table);
+                    
+                    // Remove sort after Kaushik's range frontend part
                     collection.find(condition).sort(sort).toArray(function(err2,docs2){
                         var jsonFile=docs2;
-                        //console.log(req.session.perfColType);
-                        //console.log(sort);
                         if (req.session.perfColType=="ordinal") {
-                            //console.log(docs2);
-                            //console.log(req.session.perfColValues);
                             var modifiedJson = new Array();
                             for(var j=0;j<(req.session.perfColValues).length;j++){
                                 for(var k=0;k<docs2.length;k++){
@@ -162,11 +174,30 @@ router.post('/prepareJson', function(req, res, next) {
                                     }
                                 }
                             }
-                            var jsonFile = modifiedJson;
+                            jsonFile = modifiedJson;
                         } else {
+                            // Comment out after Kaushik's range frontend part
+                            /*
+                            var modifiedJson = new Array();
+                            for(var j=0;j<(req.session.perfColValues).length;j++){
+                                for(var k=0;k<docs2.length;k++){
+                                    if (docs2[k][req.session.perfCol]>=req.session.perfColValues[j].minVal && docs2[k][req.session.perfCol]<=req.session.perfColValues[j].maxVal) {
+                                        docs2[k][req.session.perfCol]=req.session.perfColValues[j].label
+                                        modifiedJson.push(docs2[k]);
+                                    }
+                                }
+                            }
+                            */
+                            jsonFile = modifiedJson;
+                            
+                            // Remove after Kaushik's range frontend part
                             for(var l=0;l<docs2.length;l++){
+                                
                                 docs2[l][req.session.perfCol] = " "+docs2[l][req.session.perfCol];
                             }
+                            jsonFile=docs2;
+                            // till here
+                            
                         }
                         var hash = crypto.createHash('md5').update(req.session.userId).digest('hex');
                         fs.writeFile(configVariables.configLines.uploadDestination+hash+".json", JSON.stringify(jsonFile), "utf8",function(err3,res4){

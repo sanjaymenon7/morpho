@@ -111,17 +111,22 @@ router.post('/column_values_dragdrop_result',function(req,res,next){
         router.sess.perfColValues = req.body.values;
         responseJson.status=true;
         req.session.perfCol = req.body.columnName;
+        
+        // Remove after Kaushik's range frontend part
         req.session.perfSort = {};
+        // till here
+        
         var colName = req.body.columnName;
         
+        // Remove after Kaushik's range frontend part
         if (req.body.dataType=="numeric") {
           if (req.body.values[0].value<req.body.values[1].value && req.body.values[0].acv==1) {
               req.session.perfSort[colName] = 1;
           } else {
               req.session.perfSort[colName] = -1;
-          }  
+          }
         }
-        //console.log(req.session.perfSort);
+        // till here
         res.json(responseJson);                
      }
 });
