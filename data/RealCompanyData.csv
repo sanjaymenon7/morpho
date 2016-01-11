@@ -1,0 +1,162 @@
+Number,Company,Company type,Value proposition,Segments, Relationships,Channels,Activities,Resources,Partnerships,Revenue model,EBIT %
+1,AB Electrolux,non-e-business,Low cost,B-to-B and B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,3.19
+2,Abercrombie & Fitch,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,3.00
+3,Actia Group,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,6.27
+4,Adidas AG,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,20.60
+5,Adler,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,4.90
+6,Adobe Systems Inc.,non-e-business,Differentiation,B-to-B and B-to-C,Medium level service,Combination of online and offline,"Programming, Sales","Human, IT, Intellectual",Some important partners,Sales of ownership and access,9.95
+7,Advanced Micro Devices (AMD),non-e-business,Differentiation and low cost,B-to-C,High level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,-4.01
+8,Aeroflot,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Some important partners,Sales of access,6.80
+9,Air Asia,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,15.77
+10,Air Berlin,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Some important partners,Sales of access,-7.00
+11,Air Canada,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,3.41
+12,Air China,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,6.90
+13,Air France,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,3.80
+14,Airbus,non-e-business,Differentiation,B-to-B,High level service,Offline,"R&D, Production","Physical, Human, Intellectual",Many important partners,Sales of ownership,6.38
+15,Aixtron SE,non-e-business,Differentiation,B-to-B,High level service,Offline,"R&D, Production","Physical, Intellectual",Some important partners,Sales of ownership,-30.00
+16,Alaska Airlines,non-e-business,Differentiation and low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,18.20
+17,Allegiant Air,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,13.84
+18,Altran Technologies SA,non-e-business,Differentiation,B-to-B,High level service,Offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,7.50
+19,Amazon.com,e-business,Differentiation and low cost,B-to-B and B-to-C,High level service,Combination of online and offline,"Logistics, Programming, Sales","Human, IT, Intellectual",Many important partners,Sales of ownership and access,0.20
+20,American Airlines,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,9.96
+21,Amkor Technology Inc.,non-e-business,Differentiation,B-to-B,High level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,93.76
+22,Apple,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership and access,28.72
+23,Aston Martin Lagonda Ltd.,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,-7.80
+24,AstraZeneca PLC,non-e-business,Differentiation,B-to-B,Low level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Some important partners,Sales of ownership,7.95
+25,Atea (Atea ASA),non-e-business,Low cost,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,2.37
+26,Atmel Corporation,non-e-business,Low cost,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,4.23
+27,Audi AG,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,8.56
+28,Avon Products Inc.,non-e-business,Low cost,B-to-B,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Not many important partners,Sales of ownership,-51.40
+29,Baidu Inc.,e-business,Low cost,B-to-B and B-to-C,Medium level service,Online,"Programming, Sales","Human, IT, Intellectual",Many important partners,Sales of access,26.10
+30,Bayer,non-e-business,Low cost,B-to-C,Low level service,Offline,"R&D, Production","Physical, Intellectual",Some important partners,Sales of ownership,13.00
+31,Bentley Motors Ltd.,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,9.74
+32,Blackberry Ltd. (RIM),non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership and access,-95.11
+33,BMW AG,non-e-business,Differentiation,B-to-B and B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,10.96
+34,Booking.com,e-business,Low cost,B-to-B and B-to-C,Medium level service,Online,"Programming, Sales","Human, IT",Some important partners,Sales of access,13.60
+35,Bristol-Myers Squibb,non-e-business,Differentiation,B-to-B,Medium level service,Offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,14.99
+36,British Airways,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,8.32
+37,"Bugatti
+(Automob. Ettore Bugatti)",non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,-1.20
+38,CAPGEMINI,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"Services, Sales",Human,Some important partners,Sales of access,10.45
+39,China Eastern Airlines,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,6.42
+40,China Southern Airlines,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,4.06
+41,Continental Airlines,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Some important partners,Sales of access,-1.16
+42,Costco Wholesale Corporation,non-e-business,Low cost,B-to-C,High level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Not many important partners,Sales of ownership,3.30
+43,Coupons.com Inc.,e-business,Differentiation,B-to-B and B-to-C,Medium level service,Online,"Programming, Sales","Human, IT",Not many important partners,Sales of access,-11.84
+44,Daihatsu,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,7.67
+45,Delta Airlines,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,5.47
+46,Dolby,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,28.76
+47,Easy Jet,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,12.83
+48,ebay Inc.,e-business,Low cost,B-to-B and B-to-C,High level service,Online,"Programming, Sales","Human, IT, Intellectual",Many important partners,Sales of ownership and access,19.72
+49,Eli Lilly and Company,non-e-business,Low cost,B-to-B and B-to-C,Medium level service,Offline,"R&D, Production","Physical, Intellectual",Some important partners,Sales of ownership,16.05
+50,Emirates,non-e-business,Differentiation and low cost,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,7.15
+51,Etihad Airways,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Some important partners,Sales of access,3.40
+52,Expedia,e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Programming, Services, Sales","Human, IT",Many important partners,Sales of access,0.09
+53,Facebook Inc.,e-business,Differentiation and low cost,B-to-B and B-to-C,Medium level service,Online,"Programming, Sales","Human, IT, Intellectual",Many important partners,Sales of access,40.00
+54,Fairschild Semiconductor International Inc,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,5.11
+55,Ferrari,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,13.20
+56,Fielmann,non-e-business,Differentiation and low cost,B-to-C,High level service,Offline,"Production, Sales","Physical, Human",Not many important partners,Sales of ownership,18.38
+57,Finnair,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,-3.17
+58,Foot Locker Inc.,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,Sales,"Physical, Human",Many important partners,Sales of ownership,11.40
+59,Geely,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,8.49
+60,Glu Mobile Inc.,e-business,Low cost,B-to-C,Low level service,Online,"Programming, Sales","Human, IT",Not many important partners,Sales of access,0.27
+61,Go Pro,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,13.42
+62,Google Inc.,e-business,Differentiation and low cost,B-to-B and B-to-C,Medium level service,Online,"Programming, Sales","Human, IT, Intellectual",Not many important partners,Sales of access,30.33
+63,Grohe AG,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,15.50
+64,Groupon Inc.,e-business,Differentiation,B-to-B and B-to-C,Medium level service,Online,"Programming, Sales","Human, IT",Many important partners,Sales of access,4.87
+65,Gucci (not Gucci Group),non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,30.20
+66,H&M,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Not many important partners,Sales of ownership,16.90
+67,Harley-Davidson Inc.,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,20.57
+68,Hermès International S.A.,non-e-business,Differentiation,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Not many important partners,Sales of ownership,34.89
+69,Hero Motocorp Ltd.,non-e-business,Differentiation,B-to-C,Medium level service,Offline,"Production, Sales","Physical, Human",Not many important partners,Sales of ownership,9.60
+70,"Honda Motor Co., Ltd.",non-e-business,Differentiation and low cost,B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,2.90
+71,Hugo Boss AG,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,17.45
+72,Hyundai Motor Company,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,8.95
+73,Iberia,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Not many important partners,Sales of access,10.71
+74,IKEA,non-e-business,Low cost,B-to-C,High level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Some important partners,Sales of ownership,12.90
+75,Infineon Technologies AG,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,12.15
+76,Intel Corp,non-e-business,Differentiation,B-to-B,High level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,27.21
+77,Inventec Corporation,non-e-business,Low cost,B-to-C,High level service,Combination of online and offline,Production,Physical,Some important partners,Sales of ownership,2.00
+78,iRobots Corp.,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,9.54
+79,Isuzu,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,9.90
+80,JetBlue Airways,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,8.85
+81,Kia Motors Corporation,non-e-business,Low cost,B-to-C,Low level service,Offline,"Production, Sales","Physical, Human",Not many important partners,Sales of ownership,5.50
+82,KLM,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,8.83
+83,Lamborghini,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Not many important partners,Sales of ownership,-0.37
+84,Latam Airlines,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,4.12
+85,Lenovo Group Ltd.,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,14.40
+86,Lexmark International Inc.,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Not many important partners,Sales of ownership,3.06
+87,LinkedIn,e-business,Differentiation,B-to-B and B-to-C,Low level service,Combination of online and offline,"Programming, Sales","Human, IT",Many important partners,Sales of access,0.20
+88,Liveperson Inc.,e-business,Differentiation,B-to-B,Medium level service,Online,"Programming, Service","Human, IT",Many important partners,Sales of access,-2.46
+89,Louis Vuitton Malletier,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,17.46
+90,Lowe's Company Inc.,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Some important partners,Sales of ownership,8.53
+91,Marks & Spencer PLC,non-e-business,Differentiation and low cost,B-to-C,High level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Not many important partners,Sales of ownership,1.75
+92,Maserati,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Not many important partners,Sales of ownership,4.73
+93,Mazda Motor Corporation,non-e-business,Low cost,B-to-C,Medium level service,Offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,6.70
+94,McDonald’s Corporation,non-e-business,Low cost,B-to-C,Low level service,Offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,28.41
+95,Mitsubishi Motors Corporation,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,6.23
+96,Motorola Solutions Inc.,non-e-business,Differentiation,B-to-B,High level service,Combination of online and offline,"R&D, Production, Services","Physical, Human, Intellectual",Not many important partners,Sales of ownership and access,-16.07
+97,MySale Group PLC,e-business,Differentiation and low cost,B-to-C,Low level service,Online,"Production, Programming","Human, IT",Many important partners,Sales of ownership,-5.28
+98,NetFlix Inc.,e-business,Differentiation and low cost,B-to-C,Low level service,Online,"Programming, Services","Human, IT",Many important partners,Sales of access,7.30
+99,Nike Inc.,non-e-business,Differentiation,B-to-C,Low level service,Combination of online and offline,"R&D, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,13.00
+100,Nikon Corporation,non-e-business,Differentiation,B-to-B and B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,5.06
+101,Nintendo,non-e-business,Differentiation and low cost,B-to-C,High level service,Combination of online and offline,"Programming, Sales","Human, IT, Intellectual",Many important partners,Sales of ownership and access,-8.12
+102,Nordstrom Inc.,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Not many important partners,Sales of ownership,10.10
+103,Oracle Corporation,non-e-business,Differentiation,B-to-B,Medium level service,Online,"Programming, Sales","Human, IT, Intellectual",Many important partners,Sales of ownership and access,47.27
+104,Pandora Media Inc.,e-business,Low cost,B-to-C,Medium level service,Online,"Programming, Services","Human, IT",Some important partners,Sales of access,5.00
+105,Parrot AG,non-e-business,Low cost,B-to-B and B-to-C,Medium level service,Online,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,0.02
+106,Pfizer Inc.,non-e-business,Differentiation,B-to-B and B-to-C,High level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,12.73
+107,Playtech PLC,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership and access,28.04
+108,Polycom Inc.,non-e-business,Low cost,B-to-B,Medium level service,Offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership and access,12.05
+109,Porsche AG,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,15.80
+110,Prada S.p.A.,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,19.75
+111,PUMA SE,non-e-business,Differentiation and low cost,B-to-B and B-to-C,Low level service,Combination of online and offline,"R&D, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership,4.25
+112,Qantas Airways,non-e-business,Differentiation and low cost,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Some important partners,Sales of access,-2.87
+113,Qualcomm,non-e-business,Differentiation,B-to-B,Medium level service,Combination of online and offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership,30.30
+114,Rackspace Inc.,e-business,Low cost,B-to-B,High level service,Online,"Programming, Sales","Human, IT, Intellectual",Not many important partners,Sales of ownership and access,33.70
+115,Rakuten Inc.,e-business,Differentiation,B-to-B and B-to-C,Medium level service,Combination of online and offline,"Programming, Sales","Human, IT",Many important partners,Sales of ownership and access,17.54
+116,Rambus,non-e-business,Differentiation,B-to-B,High level service,Offline,"R&D, Production","Physical, Intellectual",Many important partners,Sales of ownership and access,25.41
+117,Renault,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,2.69
+118,Ricoh,non-e-business,Low cost,B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,5.19
+119,Rolls Royce Motor Cars,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Not many important partners,Sales of ownership,4.20
+120,Ryanair,non-e-business,Low cost,B-to-C,Low level service,Online,"Services, Sales","Physical, Human",Some important partners,Sales of access,13.00
+121,Salesforce Inc.,e-business,Differentiation and low cost,B-to-B,Medium level service,Online,"Programming, Sales","Human, IT",Many important partners,Sales of access,10.68
+122,Sanofi S.A.,non-e-business,Differentiation,B-to-C,Low level service,Offline,"R&D, Production","Physical, Intellectual",Some important partners,Sales of ownership,18.72
+123,SAP SE,non-e-business,Differentiation,B-to-B,High level service,Combination of online and offline,"Programming, Sales","Human, IT, Intellectual",Some important partners,Sales of access,24.66
+124,SAS,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,0.40
+125,SEAT,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,-2.22
+126,Servicenow Inc.,e-business,Differentiation,B-to-B,Medium level service,Online,"Programming, Sales","Human, IT",Many important partners,Sales of access,-22.24
+127,Singapore Airlines,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,6.09
+128,Skoda Auto,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,7.22
+129,Southwest Airlines,non-e-business,Low cost,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,10.34
+130,Spirit Airlines,non-e-business,Low cost,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,18.39
+131,Spotify Ltd.,e-business,Differentiation and low cost,B-to-C,Low level service,Combination of online and offline,"Programming, Services","Human, IT",Many important partners,Sales of access,3.24
+132,Ssangyong,non-e-business,Differentiation,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,2.31
+133,Starbucks Corporation,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Not many important partners,Sales of ownership,26.52
+134,Subaru,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,13.60
+135,Suzuki,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Some important partners,Sales of ownership,4.16
+136,Target Corporation,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Many important partners,Sales of ownership,6.25
+137,Tesco PLC,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Many important partners,Sales of ownership,-10.22
+138,Tesla Motors Inc. ,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership and access,-5.78
+139,Teva Pharmaceutical Industries Ltd.,non-e-business,Low cost,B-to-C,Medium level service,Offline,"R&D, Production","Physical, Intellectual",Some important partners,Sales of ownership,19.06
+140,Thai Airways,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,1.90
+141,The Boeing Company,non-e-business,Differentiation,B-to-B,High level service,Offline,"R&D, Production","Physical, Human, Intellectual",Many important partners,Sales of ownership,7.86
+142,The Home Depot,non-e-business,Differentiation and low cost,B-to-C,Medium level service,Combination of online and offline,"Logistik, Production, Sales","Physical, Human",Many important partners,Sales of ownership,12.59
+143,Tiffany & Co.,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,17.39
+144,TomTom,non-e-business,Differentiation,B-to-B and B-to-C,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,2.00
+145,Trimble Navigation Ltd.,non-e-business,Differentiation,B-to-B,Low level service,Combination of online and offline,"Production, Sales","Physical, Human",Many important partners,Sales of ownership,10.96
+146,TripAdvisor LLC,e-business,Low cost,B-to-B and B-to-C,Low level service,Combination of online and offline,"Programming, Sales","Human, IT",Some important partners,Sales of access,26.00
+147,True Car Inc.,e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,Programming,"Human, IT",Not many important partners,Sales of access,-22.99
+148,Turkish Airlines,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,6.96
+149,Twitter Inc.,e-business,Differentiation and low cost,B-to-B and B-to-C,Low level service,Online,"Programming, Sales","Human, IT",Not many important partners,Sales of access,-38.41
+150,Unisys Corp,non-e-business,Differentiation,B-to-B,High level service,Combination of online and offline,"Programming, Sales, Services","Human, IT",Not many important partners,Sales of ownership and access,4.60
+151,United Airlines,non-e-business,Differentiation,B-to-C,High level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,8.21
+152,Virgin Atlantic Airways,non-e-business,Differentiation and low cost,B-to-C,Medium level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,0.33
+153,Volvo,non-e-business,Differentiation,B-to-C,Medium level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Some important partners,Sales of ownership,1.73
+154,Wal-Mart Stores Inc.,non-e-business,Differentiation and low cost,B-to-C,High level service,Combination of online and offline,"Logistics, Sales","Physical, Human",Many important partners,Sales of ownership,5.71
+155,West Jet,non-e-business,Low cost,B-to-C,Low level service,Combination of online and offline,"Services, Sales","Physical, Human",Many important partners,Sales of access,11.96
+156,Western Union,non-e-business,Low cost,B-to-C,Medium level service,Combination of online and offline,"Production, Services","Physical, Human",Many important partners,Sales of access,20.34
+157,Wistron Corporation,non-e-business,Low cost,B-to-B,High level service,Offline,Production,Physical,Many important partners,Sales of ownership,0.63
+158,Xerox Corporation,non-e-business,Differentiation,B-to-B,High level service,Combination of online and offline,"R&D, Production, Sales","Physical, Human, Intellectual",Many important partners,Sales of ownership and access,8.01
+159,Zalando SE,e-business,Low cost,B-to-C,Medium level service,Online,"Programming, Logistics, Sales","Human, IT",Not many important partners,Sales of ownership and access,3.70
+160,Zynga Inc.,e-business,Low cost,B-to-C,Low level service,Online,Programming,"Human, IT",Not many important partners,Sales of access,-35.45
