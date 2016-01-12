@@ -7,9 +7,15 @@ src: url(../fonts/ProximaNova-Light.otf); }
 font-family: "Proxima Nova Regular";
 src: url(../fonts/ProximaNova-Regular.otf); }
 
-body {
+/* start.ejs view */
+
+html, body {
   font-family: "Proxima Nova Light";
   background-color: white;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden; 
 }
 
 a {
@@ -19,15 +25,11 @@ a {
 .navbar{
   margin-bottom: 0px!important;
   background-image: url(../images/header_bg.png);
-  width: 100%;
   background-size: cover;
-
-  .navbar-header {
-
-  }
+  width: 100%;
 }
 
-#startproceed {
+#startproceed, #backbtn, #uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata {
 float: center;
 margin-top: 20px;
 font-family: "Proxima Nova Regular";
@@ -36,3 +38,8 @@ background-color: white;
 padding: 6px 40px;
 border: 1px solid #42B89E; }
 
+/* datasourceselection.ejs view */
+
+.datasourceselection {
+	margin-top: 30px;
+}

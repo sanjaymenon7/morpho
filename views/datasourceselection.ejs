@@ -40,7 +40,7 @@
 </script>
 <div class="row">
     <div class="col-md-12">
-        <div class="well bs-component">
+        <div class="datasourceselection">
             <%if (uploaderror == "true"){%>
             <div id="uploadtWarning" class="alert alert-dismissible alert-warning" style="display: block">
                 <button id="uploadtWarningBtn" type="button" class="close" >×</button>
@@ -58,17 +58,17 @@
             <div class="row">
                 <div class="col-md-6" align="center">
                     <!--<a href="/dataupload" class="btn btn-info btn-lg">Upload new data set and proceed</a>-->
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#datasetlist-dialog">Select Data Set and Proceed</button>
+                    <button id="selectdataprcd" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#datasetlist-dialog">Select Data Set and Proceed</button>
                 </div>
                 <div class="col-md-6" align="center">
                     <!--<a href="/datasetlist" class="btn btn-info btn-lg">Proceed with existing datasets</a>-->
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#dataupload-dialog">Upload new Data Set</button>
+                    <button id="uploadnewdata" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#dataupload-dialog">Upload new Data Set</button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-10">
-                <a href="/start" class="btn btn-info">Back</a>
+                <a href="/start" id ="backbtn" class="btn btn-info">Back</a>
             </div>
             <div class="col-md-2">
 
