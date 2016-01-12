@@ -1,7 +1,15 @@
+/* Font */
+@font-face {
+font-family: "Proxima Nova Light";
+src: url(../fonts/ProximaNova-Light.otf); }
+
+@font-face {
+font-family: "Proxima Nova Regular";
+src: url(../fonts/ProximaNova-Regular.otf); }
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: whitesmoke;
+  font-family: "Proxima Nova Light";
+  background-color: white;
 }
 
 a {
@@ -10,4 +18,21 @@ a {
 
 .navbar{
   margin-bottom: 0px!important;
+  background-image: url(../images/header_bg.png);
+  width: 100%;
+  background-size: cover;
+
+  .navbar-header {
+
+  }
 }
+
+#startproceed {
+float: center;
+margin-top: 20px;
+font-family: "Proxima Nova Regular";
+color: #42B89E;;
+background-color: white;
+padding: 6px 40px;
+border: 1px solid #42B89E; }
+
