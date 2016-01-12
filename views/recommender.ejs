@@ -191,7 +191,7 @@
             cache: false,
             success: function(colData, textStatus, jqXHR)
             {
-                var color = function(data) { return colorgen(data["SIM Card"]); };
+                var color = function(data) { return colorgen(data[colData.dimensions[0]]); };
                 var parcoords = d3.parcoords()("#example")
                         .data(data)
                         //.hideAxis(["_id"])
@@ -204,8 +204,8 @@
                         .mode("queue")
                         .render()
                         .brushMode("1D-axes-multi")
-                        .alphaOnBrushed(0.3)
-                        .brushedColor("#000");
+                        .alphaOnBrushed(0.4)
+                        ;
                         
                 parcoords.svg.selectAll("text")
                     .style("font", "10px sans-serif");
@@ -229,7 +229,7 @@
         <h4>Oops!</h4>
         <b>Something went wrong, please try again!</b>
     </div>
-    <div id="example" class="parcoords" style="width:1350px;height:630px"></div>
+    <div id="example" class="parcoords" style="width:1350px;height:830px"></div>
     <div id="accordion" class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Value Matrix</h3>
