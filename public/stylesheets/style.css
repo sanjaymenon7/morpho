@@ -29,6 +29,8 @@ a {
   width: 100%;
 }
 
+/* datasourceselection.ejs view */
+
 #startproceed, #backbtn, #uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata {
 float: center;
 margin-top: 20px;
@@ -38,7 +40,14 @@ background-color: white;
 padding: 6px 40px;
 border: 1px solid #42B89E; }
 
-/* datasourceselection.ejs view */
+#selectdataset {
+font-family: "Proxima Nova Regular";
+color: white;
+font-size: 18px;
+background-color: #41B99F;
+margin-top: 20px;
+padding: 10px 17px; 
+}
 
 .datasourceselection {
 	margin-top: 30px;
