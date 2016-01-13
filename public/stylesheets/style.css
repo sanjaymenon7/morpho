@@ -31,7 +31,7 @@ a {
 
 /* datasourceselection.ejs view */
 
-#startproceed, #backbtn, #uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #backbtn2, #selectperfcol {
+#startproceed, #uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata {
 float: center;
 margin-top: 20px;
 font-family: "Proxima Nova Regular";
