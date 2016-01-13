@@ -8,21 +8,26 @@
 
 .child{
     vertical-align: middle;
-    border: 1px ridge darkgrey;
+    border-left: 1px solid #42B89E;
+    border-bottom: 1px solid #42B89E;
+
     text-align: center;
     height: 80px;
 }
 
+#mainDataDiv {
+    border-right: 1px solid #42B89E;
+}
 
 .header{
-    background-color: darkblue;
+    background-color: #42B89E;
     color: white;
     height: 40px;
 }
 
 .specs{
     color: #2f4154;
-    background-color: lightblue;
+    background-color: #f2fffb;
 }
 
 .header-recommend{

@@ -22,6 +22,11 @@ a {
   color: whitesmoke;
 }
 
+body .well {
+    -webkit-box-shadow: 0 0 0 0;
+    box-shadow: 0 0 0 0;
+}
+
 .navbar{
   margin-bottom: 0px!important;
   background-image: url(../images/header_bg.png);
@@ -31,24 +36,26 @@ a {
 
 /* datasourceselection.ejs view */
 
-#startproceed, #uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata {
-float: center;
-margin-top: 20px;
-font-family: "Proxima Nova Regular";
-color: #42B89E;;
-background-color: white;
-padding: 6px 40px;
-border: 1px solid #42B89E; }
 
-#selectdataset, #backbtn, #backbtn2, #selectperfcol {
+#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset {
 font-family: "Proxima Nova Regular";
 color: white;
 font-size: 18px;
 background-color: #41B99F;
 margin-top: 20px;
 padding: 10px 17px; 
+border-radius: 5px;
+}
+
+#startproceed, #backbtn, #backbtn2, #selectperfcol {
+font-family: "Proxima Nova Regular";
+color: #42B89E;
+background-color: #FFFFFF;
+padding: 6px 22px;
+border: 1px solid #42B89E; 
+border-radius: 5px;
 }
 
 .datasourceselection {
-	margin-top: 30px;
+  margin-top: 30px;
 }
