@@ -33,7 +33,7 @@ body .well {
 /* datasourceselection.ejs view */
 
 
-#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset {
+#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset, #recommendBtn {
 font-family: "Proxima Nova Regular";
 color: white;
 font-size: 18px;
@@ -64,4 +64,14 @@ border-radius: 5px;
 
 .panel-info > .panel-heading {
   background-color: #42B89E;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+  background-color: #42B89E;
+  border: none;
+}
+
+.ui-widget-header {
+  border: none;
+  background: none;
 }
