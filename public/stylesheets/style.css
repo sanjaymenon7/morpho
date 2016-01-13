@@ -18,10 +18,6 @@ html, body {
   overflow-x: hidden; 
 }
 
-a {
-  color: whitesmoke;
-}
-
 body .well {
     -webkit-box-shadow: 0 0 0 0;
     box-shadow: 0 0 0 0;
@@ -47,15 +43,25 @@ padding: 10px 17px;
 border-radius: 5px;
 }
 
-#startproceed, #backbtn, #backbtn2, #selectperfcol {
+#startproceed, #backbtn, #backbtn2, #backbtn3, #selectperfcol, #gotorecommender {
 font-family: "Proxima Nova Regular";
 color: #42B89E;
 background-color: #FFFFFF;
 padding: 6px 22px;
 border: 1px solid #42B89E; 
 border-radius: 5px;
+  -webkit-box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
 }
 
 .datasourceselection {
   margin-top: 30px;
+}
+
+.panel-info {
+  border-color: #42B89E;
+}
+
+.panel-info > .panel-heading {
+  background-color: #42B89E;
 }
