@@ -40,7 +40,7 @@ background-color: white;
 padding: 6px 40px;
 border: 1px solid #42B89E; }
 
-#selectdataset {
+#selectdataset, #backbtn, #backbtn2, #selectperfcol {
 font-family: "Proxima Nova Regular";
 color: white;
 font-size: 18px;
