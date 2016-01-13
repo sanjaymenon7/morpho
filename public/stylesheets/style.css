@@ -1,7 +1,21 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: whitesmoke;
+/* Font */
+@font-face {
+font-family: "Proxima Nova Light";
+src: url(../fonts/ProximaNova-Light.otf); }
+
+@font-face {
+font-family: "Proxima Nova Regular";
+src: url(../fonts/ProximaNova-Regular.otf); }
+
+/* start.ejs view */
+
+html, body {
+  font-family: "Proxima Nova Light";
+  background-color: white;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden; 
 }
 
 a {
@@ -10,4 +24,31 @@ a {
 
 .navbar{
   margin-bottom: 0px!important;
+  background-image: url(../images/header_bg.png);
+  background-size: cover;
+  width: 100%;
+}
+
+/* datasourceselection.ejs view */
+
+#startproceed, #backbtn, #uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #backbtn2, #selectperfcol {
+float: center;
+margin-top: 20px;
+font-family: "Proxima Nova Regular";
+color: #42B89E;;
+background-color: white;
+padding: 6px 40px;
+border: 1px solid #42B89E; }
+
+#selectdataset {
+font-family: "Proxima Nova Regular";
+color: white;
+font-size: 18px;
+background-color: #41B99F;
+margin-top: 20px;
+padding: 10px 17px; 
+}
+
+.datasourceselection {
+	margin-top: 30px;
 }
