@@ -6,6 +6,10 @@
     align-content: stretch;
 }
 
+a {
+color: white;
+}
+
 .child{
     vertical-align: middle;
     border-left: 1px solid #42B89E;
@@ -51,4 +55,12 @@
     vertical-align: middle;
     border: 3px solid white;
     text-align: center;
+}
+
+.radio-success input[type=radio]:checked ~ .circle {
+    border-color: #42B89E;
+}
+
+.radio-success input[type=radio]:checked ~ .check {
+    background-color: #42B89E;
 }

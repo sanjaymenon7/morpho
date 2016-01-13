@@ -7,6 +7,10 @@ src: url(../fonts/ProximaNova-Light.otf); }
 font-family: "Proxima Nova Regular";
 src: url(../fonts/ProximaNova-Regular.otf); }
 
+html, body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Proxima Nova Light";
+}
+
 /* start.ejs view */
 
 html, body {
@@ -33,7 +37,7 @@ body .well {
 /* datasourceselection.ejs view */
 
 
-#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset, #recommendBtn {
+#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset, #recommendBtn, #addnewgroup {
 font-family: "Proxima Nova Regular";
 color: white;
 font-size: 18px;
@@ -56,6 +60,11 @@ border-radius: 5px;
 
 .datasourceselection {
   margin-top: 30px;
+}
+
+.panel {
+    -webkit-box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
 }
 
 .panel-info {
