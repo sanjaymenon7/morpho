@@ -1,16 +1,90 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: whitesmoke;
+/* Font */
+@font-face {
+font-family: "Proxima Nova Light";
+src: url(../fonts/ProximaNova-Light.otf); }
+
+@font-face {
+font-family: "Proxima Nova Regular";
+src: url(../fonts/ProximaNova-Regular.otf); }
+
+html, body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Proxima Nova Light";
 }
 
-a {
-  color: whitesmoke;
+/* start.ejs view */
+
+html, body {
+  font-family: "Proxima Nova Light";
+  background-color: white;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+body .well {
+    -webkit-box-shadow: 0 0 0 0;
+    box-shadow: 0 0 0 0;
 }
 
 .navbar{
   margin-bottom: 0px!important;
+  background-image: url(../images/header_bg.png);
+  background-size: cover;
+  width: 100%;
 }
+
+/* datasourceselection.ejs view */
+
+
+#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset, #recommendBtn, #addnewgroup {
+font-family: "Proxima Nova Regular";
+color: white;
+font-size: 18px;
+background-color: #41B99F;
+margin-top: 20px;
+padding: 10px 17px;
+border-radius: 5px;
+}
+
+#startproceed, #backbtn, #backbtn2, #backbtn3, #selectperfcol, #gotorecommender {
+font-family: "Proxima Nova Regular";
+color: #42B89E;
+background-color: #FFFFFF;
+padding: 6px 22px;
+border: 1px solid #42B89E;
+border-radius: 5px;
+  -webkit-box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
+}
+
+.datasourceselection {
+  margin-top: 30px;
+}
+
+.panel {
+    -webkit-box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
+}
+
+.panel-info {
+  border-color: #42B89E;
+}
+
+.panel-info > .panel-heading {
+  background-color: #42B89E;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+  background-color: #42B89E;
+  border: none;
+}
+
+.ui-widget-header {
+  border: none;
+  background: none;
+}
+
 
 .elessar-handle {
   display: block;
@@ -64,7 +138,7 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background: #17B0E3;
+  background: #32e384;
   width: 0;
   z-index: 10;
 }
