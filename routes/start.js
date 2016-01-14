@@ -20,11 +20,15 @@ var data = [
                         }
                     ];
 
+router.get('/register', function(req, res, next) {
+  res.render('register');
+});                  
+
 router.post('/submitinitdata',function(req,res,next){
     db.open(function(err, db) {
 		if(!err) {
 			var users = db.collection("users");
-			users.find({"username":req.body.username}).toArray(function(err2, docs) {
+			users.find({"username":req.body.username, "password":req.body.password}).toArray(function(err2, docs) {
 				if(docs.length>0){
                     console.log("User found in DB")
                     router.sess = req.session;
@@ -35,7 +39,7 @@ router.post('/submitinitdata',function(req,res,next){
                     res.render("datasourceselection",{uploaderror:"false", data: req.session.userId});
                 }
                 else {
-                    users.insert({"username":req.body.username});
+                    users.insert({"username":req.body.username, "password":req.body.password});
                     console.log("New user inserted into DB!");
                     router.sess = req.session;
                     router.sess.loggedIn=true;
