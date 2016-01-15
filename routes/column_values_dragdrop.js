@@ -102,21 +102,23 @@ router.post('/column_values_dragdrop_result',function(req,res,next){
      } else {
         router.sess = req.session;
         router.sess.perfOrderSet = true;
-        router.sess.perfColType = req.body.dataType;
+        
+        //router.sess.perfColType = req.body.dataType;
         //console.log(req.body);
         (req.body.values).sort(function(a, b) {
             return parseInt(a.acv) - parseInt(b.acv);
         });
-        console.log(req.body.values);
-        router.sess.perfColValues = req.body.values;
+        //console.log(req.body.values);
+        //router.sess.perfColValues = req.body.values;
         responseJson.status=true;
-        req.session.perfCol = req.body.columnName;
+        //req.session.perfCol = req.body.columnName;
         
         // Remove after Kaushik's range frontend part
         req.session.perfSort = {};
+        var colName = req.body.columnName;
         // till here
         
-        var colName = req.body.columnName;
+        router.sess.perfCol=req.body;
         
         // Remove after Kaushik's range frontend part
         if (req.body.dataType=="numeric") {

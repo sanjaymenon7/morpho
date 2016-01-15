@@ -33,22 +33,30 @@ var _ = require("underscore");
 router.get('/get-data', function(req, res, next) {
    db.open(function(err, db) {
      if(!err) {
-       var columnJSON = new Array();
+       var data = {
+        columnData: new Array(),
+        groupData: req.session.perfCol
+       };
+       //var columnJSON = new Array();
        var collection = db.collection(req.session.table+"_keys");
        collection.find().toArray(function(err, docs) {
            var k=0;
            for (var col=0; col<docs.length; col++){
               if (docs[col]._id!="_id" && (req.session.selectedCols).indexOf(docs[col]._id)!=-1){
                 var header = {column_header:{name:docs[col]._id, id:col}, column_data: new Array()};
-                columnJSON.push(header);
+                data.columnData.push(header);
                 for (var val=0; val<(docs[col].value).length; val++){
-                  (columnJSON[k].column_data).push({value:docs[col].value[val].value, id:docs[col].value[val].id});
+                  (data.columnData[k].column_data).push({value:docs[col].value[val].value, id:docs[col].value[val].id});
                 }
                 k++;
               }
             }
-            res.json(columnJSON);
-            db.close();
+            collection = db.collection(req.session.table);
+            collection.find().toArray(function(err, docs2) {
+                data.configData = docs2;
+                res.json(data);
+                db.close();
+            });
            });
      }
    });
@@ -59,11 +67,11 @@ router.get('/get-all-data', function(req, res, next) {
      if(!err) {
        var collection = db.collection(req.session.table);
        collection.find().toArray(function(err, docs) {
-        if (req.session.perfColType=="ordinal") {
-            for(var j=0;j<(req.session.perfColValues).length;j++){
+        if (req.session.perfCol.dataType=="ordinal") {
+            for(var j=0;j<(req.session.perfCol.values).length;j++){
                 for(var k=0;k<docs.length;k++){
-                    if (docs[k][req.session.perfCol]==req.session.perfColValues[j].value) {
-                        docs[k][req.session.perfCol]=req.session.perfColValues[j].label;
+                    if (docs[k][req.session.perfCol.columnName]==req.session.perfCol.values[j].value) {
+                        docs[k][req.session.perfCol.columnName]=req.session.perfCol.values[j].label;
                     }
                 }
             }
@@ -71,10 +79,10 @@ router.get('/get-all-data', function(req, res, next) {
         // Comment out after Kaushik's range frontend part
         /*
         else {
-            for(var j=0;j<(req.session.perfColValues).length;j++){
+            for(var j=0;j<(req.session.perfCol.values).length;j++){
                 for(var k=0;k<docs.length;k++){
-                    if (docs[k][req.session.perfCol]>=req.session.perfColValues[j].minVal && docs[k][req.session.perfCol]<=req.session.perfColValues[j].maxVal) {
-                        docs[k][req.session.perfCol]=req.session.perfColValues[j].label;
+                    if (docs[k][req.session.perfCol.columnName]>=req.session.perfCol.values[j].minVal && docs[k][req.session.perfCol]<=req.session.perfCol.values[j].maxVal) {
+                        docs[k][req.session.perfCol.columnName]=req.session.perfCol.values[j].label;
                     }
                 }
             }
@@ -155,7 +163,7 @@ router.post('/prepareJson', function(req, res, next) {
                 if (counter == selected_items.length-1) {
                     // Remove after Kaushik's range frontend part
                     var sort = {};
-                    if (req.session.perfColType=="numeric") {
+                    if (req.session.perfCol.dataType=="numeric") {
                         sort = req.session.perfSort;
                     }
                     // till here
@@ -164,12 +172,12 @@ router.post('/prepareJson', function(req, res, next) {
                     // Remove sort after Kaushik's range frontend part
                     collection.find(condition).sort(sort).toArray(function(err2,docs2){
                         var jsonFile=docs2;
-                        if (req.session.perfColType=="ordinal") {
+                        if (req.session.perfCol.dataType=="ordinal") {
                             var modifiedJson = new Array();
-                            for(var j=0;j<(req.session.perfColValues).length;j++){
+                            for(var j=0;j<(req.session.perfCol.values).length;j++){
                                 for(var k=0;k<docs2.length;k++){
-                                    if (docs2[k][req.session.perfCol]==req.session.perfColValues[j].value) {
-                                        docs2[k][req.session.perfCol]=req.session.perfColValues[j].label
+                                    if (docs2[k][req.session.perfCol.columnName]==req.session.perfCol.values[j].value) {
+                                        docs2[k][req.session.perfCol.columnName]=req.session.perfCol.values[j].label
                                         modifiedJson.push(docs2[k]);
                                     }
                                 }
@@ -179,10 +187,10 @@ router.post('/prepareJson', function(req, res, next) {
                             // Comment out after Kaushik's range frontend part
                             /*
                             var modifiedJson = new Array();
-                            for(var j=0;j<(req.session.perfColValues).length;j++){
+                            for(var j=0;j<(req.session.perfCol.values).length;j++){
                                 for(var k=0;k<docs2.length;k++){
-                                    if (docs2[k][req.session.perfCol]>=req.session.perfColValues[j].minVal && docs2[k][req.session.perfCol]<=req.session.perfColValues[j].maxVal) {
-                                        docs2[k][req.session.perfCol]=req.session.perfColValues[j].label
+                                    if (docs2[k][req.session.perfCol.columnName]>=req.session.perfCol.values[j].minVal && docs2[k][req.session.perfCol.columnName]<=req.session.perfCol.values[j].maxVal) {
+                                        docs2[k][req.session.perfCol.columnName]=req.session.perfCol.values[j].label
                                         modifiedJson.push(docs2[k]);
                                     }
                                 }
@@ -193,7 +201,7 @@ router.post('/prepareJson', function(req, res, next) {
                             // Remove after Kaushik's range frontend part
                             for(var l=0;l<docs2.length;l++){
                                 
-                                docs2[l][req.session.perfCol] = " "+docs2[l][req.session.perfCol];
+                                docs2[l][req.session.perfCol.columnName] = " "+docs2[l][req.session.perfCol.columnName];
                             }
                             jsonFile=docs2;
                             // till here
