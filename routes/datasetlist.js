@@ -56,7 +56,7 @@ router.post('/setDataSet',function(req,res,next){
                         router.sess.tableSet = true;
                         router.sess.table=docs[0]["table"];
                         res.json(reponseJson);
-                        res.render('coloumnpreprocessor',{data: req.session.userId})
+                        //res.render('coloumnpreprocessor',{data: req.session.userId})
                     } else{
                         res.send("Project not found or multiple copies of project exist");
                     }
