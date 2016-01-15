@@ -43,15 +43,15 @@
             cache: false,
             success: function(data) {
 
-                // console.log(data)
+                console.log(data)
                 var datahtml='';
                 var colhtml='';
-                for (i=0;i<data.length;i++){
+                for (i=0;i<data.columnData.length;i++){
                     var datahtml='';
                     var colhtml='';
                     // console.log(data[i].column_header.name);
-                    var colData =data[i].column_data;
-                    datahtml= datahtml+('<div class ="child-recommend header-recommend tile-title"  id="'+ data[i].column_header.id +'" >'+ data[i].column_header.name +'</div>');
+                    var colData =data.columnData[i].column_data;
+                    datahtml= datahtml+('<div class ="child-recommend header-recommend tile-title"  id="'+ data.columnData[i].column_header.id +'" >'+ data.columnData[i].column_header.name +'</div>');
                     for(j=0;j<colData.length;j++){
                         //  console.log(colData[j].value);
                         colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false">'+colData[j].value +'</div>');
