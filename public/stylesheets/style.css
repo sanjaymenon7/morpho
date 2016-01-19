@@ -37,7 +37,7 @@ body .well {
 /* datasourceselection.ejs view */
 
 
-#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset, #recommendBtn, #addnewgroup {
+#uploadinfoBtn, #uploadtWarningBtn, #selectdataprcd, #uploadnewdata, #selectdataset, #recommendBtn, #addnewgroup, #deldataset {
 font-family: "Proxima Nova Regular";
 color: white;
 font-size: 18px;
