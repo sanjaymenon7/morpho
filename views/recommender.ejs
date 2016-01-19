@@ -33,6 +33,10 @@
 <div id="headerdiv" style="display: none;">recommender</div>
 <%include header.ejs%>
 <script type="text/javascript">
+    var configData;
+    var groupData;
+    var columnData;
+    var selectedItems = {};
     $( document ).ready(function() {
 
         $( "#tabs" ).tabs();
@@ -42,8 +46,14 @@
             dataType: 'json',
             cache: false,
             success: function(data) {
-
-                console.log(data)
+                console.log(data);
+                configData = data.configData;
+                groupData = data.groupData;
+                columnData = data.columnData;
+                for (var i=0;i<data.columnData.length;i++) {
+                    selectedItems[data.columnData[i].column_header.name]=new Array();
+                }
+                //console.log(selectedItems);
                 var datahtml='';
                 var colhtml='';
                 for (i=0;i<data.columnData.length;i++){
@@ -51,15 +61,15 @@
                     var colhtml='';
                     // console.log(data[i].column_header.name);
                     var colData =data.columnData[i].column_data;
-                    datahtml= datahtml+('<div class ="child-recommend header-recommend tile-title"  id="'+ data.columnData[i].column_header.id +'" >'+ data.columnData[i].column_header.name +'</div>');
+                    datahtml= datahtml+('<div class ="child-recommend header-recommend tile-title"  id="'+ data.columnData[i].column_header.id +'">'+ data.columnData[i].column_header.name +'</div>');
                     for(j=0;j<colData.length;j++){
                         //  console.log(colData[j].value);
-                        colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false">'+colData[j].value +'</div>');
+                        colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false" column="'+data.columnData[i].column_header.name+'">'+colData[j].value +'</div>');
                     }
                     var htmlDivs = '<div class="divcover" filtered="false">'+datahtml+colhtml +'</div>';
                     $("#mainDataDiv").append(htmlDivs);
                 }
-
+                recommend(configData, columnData, selectedItems);
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -68,18 +78,115 @@
         });
         $('.parentContainer').on('click', '.specs-recommend', function(){
             // do something
-            console.log('inside');
-            console.log($(this).attr('id'));
-                if($(this).attr('isSelected') == 'false')
-                {
-                    $(this).addClass( "selected-recommendation" );
-                    $(this).attr('isSelected','true')
-                }else if($(this).attr('isSelected') == 'true'){
-                    $(this).removeClass( "selected-recommendation" );
-                    $(this).attr('isSelected','false')
+            //console.log('inside');
+            //console.log();
+            var column = $(this).attr('column');
+            var item = $(this).text();
+            if($(this).attr('isSelected') == 'false')
+            {
+                selectedItems[column].push(item);
+                
+                //console.log(selectedItems);
+                $(this).addClass( "selected-recommendation" );
+                $(this).attr('isSelected','true')
+            } else if($(this).attr('isSelected') == 'true'){
+                var index = selectedItems[column].indexOf(item);
+                if (index > -1) {
+                    selectedItems[column].splice(index, 1);
                 }
-
+                //console.log(selectedItems);
+                $(this).removeClass( "selected-recommendation" );
+                $(this).attr('isSelected','false')
+            }
+            var filteredData = filter(selectedItems, configData);
+            //console.log(filteredData);
+            recommend(filteredData, columnData, selectedItems);
+            //console.log(columnData);
         });
+        function filter(selectedItems, configData) {
+            //console.log(selectedItems);
+            return configData.filter(function (el) {
+                var flag={};
+                for (var i=0;i<columnData.length;i++) {
+                    prop = columnData[i].column_header.name;
+                    flag[prop]=1;
+                    if(selectedItems[prop].length>0){
+                        if(selectedItems[prop].indexOf(el[prop])==-1){
+                            flag[prop]=0;
+                        }
+                    }
+                }
+                for (var key in flag) {
+                    if (flag[key]==0) {
+                        return false;
+                        break;
+                    } 
+                }
+                return true;
+            });
+        }
+        function recommend(filteredData, columnData, selectedItems) {
+            for (var i=0;i<columnData.length;i++) {
+                
+                for (var j=0;j<columnData[i].column_data.length;j++) {
+                    var div = $('#'+columnData[i].column_data[j].id);
+                    if (div.attr('isSelected') == 'false') {
+                        div.css("background","aliceblue");
+                    } else if(div.attr('isSelected') == 'true') {
+                        div.css("background","lawngreen");
+                    }
+                }
+                if (selectedItems[columnData[i].column_header.name].length==0) {
+                    for (var j=0;j<columnData[i].column_data.length;j++) {
+                        var selectedTemp = selectedItems;
+                        selectedTemp[columnData[i].column_header.name].push(columnData[i].column_data[j].value);
+                        var futureItems = filter(selectedTemp, filteredData);
+                        selectedTemp[columnData[i].column_header.name].pop();
+                        //console.log(futureItems.length);
+                        columnData[i].column_data[j].ratio = calculateRatio(futureItems, filteredData.length);
+                        var color = ["#0000ff","#ff0000","#00ff00",
+                    "#00ffff","#ffff00","#ff00ff","#ff7f00",
+                    "#cab2d6","#6a3d9a","#ffff99","#b15928"];
+                        var count = 0;
+                        var percentTotal = 0;
+                        var colorString = "";
+                        for (var h in columnData[i].column_data[j].ratio.percent) {
+                            colorString = colorString + ", "+color[count]+" "+percentTotal+"%";
+                            percentTotal = percentTotal + columnData[i].column_data[j].ratio.percent[h];
+                            colorString = colorString + ", "+color[count]+" "+percentTotal+"%";
+                            count++;
+                        }
+                        $("#"+columnData[i].column_data[j].id).css("background","linear-gradient(to right"+colorString+")");
+                        //console.log(colorString);
+                    }
+                }
+            }
+        }
+        function calculateRatio(futureItems, countTotal) {
+            var ratio = {count:{}, percent: {}};
+            for (var k=0;k<groupData.values.length;k++) {
+                ratio.count[groupData.values[k].acv]=0;
+            }
+            for (var k=0;k<groupData.values.length;k++) {
+                ratio.count[groupData.values[k].acv] += futureItems.filter(function (el) {
+                    if(el[groupData.columnName]==groupData.values[k].value){
+                        return true;
+                    } else{
+                        return false
+                    }
+                }).length;
+            }
+           
+            var total = 0;
+            for (var key in ratio.count) {
+                total = total + ratio.count[key];
+            }
+            ratio.count.lost = countTotal-total;
+            for (var key in ratio.count) {
+                ratio.percent[key] = Math.round((ratio.count[key]/countTotal) * 100);
+            }
+            return ratio;
+        }
         function drawVisualization(dimensions, filename){
             //console.log(dimensions);
             //console.log(filename);
@@ -102,6 +209,7 @@
             if( $('div[isselected="true"]').length >0){
                 selectedItems=[];
                 $('#selecteditemsdiv').empty();
+                
                 $('#vis').empty();
                // $("#recommend-matrix").css("display","none");
                 $("#recommend-graph").css("display","block");
