@@ -13,7 +13,6 @@
     <script src="../bower_components/pleasejs/dist/Please.js"></script>
     <script src="../bower_components/chance/chance.js"></script>
     <script src="../bower_components/elessar/dist/elessar.js"></script>
-   
 
 
     <link rel="" media="screen" href="../bower_components/flat-ui/fonts/glyphicons/flat-ui-icons-regular.ttf">
@@ -183,11 +182,7 @@
                                 <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
                                 <!---->
                                 <!--</div>-->
-                                <div class="label-info h4" id="groupInput1"
-                                     style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:white"
-                                     contenteditable="true">
-                                    Group Here
-                                </div>
+                                <div class="label-info h4" id="groupInput1" style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:white" contenteditable="true">Group Here</div>
                                 <ul id="positionedList1" style="min-height:80px"
                                     ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
@@ -290,7 +285,6 @@
                 mapMaindata.set(innerValue, divCount);
             }
 
-
         }
 
     }// end function listParentUpdater.
@@ -300,20 +294,23 @@
         $("#warning").css("display", "none");
     });
 
-    function nextStep() {
+    //TODO
+    // use colour from please colour and send that as well.
+    //
+    function nextStep(){
         if (mainData.dataType != 'numeric') {
             var initElement = document.getElementById('initOrdinalList')
-            if (initElement.getElementsByTagName('li').length > 0) {
-                //console.log($('#warningInput'))
-                // commented because we dont need to throw a warnign right now.
-                //$('#warningMessage').text("Please group all Elements to the right before proceeding");
-                //$('#warning').css("display", "block");
-
-                for(var i=0;i<initElement.getElementsByTagName('li').length;i++){
-                    mainData.values;
-                }
-                //return;
-            }
+//            if (initElement.getElementsByTagName('li').length > 0) {
+//                //console.log($('#warningInput'))
+//                // commented because we dont need to throw a warnign right now.
+//                //$('#warningMessage').text("Please group all Elements to the right before proceeding");
+//                //$('#warning').css("display", "block");
+//
+//                for(var i=0;i<initElement.getElementsByTagName('li').length;i++){
+//                    mainData.values;
+//                }
+//                //return;
+//            }
 
             var countOfDiv = currentDiv.substr(currentDiv.length - 1);
 
@@ -350,11 +347,13 @@
                 //if(mainData.values[i].)
                 if(mainData.values[i].acv==-1){
                     mainData.values[i].label= "Unassigned group";
+                    mainData.values[i].color='#ffffff';
                 }
                 else{
                     var label = document.getElementById('groupInput' + mainData.values[i].acv).innerHTML;
                     console.log('label: ' + label);
                     mainData.values[i].label = label;
+                    mainData.values[i].color=$('#position'+mainData.values[i].acv).css('background-color');
                 }
 
 
@@ -369,10 +368,16 @@
                     numericJsonReturn('dsc');
                     console.log('inside nextstep and in numeric selection. dsc passed');
                 }
+                var rangeVal=rangeBars.val();
+                for(var i=0;i<rangeVal.length;i++){
+                    var tempValues=rangeVal[i];
+                    mainData.values[i].label=tempValues[0]+'-'+tempValues[1];
+                    mainData.values[i].color="#ffffff";
+                    mainData.values[i].minVal=tempValues[0];
+                    mainData.values[i].maxVal=tempValues[1];
 
-
+                }
             }
-
 
         }
         console.log("main data: ");
@@ -399,16 +404,34 @@
     // generates the color to be used for the new groups that are created.
     //
     function colorGenerator() {
+        var divColorsInitial=['lightcoral','lightgreen','lightyellow','peru','lightseagreen'];
+        var divColorsTemp;
+        var colorsReturned;
+        divColors=['#F08080','#90EE90','#FFFF70','#CD853F','#20B2AA'];
+        //divColors.push.apply(divColors,divColorsInitial);
+        if(mainData.values.length>5)
+            colorsReturned=Math.floor((mainData.values.length -divColorsInitial.length)/divColorsInitial.length);
+        else{
+            colorsReturned=5;
+            console.log(divColors);
+            return;
+        }
+        console.log('colors REturned value: '+colorsReturned);
+        console.log(divColorsInitial);
 
-        divColors = Please.make_color({
-            golden: true,
-            base_color: 'lightcyan',
-            grayscale: true,
-            colors_returned: mainData.values.length * 2
+        for(var i=0;i<5;i++){
+            divColorsTemp=Please.make_color({
+                golden: true,
+                base_color: divColorsInitial[i],
+                grayscale: true,
+                colors_returned: colorsReturned
 
-        });
+            });
+            divColors.push.apply(divColors,divColorsTemp);
+        }
+
         // console.log(divColors);
-
+        console.log(divColors);
     }// end function colorGenerator().
 
     // used to create the dynamic divisions which are used for grouping elements.
@@ -523,9 +546,20 @@
         if(rangeBars!=null)
                 console.log(rangeBars.val());
         var midVal;
-        if(minVal>maxVal)
+        var snapVal;
+        if(minVal>maxVal){
             midVal=minVal/2;
-        else midVal=maxVal/2;
+            snapVal=Math.min(.5,minVal/10);
+            snapVal=snapVal.toFixed(2);
+        }
+
+        else {
+            midVal=maxVal/2;
+            snapVal=Math.min(0.5, (maxVal/10));
+            snapVal=snapVal.toFixed(2);
+
+        }
+        console.log("snapVal: "+snapVal+" ")
         rangeBars=RangeBar({
             min: minVal,//moment().startOf('day').format('LLLL'),
             max: maxVal,//moment().startOf('day').add(1, 'day').format('LLLL'),
@@ -542,9 +576,11 @@
                 ],
 
             ],
+            htmlLabel: true, // if true, range labels are written as html
+            allowSwap: true,
             label: function(a){return JSON.stringify(a)},
-            snap: 0.5,//1000 * 60 * 15,
-            minSize: 1,//1000 * 60 * 60,
+            snap: snapVal,//1000 * 60 * 15,
+            minSize: snapVal*2,//1000 * 60 * 60,
 
             allowDelete:true,
             indicator:null
@@ -558,9 +594,9 @@
         }).on('change', function(ev, ranges, changed) {
             console.log(changed);
             $('pre.changing').after($('<pre>').html('changed'+JSON.stringify(ranges,null,2)));
-        }).$el;
-
-        $('#numericRangeBar').append(rangeBars);
+        })
+        var rangeBarElement= rangeBars.$el;
+        $('#numericRangeBar').append(rangeBarElement);
 
 
     }// end function numericRangeBar.
@@ -587,5 +623,28 @@
         numericRangeBarDraw(ascOrDsc,minVal,maxVal);
         console.log(mainData.values);
     }// end function numericJsonReturn.
+
+
+    /*
+
+     {
+     colname: "",
+     datatype: "numeric",
+     values:[
+     {
+     label: "Low",
+     minVal: 100,
+     maxVal: 200,
+     acv:1
+     },
+     {
+     label: "Low",
+     minVal: 100,
+     maxVal: 200,
+     acv:1
+     }
+     ]
+     }
+     */
 </script>
 </html>
