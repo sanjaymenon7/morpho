@@ -23,37 +23,42 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $.material.init();
-        $.ajax({
-            url : "http://localhost:3000/datasetlist/getList",
-            type: "get",
-            dataType: 'json',
-            success: function(data, textStatus, jqXHR)
-            {
-                if(data.length >0){
-                    console.log(data)
-                    var listHtml=''
-                    for (i=0;i<data.length;i++){
-                        console.log(data[i].id);
 
-                        $("#radioList").append('<div class="radio radio-success"><label><input type="radio" name="datasetlist" value="'+data[i].text+'" /><span class="circle"></span><span class="check"></span>'+data[i].text+'<p><b>Description:</b>'+data[i].description +'</p></lable></div>')
+        function getDatasetList(){
+            $.ajax({
+                url : "http://localhost:3000/datasetlist/getList",
+                type: "get",
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR)
+                {
+                    if(data.length >0){
+                        console.log(data)
+                        var listHtml=''
+                        for (i=0;i<data.length;i++){
+                            console.log(data[i].id);
+
+                            $("#radioList").append('<div class="radio radio-success"><label><input type="radio" name="datasetlist" value="'+data[i].text+'" /><span class="circle"></span><span class="check"></span>'+data[i].text+'<p><b>Description:</b>'+data[i].description +'</p></lable></div>')
+                        }
+                        console.log(listHtml);
+
                     }
-                    console.log(listHtml);
+                    else{
+                        $("#submitdiv").css("display","none");
+                        $("#backdiv").css("display","block")
+
+                    }
+
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
 
                 }
-                else{
-                    $("#submitdiv").css("display","none");
-                    $("#backdiv").css("display","block")
+            });
+        }
 
-                }
-
-
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-
-            }
-        });
+        getDatasetList();
 
         $( "#selectdataset" ).click(function() {
 
@@ -73,6 +78,37 @@
                         console.log(data);
                         if(data.status == true){
                             location.href = "http://localhost:3000/coloumnpreprocessor";
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+
+                    }
+                });
+
+            }
+        });
+
+        $( "#deldataset" ).click(function() {
+
+            if($('input[name=datasetlist]:radio:checked').val() === undefined){
+                $("#datasetWarning").css("display","block");
+            }
+            else{
+
+                var formData={selectedProject:$('input[name=datasetlist]:radio:checked').val()};
+                console.log(formData);
+                $.ajax({
+                    url : "http://localhost:3000/datasourceselection/deleteProject",
+                    type: "POST",
+                    data : formData,
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        console.log(data);
+                        if(data.status == true){
+                            $("#radioList").empty();
+                            getDatasetList();
                         }
 
                     },
@@ -109,9 +145,10 @@
 
             <div class="row" id="submitdiv" style="display: block">
                 <div class="col-md-6">
-                    <button id="selectdataset" class="btn btn-success">Submit and Proceed to Preprocessing <div class="ripple-wrapper"></div></button>
+                    <button id="selectdataset" class="btn btn-success">Select and Proceed<div class="ripple-wrapper"></div></button>
                 </div>
-                <div class="">
+                <div class="col-md-6">
+                    <button id="deldataset" class="btn btn-success">Delete Dataset <div class="ripple-wrapper"></div></button>
                 </div>
             </div>
             <div class="row" id="backdiv" style="display: none">
