@@ -14,6 +14,7 @@
     "Sortable": "~1.4.2",
     "pleasejs": "~0.4.2",
     "chance": "~0.8.0",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "elessar": "~1.8.4"
   }
 }
