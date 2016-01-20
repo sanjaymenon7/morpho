@@ -58,6 +58,20 @@ border-radius: 5px;
   box-shadow: 0 0 0 0;
 }
 
+#logoutbox {
+  display: inline;
+  float: right;
+  margin-top: 15px;
+}
+
+#btn-logout {
+font-family: "Proxima Nova Regular";
+color: #42B89E;
+background-color: #FFFFFF;
+padding: 3px 15px;
+margin: 0px;
+}
+
 .datasourceselection {
   margin-top: 30px;
 }

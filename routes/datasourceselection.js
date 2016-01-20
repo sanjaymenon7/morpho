@@ -7,7 +7,7 @@ var mongo = require('mongodb'),
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('morphologicalrecommender', server);
 
-/* GET start start page. */
+/* GET start page. */
 router.get('/', function(req, res, next) {
     if (req.session.loggedIn) {
         res.render('datasourceselection',{uploaderror:"false", data: req.session.userId});

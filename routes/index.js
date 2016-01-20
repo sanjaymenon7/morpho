@@ -38,6 +38,12 @@ router.get('/', function(req, res, next) {
  //console.log(phoneInfo.phoneSpecs[0]);
 });
 
+/* Logout service */
+router.get('/logout', function(req, res, next) {
+    req.session.loggedIn = false;
+    res.render('home');
+});
+
 //Mock Service to populate mock main data
 router.get('/mainData',function(req,res,next){
   res.json(perfColFilterResponse)
