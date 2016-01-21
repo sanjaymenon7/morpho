@@ -44,6 +44,11 @@ router.get('/get-data', function(req, res, next) {
            for (var col=0; col<docs.length; col++){
               if (docs[col]._id!="_id" && (req.session.selectedCols).indexOf(docs[col]._id)!=-1){
                 var header = {column_header:{name:docs[col]._id, id:col}, column_data: new Array()};
+                if (typeof docs[col].value[0].value === "number") {
+                    header.column_header.type="number";
+                } else {
+                    header.column_header.type="ordinal";
+                }
                 data.columnData.push(header);
                 for (var val=0; val<(docs[col].value).length; val++){
                   (data.columnData[k].column_data).push({value:docs[col].value[val].value, id:docs[col].value[val].id});

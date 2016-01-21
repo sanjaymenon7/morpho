@@ -37,6 +37,7 @@
     var groupData;
     var columnData;
     var selectedItems = {};
+    var color = new Array();
     $( document ).ready(function() {
 
         $( "#tabs" ).tabs();
@@ -50,6 +51,13 @@
                 configData = data.configData;
                 groupData = data.groupData;
                 columnData = data.columnData;
+                for (var i=0;i<groupData.values.length;i++) {
+                    if (color.indexOf(groupData.values[i].color)==-1) {
+                        color.push(groupData.values[i].color);
+                    }
+                }
+                color.push("rgb(160, 160, 160)");
+                console.log(color);
                 for (var i=0;i<data.columnData.length;i++) {
                     selectedItems[data.columnData[i].column_header.name]=new Array();
                 }
@@ -64,7 +72,7 @@
                     datahtml= datahtml+('<div class ="child-recommend header-recommend tile-title"  id="'+ data.columnData[i].column_header.id +'">'+ data.columnData[i].column_header.name +'</div>');
                     for(j=0;j<colData.length;j++){
                         //  console.log(colData[j].value);
-                        colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false" column="'+data.columnData[i].column_header.name+'">'+colData[j].value +'</div>');
+                        colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false" column="'+data.columnData[i].column_header.name+'" type="'+data.columnData[i].column_header.type+'">'+colData[j].value +'</div>');
                     }
                     var htmlDivs = '<div class="divcover" filtered="false">'+datahtml+colhtml +'</div>';
                     $("#mainDataDiv").append(htmlDivs);
@@ -81,11 +89,16 @@
             //console.log('inside');
             //console.log();
             var column = $(this).attr('column');
-            var item = $(this).text();
+            var datatype = $(this).attr('type');
+            var item;
+            if (datatype === "number") {
+                item = parseFloat($(this).text());
+            } else {
+                item = $(this).text();
+            }
             if($(this).attr('isSelected') == 'false')
             {
                 selectedItems[column].push(item);
-                
                 //console.log(selectedItems);
                 $(this).addClass( "selected-recommendation" );
                 $(this).attr('isSelected','true')
@@ -98,12 +111,13 @@
                 $(this).removeClass( "selected-recommendation" );
                 $(this).attr('isSelected','false')
             }
-            var filteredData = filter(selectedItems, configData);
+            var filteredData = filter(selectedItems, configData, 1);
+            
             //console.log(filteredData);
             recommend(filteredData, columnData, selectedItems);
             //console.log(columnData);
         });
-        function filter(selectedItems, configData) {
+        function filter(selectedItems, configData, flag) {
             //console.log(selectedItems);
             return configData.filter(function (el) {
                 var flag={};
@@ -140,13 +154,9 @@
                     for (var j=0;j<columnData[i].column_data.length;j++) {
                         var selectedTemp = selectedItems;
                         selectedTemp[columnData[i].column_header.name].push(columnData[i].column_data[j].value);
-                        var futureItems = filter(selectedTemp, filteredData);
+                        var futureItems = filter(selectedTemp, filteredData, 0);
                         selectedTemp[columnData[i].column_header.name].pop();
-                        //console.log(futureItems.length);
                         columnData[i].column_data[j].ratio = calculateRatio(futureItems, filteredData.length);
-                        var color = ["#0000ff","#ff0000","#00ff00",
-                    "#00ffff","#ffff00","#ff00ff","#ff7f00",
-                    "#cab2d6","#6a3d9a","#ffff99","#b15928"];
                         var count = 0;
                         var percentTotal = 0;
                         var colorString = "";
@@ -157,7 +167,6 @@
                             count++;
                         }
                         $("#"+columnData[i].column_data[j].id).css("background","linear-gradient(to right"+colorString+")");
-                        //console.log(colorString);
                     }
                 }
             }
@@ -169,11 +178,20 @@
             }
             for (var k=0;k<groupData.values.length;k++) {
                 ratio.count[groupData.values[k].acv] += futureItems.filter(function (el) {
-                    if(el[groupData.columnName]==groupData.values[k].value){
-                        return true;
-                    } else{
-                        return false
+                    if (groupData.dataType=="ordinal") {
+                        if(el[groupData.columnName]==groupData.values[k].value){
+                          return true;
+                        } else{
+                          return false
+                        }
+                    } else if (groupData.dataType == "numeric") {
+                        if(parseFloat(el[groupData.columnName])>=groupData.values[k].minVal && parseFloat(el[groupData.columnName])<=groupData.values[k].maxVal){
+                          return true;
+                        } else{
+                          return false
+                        }
                     }
+                    
                 }).length;
             }
            
