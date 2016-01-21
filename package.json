@@ -38,6 +38,7 @@
     "serve-favicon": "~2.3.0",
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
-    "watchify": "^3.6.0"
+    "watchify": "^3.6.0",
+    "bcrypt-nodejs": "0.0.3"
   }
 }

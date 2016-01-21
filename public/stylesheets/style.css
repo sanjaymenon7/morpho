@@ -34,6 +34,10 @@ body .well {
   width: 100%;
 }
 
+#registerlink {
+  margin-top: 15px;
+}
+
 /* datasourceselection.ejs view */
 
 
