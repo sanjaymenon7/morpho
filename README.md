@@ -3,11 +3,11 @@
 This is the repository for the SEBIS Master Lab Course Web Applications.
 Organizer : Marin Zec.
 
-Students: 
+Students:
 Kaushik Gopalan
 Mohd Ahmed Khan
 Sanjay Menon
-Togi Dashnyam 
+Togi Dashnyam
 
 
 

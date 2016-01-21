@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/ripples.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/roboto.css">
     <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/flexBox.css'/>
 </head>
 <body>
 <div class="navbar navbar-default">
@@ -48,8 +49,9 @@
                 "password": $("#inputPassword").val()
             }
             if(! $("#startform").valid()) return false;
+            if($("#inputPassword").val() != $("#inputPassword2").val()) return false;
             $.ajax({
-                url : "http://localhost:3000/start/submitinitdata",
+                url : "http://localhost:3000/register/registernewuser",
                 type: "POST",
                 dataType: 'json',
                 data : data,
@@ -80,20 +82,27 @@
             <div class="">
                 <form class="form-horizontal" id="startform" action="javascript:submitFunc();">
                     <fieldset>
-                        <legend>Start Analysis</legend>
+                        <legend>Register New User</legend>
                         <div class="form-group is-empty">
-                            <label for="inputEmail" class="col-lg-2 control-label">User Email</label>
+                            <label for="inputEmail" class="col-lg-2 control-label">Enter Email</label>
 
                             <div class="col-lg-10">
-                                <input type="email" class="form-control" id="inputUserName" placeholder="User Name" name="username" required>
+                                <input type="email" class="form-control" id="inputUserName" placeholder="E-Mail" name="username" required>
                             </div>
                             <span class="material-input"></span>
                         </div>
                         <div class="form-group is-empty">
-                            <label for="password" class="col-lg-2 control-label">Password</label>
+                            <label for="password" class="col-lg-2 control-label">Enter Password</label>
 
                             <div class="col-lg-10">
                                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
+                            </div>
+                        </div>
+                                                <div class="form-group is-empty">
+                            <label for="password" class="col-lg-2 control-label">Confirm Password</label>
+
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" id="inputPassword2" placeholder="Password" name="password2" required>
                             </div>
                         </div>
                     </fieldset>
@@ -103,10 +112,10 @@
 
             <div class="row">
                 <div class="col-md-9">
-                <a href="/register">No account? Register new user</a>
+
                 </div>
                 <div class="col-md-2">
-                    <button id="startproceed" onclick="submitFunc();" class="btn btn-primary login">Log In<div class="ripple-wrapper"></div></button>
+                    <button id="startproceed" onclick="submitFunc();" class="btn btn-primary login">Sign Up<div class="ripple-wrapper"></div></button>
                 </div>
             </div>
         </div>

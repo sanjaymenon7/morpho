@@ -9,34 +9,36 @@ var db = new Db('morphologicalrecommender', server);
 // Multer - A lib to manage uploads
 var multer  = require('multer');
 
-/* GET start start page. */
+/* GET register page. */
 router.get('/', function(req, res, next) {
-    res.render('start');
+    res.render('register');
 });
 
 var data = [
                         {
                             "success": true
                         }
-                    ];                 
+                    ];               
 
-router.post('/submitinitdata',function(req,res,next){
+/* Register service */
+router.post('/registernewuser',function(req,res,next){
     db.open(function(err, db) {
 		if(!err) {
 			var users = db.collection("users");
 			users.find({"username":req.body.username, "password":req.body.password}).toArray(function(err2, docs) {
 				if(docs.length>0){
-                    console.log("User found in DB")
+                    console.log("User already exists!")
+                    res.render("register",{uploaderror:"true"});
+                }
+                else {
+                    users.insert({"username":req.body.username, "password":req.body.password});
+                    console.log("New user inserted into DB!");
                     router.sess = req.session;
                     router.sess.loggedIn=true;
                     router.sess.userId=req.body.username;
                     data[0].success=true;
                     res.json(data);
                     res.render("datasourceselection",{uploaderror:"false", data: req.session.userId});
-                }
-                else {
-                    console.log("User not found!");
-                    res.render("start",{uploaderror:"true"});
                 }
 				db.close();
 			});
