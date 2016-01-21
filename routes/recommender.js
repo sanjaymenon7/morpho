@@ -80,10 +80,7 @@ router.get('/get-all-data', function(req, res, next) {
                     }
                 }
             }
-        }
-        // Comment out after Kaushik's range frontend part
-        /*
-        else {
+        } else {
             for(var j=0;j<(req.session.perfCol.values).length;j++){
                 for(var k=0;k<docs.length;k++){
                     if (docs[k][req.session.perfCol.columnName]>=req.session.perfCol.values[j].minVal && docs[k][req.session.perfCol]<=req.session.perfCol.values[j].maxVal) {
@@ -92,7 +89,6 @@ router.get('/get-all-data', function(req, res, next) {
                 }
             }
         }
-        */
         res.json(docs);
        });    
      }
@@ -119,8 +115,7 @@ router.get('/get-parallel-coords-column-metadata', function(req, res, next) {
                             column_info.types[result[i]] = "string";
                         }
                         if (i==req.session.performance){
-                            // Comment out after Kaushik's range frontend part
-                            // column_info.types[result[i]] = "string";
+                            column_info.types[result[i]] = "string";
                             column_info.dimensions.push(result[i]);
                         }
                     }
@@ -166,16 +161,10 @@ router.post('/prepareJson', function(req, res, next) {
                 }
                 counter++;
                 if (counter == selected_items.length-1) {
-                    // Remove after Kaushik's range frontend part
-                    var sort = {};
-                    if (req.session.perfCol.dataType=="numeric") {
-                        sort = req.session.perfSort;
-                    }
-                    // till here
+                    
                     var collection = db.collection(req.session.table);
                     
-                    // Remove sort after Kaushik's range frontend part
-                    collection.find(condition).sort(sort).toArray(function(err2,docs2){
+                    collection.find(condition).toArray(function(err2,docs2){
                         var jsonFile=docs2;
                         if (req.session.perfCol.dataType=="ordinal") {
                             var modifiedJson = new Array();
@@ -189,8 +178,6 @@ router.post('/prepareJson', function(req, res, next) {
                             }
                             jsonFile = modifiedJson;
                         } else {
-                            // Comment out after Kaushik's range frontend part
-                            /*
                             var modifiedJson = new Array();
                             for(var j=0;j<(req.session.perfCol.values).length;j++){
                                 for(var k=0;k<docs2.length;k++){
@@ -200,16 +187,7 @@ router.post('/prepareJson', function(req, res, next) {
                                     }
                                 }
                             }
-                            */
                             jsonFile = modifiedJson;
-                            
-                            // Remove after Kaushik's range frontend part
-                            for(var l=0;l<docs2.length;l++){
-                                
-                                docs2[l][req.session.perfCol.columnName] = " "+docs2[l][req.session.perfCol.columnName];
-                            }
-                            jsonFile=docs2;
-                            // till here
                             
                         }
                         var hash = crypto.createHash('md5').update(req.session.userId).digest('hex');
