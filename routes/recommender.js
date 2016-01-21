@@ -102,7 +102,8 @@ router.get('/get-parallel-coords-column-metadata', function(req, res, next) {
           var collection_keys = db.collection(req.session.table+"_keys");
           var column_info = {
             "dimensions": new Array(),
-            "types": {}
+            "types": {},
+            "color":new Array()
           }
           collection.findOne({}, function(err, doc) {
             var query = 'db.'+req.session.table+'_keys.distinct("_id");';

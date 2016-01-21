@@ -110,6 +110,7 @@
                 $(this).addClass( "selected-recommendation" );
                 $(this).attr('isSelected','true')
             } else if($(this).attr('isSelected') == 'true'){
+                console.log(selectedItems);
                 var index = selectedItems[column].indexOf(item);
                 if (index > -1) {
                     selectedItems[column].splice(index, 1);
@@ -177,7 +178,6 @@
                         }
                         
                         if (columnData[i].column_data[j].ratio.percent["lost"] == 100) {
-                            console.log(columnData[i].column_data[j].ratio.percent[count-1]);
                             $("#"+columnData[i].column_data[j].id).css("background","rgb(160, 160, 160)");
                             $("#"+columnData[i].column_data[j].id).attr('isNotPossible','true');
                         } else {
@@ -244,7 +244,7 @@
         //on click of submit button
         $( "#recommendBtn" ).click(function() {
             if( $('div[isselected="true"]').length >0){
-                selectedItems=[];
+                var selectedElements=[];
                 $('#selecteditemsdiv').empty();
                 
                 $('#vis').empty();
@@ -253,17 +253,17 @@
                 var itemsHtml = '';
                 $('div[isselected="true"]').each(function() {
                     console.log($( this ).text());
-                    selectedItems.push($( this ).attr('id'));
+                    selectedElements.push($( this ).attr('id'));
                     itemsHtml =itemsHtml +('<span class="label label-default">'+$( this ).text() +'</span>&nbsp;&nbsp;')
                 });
                 $('#selecteditemsdiv').append(itemsHtml);
                 //dimennsions = ["Company Name", "Phone Name", "Camera", "Clock Rate", "Battery Capacity", "Multiple SIM Cards"]
                 //fileName = 'data1.csv'
                // drawVisualization(dimennsions, fileName);
-                console.log(selectedItems);
+                console.log(selectedElements);
                 var data =
                 {
-                    "selected_items": selectedItems
+                    "selected_items": selectedElements
                 }
                 $.ajax({
                     url : "http://localhost:3000/recommender/prepareJson",
@@ -274,12 +274,13 @@
                     cache: false,
                     success: function(data, textStatus, jqXHR)
                     {
-
+                        
+                        
                         //console.log(data.filename);
                         //console.log(data.columns);
                         if(data.success == true){
                          //drawVisualization(data.columns, data.filename);
-                            drawParallelCoordinates();
+                            drawParallelCoordinates(data.filename);
                             //$('#ui-id-1').trigger('click');
                             $('html, body').animate({ scrollTop: $('#recommend-graph').offset().top }, 'slow');
                         }
@@ -327,19 +328,36 @@
         });
     });
 
-    function drawParallelCoordinates(){
-        d3.json('recommender/get-all-data', function(data) {
-            var colorgen = d3.scale.ordinal()
-                    .range(["#0000ff","#ff0000","#00ff00",
-                        "#00ffff","#ffff00","#ff00ff","#ff7f00",
-                        "#cab2d6","#6a3d9a","#ffff99","#b15928"]);
+    function drawParallelCoordinates(filename){
+        d3.json("../data?filename="+filename+"", function(data) {
+            
             $.ajax({
                 url : "http://localhost:3000/recommender/get-parallel-coords-column-metadata",
                 type: "GET",
                 cache: false,
                 success: function(colData, textStatus, jqXHR)
                 {
+                    var colors = new Array();
+                    for (var i=0;i<data.length;i++) {
+                        for(j=0;j<groupData.values.length;j++){
+                            if(data[i][groupData.columnName]==groupData.values[j].label){
+                                if (colors.indexOf(groupData.values[j].color)==-1) {
+                                    colors.push(groupData.values[j].color);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    console.log(colors);
+                    var colorgen = d3.scale.ordinal()
+                    .range(colors);
                     var color = function(data) { return colorgen(data[colData.dimensions[0]]); };
+                    
+                    $("#indepthparcoods").html("");
+                    //console.log(colData.color);
+                    //console.log(data)
                     var parcoords = d3.parcoords()("#indepthparcoods")
                             .data(data)
                             //.hideAxis(["_id"])
