@@ -212,3 +212,21 @@ body.elessar-dragging .handle {
   cursor: -moz-grabbing !important;
   cursor: grabbing !important;
 }
+
+#legend-container{
+  margin-top:-10px;
+}
+
+.legend-div{
+  float:left;
+  width:10px;
+  height:10px;
+  margin-left:15px;
+  border: 1px solid black;
+}
+
+.legend-text{
+  float:left;
+  margin-top:-3px;
+  margin-left:5px;
+}

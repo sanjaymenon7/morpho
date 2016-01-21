@@ -56,11 +56,15 @@
                     if (color.indexOf(groupData.values[i].color)==-1) {
                         color.push(groupData.values[i].color);
                         groupNames.push(groupData.values[i].label);
+                        $('#legend-container').append('<div class="legend-div" style="background:'+groupData.values[i].color+'"></div><p class="legend-text">'+groupData.values[i].label+'</p>');
                     }
                 }
-                color.push("rgb(160, 160, 160)");
+                $('#legend-container').append('<div class="legend-div" style="background:rgba(160, 160, 160, 0.5)"></div><p class="legend-text">Neglect</p>');
+                $('#legend-container').append('<div class="legend-div" style="background:lawngreen"></div><p class="legend-text">Selected</p>');
+                $('#legend-container').append('<div class="legend-div" style="background:aliceblue"></div><p class="legend-text">Filtered out</p>');
+                $('#legend-container').append('<div class="legend-div" style="background:rgb(160, 160, 160)"></div><p class="legend-text">Not Possible</p>');
+                color.push("rgba(160, 160, 160, 0.5)");
                 groupNames.push("Neglect");
-                console.log(color);
                 for (var i=0;i<data.columnData.length;i++) {
                     selectedItems[data.columnData[i].column_header.name]=new Array();
                 }
@@ -75,7 +79,7 @@
                     datahtml= datahtml+('<div class ="child-recommend header-recommend tile-title"  id="'+ data.columnData[i].column_header.id +'">'+ data.columnData[i].column_header.name +'</div>');
                     for(j=0;j<colData.length;j++){
                         //  console.log(colData[j].value);
-                        colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false" column="'+data.columnData[i].column_header.name+'" type="'+data.columnData[i].column_header.type+'">'+colData[j].value +'</div>');
+                        colhtml=colhtml+('<div class ="child-recommend specs-recommend" id="'+colData[j].id+'" isSelected="false" isNotPossible="false" column="'+data.columnData[i].column_header.name+'" type="'+data.columnData[i].column_header.type+'">'+colData[j].value +'</div>');
                     }
                     var htmlDivs = '<div class="divcover" filtered="false">'+datahtml+colhtml +'</div>';
                     $("#mainDataDiv").append(htmlDivs);
@@ -99,7 +103,7 @@
             } else {
                 item = $(this).text();
             }
-            if($(this).attr('isSelected') == 'false')
+            if($(this).attr('isSelected') == 'false' && $(this).attr('isNotPossible') == 'false')
             {
                 selectedItems[column].push(item);
                 //console.log(selectedItems);
@@ -171,8 +175,17 @@
                             colorString = colorString + ", "+color[count]+" "+percentTotal+"%";
                             count++;
                         }
+                        
+                        if (columnData[i].column_data[j].ratio.percent["lost"] == 100) {
+                            console.log(columnData[i].column_data[j].ratio.percent[count-1]);
+                            $("#"+columnData[i].column_data[j].id).css("background","rgb(160, 160, 160)");
+                            $("#"+columnData[i].column_data[j].id).attr('isNotPossible','true');
+                        } else {
+                            $("#"+columnData[i].column_data[j].id).css("background","linear-gradient(to right"+colorString+")");
+                            $("#"+columnData[i].column_data[j].id).attr('isNotPossible','false');
+                        }
                         $("#"+columnData[i].column_data[j].id).attr("title",percentString);
-                        $("#"+columnData[i].column_data[j].id).css("background","linear-gradient(to right"+colorString+")");
+                        
                     }
                 }
             }
@@ -423,6 +436,9 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <legend>Select required items and click Submit for recommendations</legend>
+                                <div id="legend-container">
+                                
+                                </div>
                             </div>
                             <div class="col-md-2">
                                 <button id="recommendBtn" class="btn btn-lg btn-primary">Submit<div class="ripple-wrapper"></div></button>
