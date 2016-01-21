@@ -182,7 +182,7 @@
                                 <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
                                 <!---->
                                 <!--</div>-->
-                                <div class="label-info h4" id="groupInput1" style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:white" contenteditable="true">Group Here</div>
+                                <div class="label-info h4" id="groupInput1" style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:lightgreen" contenteditable="true">Group Here</div>
                                 <ul id="positionedList1" style="min-height:80px"
                                     ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
@@ -294,24 +294,10 @@
         $("#warning").css("display", "none");
     });
 
-    //TODO
-    // use colour from please colour and send that as well.
-    //
+
     function nextStep(){
         if (mainData.dataType != 'numeric') {
             var initElement = document.getElementById('initOrdinalList')
-//            if (initElement.getElementsByTagName('li').length > 0) {
-//                //console.log($('#warningInput'))
-//                // commented because we dont need to throw a warnign right now.
-//                //$('#warningMessage').text("Please group all Elements to the right before proceeding");
-//                //$('#warning').css("display", "block");
-//
-//                for(var i=0;i<initElement.getElementsByTagName('li').length;i++){
-//                    mainData.values;
-//                }
-//                //return;
-//            }
-
             var countOfDiv = currentDiv.substr(currentDiv.length - 1);
 
             for (var i = 1; i <= countOfDiv; i++) {
@@ -333,9 +319,38 @@
         else{
             console.log('rangebar value:');
             console.log(rangeBars);
-            var a=rangeBars.val();
+
+            var rangeVal=rangeBars.val();
+            console.log(rangeVal);
             console.log(rangeBars.val());
-            console.log(a);
+            mainData.values[0]
+            for(var i=0;i<rangeVal.length;i++){
+                var tempArray=new Array();
+                var tempValues=rangeVal[i];
+                console.log(tempValues);
+                if ($('#optionsRadios1').prop("checked")){
+                    tempArray.acv=i;
+                }
+                else if($('#optionsRadios2').prop("checked")){
+                    tempArray.acv=rangeVal.length - i;
+                }
+                //tempArray.acv=i;
+                tempArray.label=tempValues[0]+' - '+tempValues[1];
+                tempArray.color=divColors[i];
+                console.log('div colors:')
+                console.log(divColors[i]);
+                tempArray.minVal=tempValues[0];
+                tempArray.maxVal=tempValues[1];
+                mainData.values.push(tempArray);
+                //console.log(mainData.values[i]);
+            }
+
+                console.log('main data:');
+
+                console.log(mainData.values);
+                mainData.values.splice(0,2);
+                console.log('after splice');
+                console.log(mainData.values);
         }
 
         for (i = 0; i < mainData.values.length; i++) {
@@ -368,15 +383,8 @@
                     numericJsonReturn('dsc');
                     console.log('inside nextstep and in numeric selection. dsc passed');
                 }
-                var rangeVal=rangeBars.val();
-                for(var i=0;i<rangeVal.length;i++){
-                    var tempValues=rangeVal[i];
-                    mainData.values[i].label=tempValues[0]+'-'+tempValues[1];
-                    mainData.values[i].color="#ffffff";
-                    mainData.values[i].minVal=tempValues[0];
-                    mainData.values[i].maxVal=tempValues[1];
 
-                }
+
             }
 
         }
@@ -411,6 +419,9 @@
         //divColors.push.apply(divColors,divColorsInitial);
         if(mainData.values.length>5)
             colorsReturned=Math.floor((mainData.values.length -divColorsInitial.length)/divColorsInitial.length);
+        else if(mainData.dataType=='numeric'){
+            colorsReturned=20;
+        }
         else{
             colorsReturned=5;
             console.log(divColors);
@@ -478,7 +489,7 @@
         //console.log('tomove elements ');
         //console.log(toMove);
 
-        for (i = 0; i < toMove.length; i++) {
+        for (var i = 0; i < toMove.length; i++) {
             if (toMove[i].tagName == 'UL')
                 listElements = toMove[i].children;
         }
@@ -514,6 +525,7 @@
 
     // To create the numeric divisions.
     function numericDivCreator(data) {
+        colorGenerator();
         document.getElementById('numericDiv').style.display = 'block';
         document.getElementById('ordinalDiv').innerHTML = "";
 
@@ -575,12 +587,17 @@
                     midVal//moment().startOf('day').add(1, 'hours').format('LLLL')
                 ],
 
+
+
             ],
             htmlLabel: true, // if true, range labels are written as html
             allowSwap: true,
-            label: function(a){return JSON.stringify(a)},
+            label: function(a){
+                console.log('label is:'+a);
+                console.log(a[0]+ '  '+a[1]);
+                return JSON.stringify(a[0]+' To '+a[1])},
             snap: snapVal,//1000 * 60 * 15,
-            minSize: snapVal*2,//1000 * 60 * 60,
+            minSize: snapVal*1,//1000 * 60 * 60,
 
             allowDelete:true,
             indicator:null
@@ -614,8 +631,8 @@
         else {
             mainData.values[0].acv = "2"; // mainData.values[1].value;
             mainData.values[1].acv = "1"; // mainData.values[0].value;
-            minVal=mainData.values[1].value;
-            maxVal=mainData.values[0].value;
+            minVal=mainData.values[0].value;
+            maxVal=mainData.values[1].value;// changed so that we dont swap the values instead just redraw
             console.log('numeric json. dsc selected');
 
         }
