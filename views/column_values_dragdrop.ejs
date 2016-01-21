@@ -176,13 +176,13 @@
                         <div class="col-md-1">
                         </div>
                         <div id="positionedDiv" class="col-md-3 container" style="max-height:400px;overflow-y: auto">
-                            <div id="position1" class="panel panel-info">
+                            <div id="position1" class="panel panel-info" style="background-color:lightgreen">
                                 <!--<div class="panel-heading"> Group Elements Here</div>-->
                                 <!--<div class="form-group ">-->
                                 <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
                                 <!---->
                                 <!--</div>-->
-                                <div class="label-info h4" id="groupInput1" style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:lightgreen" contenteditable="true">Group Here</div>
+                                <div class="label-info h4" id="groupInput1" style="padding-top:3px;padding-bottom:3px; padding-left: 30px; margin-top: 0px; color:white; " contenteditable="true">Group Here</div>
                                 <ul id="positionedList1" style="min-height:80px"
                                     ondrop="javascript:listParentUpdater('positionedList1')"></ul>
 
@@ -190,7 +190,7 @@
                         </div>
                         <div class="col-md-1">
                             <a id="addnewgroup" href="javascript:newDivCreator(this)" class="btn btn-raised btn-success"
-                               style="margin-top: 0px">Add New Group</a>
+                               style="margin-top: 0px">Add New Group</a>position1
 
                         </div>
                     </div>
@@ -363,7 +363,7 @@
                 //if(mainData.values[i].)
                 if(mainData.values[i].acv==-1){
                     mainData.values[i].label= "Unassigned group";
-                    mainData.values[i].color='#ffffff';
+                    mainData.values[i].color='#0000CD';
                 }
                 else{
                     var label = document.getElementById('groupInput' + mainData.values[i].acv).innerHTML;
