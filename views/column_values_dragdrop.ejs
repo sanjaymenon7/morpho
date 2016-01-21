@@ -176,7 +176,7 @@
                         <div class="col-md-1">
                         </div>
                         <div id="positionedDiv" class="col-md-3 container" style="max-height:400px;overflow-y: auto">
-                            <div id="position1" class="panel panel-info" style="background-color:lightgreen">
+                            <div id="position1" class="panel panel-info" style="background-color:lightseagreen">
                                 <!--<div class="panel-heading"> Group Elements Here</div>-->
                                 <!--<div class="form-group ">-->
                                 <!--<input class="form-control" style="padding-left:20px" placeholder="Label for Group 1" id="groupInput1" type="text">-->
@@ -190,7 +190,7 @@
                         </div>
                         <div class="col-md-1">
                             <a id="addnewgroup" href="javascript:newDivCreator(this)" class="btn btn-raised btn-success"
-                               style="margin-top: 0px">Add New Group</a>position1
+                               style="margin-top: 0px">Add New Group</a>
 
                         </div>
                     </div>
@@ -323,9 +323,10 @@
             var rangeVal=rangeBars.val();
             console.log(rangeVal);
             console.log(rangeBars.val());
-            mainData.values[0]
+            //for(var i=0;i<rangeBars)
+            //mainData.values[0]
             for(var i=0;i<rangeVal.length;i++){
-                var tempArray=new Array();
+                var tempArray={};
                 var tempValues=rangeVal[i];
                 console.log(tempValues);
                 if ($('#optionsRadios1').prop("checked")){
@@ -391,6 +392,7 @@
         }
         console.log("main data: ");
         console.log(mainData);
+        console.log(JSON.stringify(mainData));
         $.ajax({
             url: '/column_values_dragdrop/column_values_dragdrop_result',
             type: 'POST',
