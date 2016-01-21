@@ -38,6 +38,7 @@
     var columnData;
     var selectedItems = {};
     var color = new Array();
+    var groupNames = new Array();
     $( document ).ready(function() {
 
         $( "#tabs" ).tabs();
@@ -54,9 +55,11 @@
                 for (var i=0;i<groupData.values.length;i++) {
                     if (color.indexOf(groupData.values[i].color)==-1) {
                         color.push(groupData.values[i].color);
+                        groupNames.push(groupData.values[i].label);
                     }
                 }
                 color.push("rgb(160, 160, 160)");
+                groupNames.push("Neglect");
                 console.log(color);
                 for (var i=0;i<data.columnData.length;i++) {
                     selectedItems[data.columnData[i].column_header.name]=new Array();
@@ -160,12 +163,15 @@
                         var count = 0;
                         var percentTotal = 0;
                         var colorString = "";
+                        var percentString = "";
                         for (var h in columnData[i].column_data[j].ratio.percent) {
                             colorString = colorString + ", "+color[count]+" "+percentTotal+"%";
                             percentTotal = percentTotal + columnData[i].column_data[j].ratio.percent[h];
+                            percentString = percentString + groupNames[count]+": "+ columnData[i].column_data[j].ratio.percent[h]+"%\n";
                             colorString = colorString + ", "+color[count]+" "+percentTotal+"%";
                             count++;
                         }
+                        $("#"+columnData[i].column_data[j].id).attr("title",percentString);
                         $("#"+columnData[i].column_data[j].id).css("background","linear-gradient(to right"+colorString+")");
                     }
                 }
