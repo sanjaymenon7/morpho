@@ -9,6 +9,9 @@ var db = new Db('morphologicalrecommender', server);
 // Multer - A lib to manage uploads
 var multer  = require('multer');
 
+// PW encryption
+var bcrypt = require('bcrypt-nodejs')
+
 /* GET register page. */
 router.get('/', function(req, res, next) {
     res.render('register');
@@ -25,13 +28,14 @@ router.post('/registernewuser',function(req,res,next){
     db.open(function(err, db) {
 		if(!err) {
 			var users = db.collection("users");
-			users.find({"username":req.body.username, "password":req.body.password}).toArray(function(err2, docs) {
+            var hash = bcrypt.hashSync(req.body.password);
+			users.find({"username":req.body.username}).toArray(function(err2, docs) {
 				if(docs.length>0){
                     console.log("User already exists!")
-                    res.render("register",{uploaderror:"true"});
+                    res.render("register");
                 }
                 else {
-                    users.insert({"username":req.body.username, "password":req.body.password});
+                    users.insert({"username":req.body.username, "password":hash});
                     console.log("New user inserted into DB!");
                     router.sess = req.session;
                     router.sess.loggedIn=true;
