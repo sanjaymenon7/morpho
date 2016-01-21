@@ -356,9 +356,10 @@
         for (i = 0; i < mainData.values.length; i++) {
             console.log('maindata value at ' + i);
             console.log(mapMaindata.get(mainData.values[i].value) + '   ... ' + mainData.values[i].acv);
-            mainData.values[i].acv = mapMaindata.get(mainData.values[i].value);
+
 
             if (mainData.dataType != 'numeric') {
+                mainData.values[i].acv = mapMaindata.get(mainData.values[i].value);
                 //if(mainData.values[i].)
                 if(mainData.values[i].acv==-1){
                     mainData.values[i].label= "Unassigned group";
@@ -375,12 +376,12 @@
             }
             else {
                 if ($('#optionsRadios1').prop("checked")){
-                    numericJsonReturn('asc');
+                    //numericJsonReturn('asc');
                     console.log('inside nextstep and in numeric selection. asc passed');
                 }
 
                 else if($('#optionsRadios2').prop("checked")){
-                    numericJsonReturn('dsc');
+                   // numericJsonReturn('dsc');
                     console.log('inside nextstep and in numeric selection. dsc passed');
                 }
 
