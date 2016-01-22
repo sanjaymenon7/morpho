@@ -364,13 +364,14 @@
                             .types(colData.types)
                             .dimensions(colData.dimensions)
                             .color(color)
-                            .alpha(0.9)
+                            .alpha(1)
                             .composite("darken")
                             .margin({ top: 24, left: 10, bottom: 10, right: 0 })
                             .mode("queue")
                             .render()
                             .brushMode("1D-axes-multi")
                             .alphaOnBrushed(0.2)
+                            .reorderable()
                             ;
 
                     parcoords.svg.selectAll("text")
@@ -404,13 +405,14 @@
                         .types(colData.types)
                         .dimensions(colData.dimensions)
                         .color(color)
-                        .alpha(0.9)
+                        .alpha(1)
                         .composite("darken")
                         .margin({ top: 24, left: 10, bottom: 10, right: 0 })
                         .mode("queue")
                         .render()
                         .brushMode("1D-axes-multi")
                         .alphaOnBrushed(0.2)
+                        .reorderable()
                         ;
                         
                 parcoords.svg.selectAll("text")
