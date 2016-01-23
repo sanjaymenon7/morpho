@@ -12,9 +12,14 @@ var multer  = require('multer');
 // PW encryption
 var bcrypt = require('bcrypt-nodejs');
 
-/* GET start start page. */
+/* GET start page. */
 router.get('/', function(req, res, next) {
-    res.render('start');
+    if (req.session.loggedIn) {
+        res.render('datasourceselection',{uploaderror:"false", data: req.session.userId});
+    }
+    else {
+        res.render('start');
+}
 });
 
 var data = [
