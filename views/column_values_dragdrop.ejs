@@ -418,7 +418,7 @@
         var divColorsInitial=['lightcoral','lightgreen','lightyellow','peru','lightseagreen'];
         var divColorsTemp;
         var colorsReturned;
-        divColors=['#F08080','#90EE90','#FFFF70','#CD853F','#20B2AA'];
+        divColors=['#F08080','#90EE90','#87CEFA','#CD853F','#20B2AA'];
         //divColors.push.apply(divColors,divColorsInitial);
         if(mainData.values.length>5)
             colorsReturned=Math.floor((mainData.values.length -divColorsInitial.length)/divColorsInitial.length);
@@ -645,26 +645,13 @@
     }// end function numericJsonReturn.
 
 
-    /*
-
-     {
-     colname: "",
-     datatype: "numeric",
-     values:[
-     {
-     label: "Low",
-     minVal: 100,
-     maxVal: 200,
-     acv:1
-     },
-     {
-     label: "Low",
-     minVal: 100,
-     maxVal: 200,
-     acv:1
-     }
-     ]
-     }
-     */
+   function tempFunction(){
+       for(var i=0;i<rangeVal.length;i++){
+           if (i+1 <length){
+               if (rangeVal[i+1][0] - rangeVal[i][1] > 0)
+                    ;
+           }
+       }
+   }
 </script>
 </html>
