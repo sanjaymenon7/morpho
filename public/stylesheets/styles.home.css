@@ -13,12 +13,12 @@ font-family: "Proxima Nova Light"; }
 /* Background Style of Sections */
 #section-1 {
 background-image: url("../images/header_bg.png");
-height: 633px;
+height: 100vh;
 width: 100%;
 background-size: cover; }
 
 #section-2 {
-height: 633px;
+height: 100vh;
 width: 100%;
 background-size: cover;
 background-color: #FFFFFF;
@@ -27,19 +27,19 @@ display: block;
 box-sizing: border-box; }
 
 #section-3 {
-height: 633px;
+height: 100vh;
 width: 100%;
 background-size: cover;
 background-color: #F5F5F5; }
 
 #section-4 {
-height: 538px;
+height: 85vh;
 width: 100%;
 background-size: cover; }
 
 #section-5 {
 background-image: url("../images/footer_bg.png");
-height: 95px;
+height: 15vh;
 width: 100%;
 background-size: cover; }
 
