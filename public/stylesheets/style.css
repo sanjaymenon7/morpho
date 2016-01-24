@@ -38,6 +38,10 @@ body .well {
   margin-top: 15px;
 }
 
+#registerconfirm {
+  margin-top: 15px;
+  margin-left: 90px;
+}
 /* datasourceselection.ejs view */
 
 
@@ -51,7 +55,7 @@ padding: 10px 17px;
 border-radius: 5px;
 }
 
-#startproceed, #backbtn, #backbtn2, #backbtn3, #selectperfcol, #gotorecommender {
+#startproceed, #backbtn, #backbtn2, #backbtn3, #selectperfcol, #gotorecommender, #cancel {
 font-family: "Proxima Nova Regular";
 color: #42B89E;
 background-color: #FFFFFF;
@@ -74,6 +78,15 @@ color: #42B89E;
 background-color: #FFFFFF;
 padding: 3px 15px;
 margin: 0px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+button#selectperfcol {
+    float: right;
 }
 
 .signuplink {
