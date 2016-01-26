@@ -48,7 +48,6 @@
             dataType: 'json',
             cache: false,
             success: function(data) {
-                console.log(data);
                 configData = data.configData;
                 groupData = data.groupData;
                 columnData = data.columnData;
@@ -84,8 +83,9 @@
                     var htmlDivs = '<div class="divcover" filtered="false">'+datahtml+colhtml +'</div>';
                     $("#mainDataDiv").append(htmlDivs);
                 }
+                drawOverview();
                 recommend(configData, columnData, selectedItems);
-
+                
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -349,8 +349,7 @@
                         }
                     }
                     
-                    
-                    console.log(colors);
+                
                     var colorgen = d3.scale.ordinal()
                     .range(colors);
                     var color = function(data) { return colorgen(data[colData.dimensions[0]]); };
@@ -385,48 +384,60 @@
 
         });
     }
-
-    $("#example").css("width", $( window ).width()-90);
-    $("#indepthparcoods").css("width", $( window ).width()-90);
-
-    d3.json('recommender/get-all-data', function(data) {
-        var colorgen = d3.scale.ordinal()
-                .range(["#0000ff","#ff0000","#00ff00",
-                    "#00ffff","#ffff00","#ff00ff","#ff7f00",
-                    "#cab2d6","#6a3d9a","#ffff99","#b15928"]);
-        $.ajax({
-            url : "http://localhost:3000/recommender/get-parallel-coords-column-metadata",
-            type: "GET",
-            cache: false,
-            success: function(colData, textStatus, jqXHR)
-            {
-                var color = function(data) { return colorgen(data[colData.dimensions[0]]); };
-                var parcoords = d3.parcoords()("#example")
-                        .data(data)
-                        //.hideAxis(["_id"])
-                        .types(colData.types)
-                        .dimensions(colData.dimensions)
-                        .color(color)
-                        .alpha(1)
-                        .composite("darken")
-                        .margin({ top: 24, left: 20, bottom: 20, right: 10 })
-                        .mode("queue")
-                        .render()
-                        .brushMode("1D-axes-multi")
-                        .alphaOnBrushed(0.2)
-                        .reorderable()
-                        ;
-                        
-                parcoords.svg.selectAll("text")
-                    .style("font", "15px sans-serif");
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-
-            }
+    function drawOverview(){
+        $("#example").css("width", $( window ).width()-90);
+        $("#indepthparcoods").css("width", $( window ).width()-90);
+    
+        d3.json('recommender/get-all-data', function(data) {
+            $.ajax({
+                url : "http://localhost:3000/recommender/get-parallel-coords-column-metadata",
+                type: "GET",
+                cache: false,
+                success: function(colData, textStatus, jqXHR)
+                {
+                    var colors = new Array();
+                    for (var i=0;i<data.length;i++) {
+                        for(j=0;j<groupData.values.length;j++){
+                            if(data[i][groupData.columnName]==groupData.values[j].label){
+                                if (colors.indexOf(groupData.values[j].color)==-1) {
+                                    colors.push(groupData.values[j].color);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    var colorgen = d3.scale.ordinal()
+                    .range(colors);
+                    var color = function(data) { return colorgen(data[colData.dimensions[0]]); };
+                    var parcoords = d3.parcoords()("#example")
+                            .data(data)
+                            //.hideAxis(["_id"])
+                            .types(colData.types)
+                            .dimensions(colData.dimensions)
+                            .color(color)
+                            .alpha(1)
+                            .composite("darken")
+                            .margin({ top: 24, left: 20, bottom: 20, right: 10 })
+                            .mode("queue")
+                            .render()
+                            .brushMode("1D-axes-multi")
+                            .alphaOnBrushed(0.2)
+                            .reorderable()
+                            ;
+                            
+                    parcoords.svg.selectAll("text")
+                        .style("font", "15px sans-serif");
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+    
+                }
+            });
+            
         });
-        
-    });
+    }
 </script>
 <div class="well bs-cpmponent">
     <div id="recommendertWarning" class="alert alert-dismissible alert-warning" style="display: none">

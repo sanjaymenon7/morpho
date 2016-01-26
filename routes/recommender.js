@@ -83,8 +83,8 @@ router.get('/get-all-data', function(req, res, next) {
         } else {
             for(var j=0;j<(req.session.perfCol.values).length;j++){
                 for(var k=0;k<docs.length;k++){
-                    if (docs[k][req.session.perfCol.columnName]>=req.session.perfCol.values[j].minVal && docs[k][req.session.perfCol]<=req.session.perfCol.values[j].maxVal) {
-                        docs[k][req.session.perfCol.columnName]=req.session.perfCol.values[j].label;
+                    if (docs[k][req.session.perfCol.columnName]>=req.session.perfCol.values[j].minVal && docs[k][req.session.perfCol.columnName]<=req.session.perfCol.values[j].maxVal) {
+                        docs[k][req.session.perfCol.columnName]=req.session.perfCol.values[j].label
                     }
                 }
             }
